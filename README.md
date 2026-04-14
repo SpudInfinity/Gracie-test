@@ -9,4 +9,4 @@ A minimalist, atmospheric song quiz inspired by Laufeyland, featuring the haunti
 - 🎹 Curated lyrics and results based on your personality
 
 ## How to Play
-Visit the live site here: [Insert Your GitHub Pages Link]
+Visit the live site here: [https://spudinfinity.github.io/Gracie-test/]
