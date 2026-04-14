@@ -46,7 +46,7 @@
                 of the heart you once broke.<br>
                 Step into the silence."
             </p>
-            <button class="btn" style="text-align:center; padding-left:0;" onclick="begin()">Enter the Void</button>
+            <button id="start-btn" class="btn" style="text-align:center; padding-left:0;" onclick="begin()">Enter the Void</button>
         </div>
 
         <div id="quiz">
@@ -78,7 +78,6 @@
     <script>
         const audio = document.getElementById('bg-audio');
 
-        // 歌曲与歌手真实库
         const gracieSongs = ["Mean It", "Stay", "21", "I miss you, I'm sorry", "Long Sleeves", "minor", "tehe", "Friend", "Brush Fire", "Unlearn", "Rockland", "Augusta", "The Bottom", "Mess It Up", "Alright", "Camden", "Feels Like", "Hard to sleep", "Faultline", "Block me out", "Difficult", "Where do we go now?", "Amelie", "Abby", "Full Machine", "Will you cry?", "I should hate you", "Best", "Better", "Right Now", "The Exit", "Cedar", "Risk", "Close To You", "Blowing Smoke", "Let It Happen", "Tough Love", "I Love You, I'm Sorry", "Free Now", "Normal Thing", "Gave You I Gave You I", "The Secret of Us", "That’s So True", "I Fight It", "In Between", "Spark", "Packing It Up"];
 
         const allTags = ["末日余晖", "过期雨季", "失语霓虹", "碎裂胶片", "凌晨四点", "深海呼吸", "枯萎信笺", "坠落行星", "铁锈记忆", "薄雾晨曦", "孤岛心理", "空镜美学", "灵魂褶皱", "致命温柔", "孤独观测者", "瞬时永恒", "逃离地心", "玫瑰余烬", "无人区玫瑰", "静默审判", "记忆标本", "失眠症候群", "灵魂副作用", "昨日世界", "灰烬审美", "深渊的回响", "莫奈的花园", "西西弗斯", "慢动作心碎", "低保真情绪", "微观依恋", "夜色温柔", "悲观主义", "重庆森林", "春光乍泄", "恋恋风尘", "北野武蓝", "盐系寂寞", "半衰期", "情感放射", "潮湿主义", "旧电影质感", "无解的题", "真空地带", "听觉残留", "心碎出口", "蓝色调式", "被动荒废", "影子练习", "过敏体质", "降噪生活", "平行失语", "昨日重现", "时间缝隙", "白噪音", "梦境碎片", "触觉失灵", "深蓝梦呓", "午夜飞行", "无目的流浪", "废弃电台", "降落练习", "隐形裂痕", "情绪过载", "冷色调告别", "匿名信件", "远方共振", "旧磁带", "复古伤感", "半透明", "琥珀色记忆", "荒野呼唤", "私密频率", "低空飞行", "极简孤寂", "雾中漫行", "光影废墟", "末班车", "空房间", "无声尖叫", "灵魂寄宿", "幻肢痛", "单色世界", "雨水收集", "微凉体温", "心室颤动", "旧报纸", "黑白默片", "倒放的人生", "破碎共识", "冷战美学", "灰度空间", "呼吸刻度", "情感幽灵", "数字葬礼", "霓虹废土", "寂静之声", "无名氏", "漂流瓶", "最后一次点火"];
@@ -160,12 +159,20 @@
         let cur = 0; 
         let scores = { A:0, B:0, C:0, D:0 };
 
+        // 核心修改点：强制进入函数
         function begin() { 
+            // 立即切换 UI 界面，不等待音频结果
             document.getElementById('start').style.display = 'none'; 
             document.getElementById('quiz').style.display = 'block'; 
+            
+            // 后台尝试静默播放音频
             if(audio) {
-                audio.play().catch(e => console.log("Audio play blocked"));
+                audio.play().catch(e => {
+                    console.log("Audio playback was prevented or failed. Error:", e);
+                });
             }
+            
+            // 初始化题目显示
             show(); 
         }
 
@@ -228,9 +235,4 @@
             finalExt.forEach(item => {
                 extList.innerHTML += `
                     <div class="rec-card">
-                        <div class="rec-artist">${item.a}</div>
-                        <div class="rec-title">${item.t}</div>
-                    </div>`;
-            });
-            
-            document.
+      
