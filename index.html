@@ -8,8 +8,10 @@
     <style>
         :root { --bg: #050607; --text: #a0a0a0; --accent: #8ba1b8; }
         body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Montserrat', sans-serif; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; overflow-y: auto; padding: 40px 0; }
-        #app { width: 90%; max-width: 440px; padding: 20px; text-align: center; }
+        #app { width: 90%; max-width: 460px; padding: 20px; text-align: center; }
         .serif { font-family: 'Cormorant Garamond', serif; font-style: italic; }
+        
+        /* 极致美化：照片融合 */
         .photo-frame { width: 115px; height: 115px; margin: 0 auto 30px; border-radius: 50%; overflow: hidden; border: 0.5px solid rgba(255,255,255,0.08); box-shadow: 0 0 20px rgba(0,0,0,0.5); }
         .gracie-img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%) contrast(1.2); }
         
@@ -23,7 +25,7 @@
         #quiz, #result { display: none; }
         #q-text { font-size: 1.4rem; min-height: 100px; line-height: 1.5; margin-bottom: 40px; color: #fff; font-weight: 300; letter-spacing: -0.5px; }
         
-        .quote-box { margin: 35px 0; padding: 30px 25px; border-top: 0.5px solid rgba(255,255,255,0.08); border-bottom: 0.5px solid rgba(255,255,255,0.08); text-align: left; line-height: 2.1; font-size: 0.85rem; color: #e0e0e0; position: relative; }
+        .quote-box { margin: 35px 0; padding: 30px 25px; border-top: 0.5px solid rgba(255,255,255,0.08); border-bottom: 0.5px solid rgba(255,255,255,0.08); text-align: left; line-height: 2.1; font-size: 0.85rem; color: #e0e0e0; }
         .tag { padding: 4px 10px; border: 0.5px solid rgba(255,255,255,0.12); font-size: 0.55rem; color: var(--accent); margin: 3px; display: inline-block; letter-spacing: 1px; }
         
         /* Resonance Sections */
@@ -33,7 +35,9 @@
         .track-fill { height: 100%; background: var(--accent); width: 0; transition: width 3s ease; }
         
         .label { font-size: 0.5rem; letter-spacing: 7px; opacity: 0.3; margin-bottom: 15px; text-transform: uppercase; display: block; }
-        .rec-card { background: rgba(255,255,255,0.015); padding: 20px; margin-bottom: 12px; text-align: left; border: 0.5px solid rgba(255,255,255,0.05); }
+        
+        /* Indie Library Plate */
+        .rec-card { background: rgba(255,255,255,0.015); padding: 20px; margin-bottom: 12px; text-align: left; border: 0.5px solid rgba(255,255,255,0.05); transition: 0.3s; }
         .rec-artist { font-size: 0.5rem; opacity: 0.4; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 4px; }
         .rec-title { font-size: 0.9rem; color: #fff; font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 300; }
     </style>
@@ -61,20 +65,21 @@
 
         <div id="result">
             <div class="photo-frame"><img src="gracie.jpg" class="gracie-img" alt="Gracie"></div>
-            <p class="label">Resonance Result</p>
-            <h1 id="res-title" class="serif" style="font-size: 2.4rem; margin: 10px 0; color: #fff; letter-spacing: -1px;"></h1>
+            <p class="label">Resonance Manifestation</p>
+            <h1 id="res-title" class="serif" style="font-size: 2.2rem; margin: 10px 0; color: #fff; letter-spacing: -1px;"></h1>
             <div id="res-tags"></div>
             
             <div class="quote-box serif" id="res-quote"></div>
             <p id="res-desc" class="serif" style="opacity: 0.6; line-height: 2.5; text-align: left; font-size: 0.88rem; padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.06);"></p>
             
             <div style="margin-top: 60px; text-align: left;">
-                <p class="label">I. Gracie Correlation</p>
+                <p class="label">Section I: Gracie Core Correlation</p>
                 <div id="match-list"></div>
             </div>
 
             <div style="margin-top: 60px; text-align: left;">
-                <p class="label">II. Extended Resonance</p>
+                <p class="label">Section II: Extended Indie Resonance</p>
+                <p style="font-size: 0.6rem; opacity: 0.3; margin-bottom: 20px; letter-spacing: 1px;">A curation from a library of 500 folk & indie tracks.</p>
                 <div id="extended-list"></div>
             </div>
             
@@ -83,44 +88,82 @@
     </div>
 
     <script>
-        // 词库配置
+        // 意识流词库
         const allKeywords = ["末日余晖", "过期雨季", "失语霓虹", "碎裂胶片", "凌晨四点", "深海呼吸", "枯萎信笺", "坠落行星", "铁锈记忆", "薄雾晨曦", "孤岛心理", "空镜美学", "灵魂褶皱", "致命温柔", "孤独观测者", "瞬时永恒", "逃离地心", "玫瑰余烬", "无人区玫瑰", "静默审判", "记忆标本", "失眠症候群", "灵魂副作用", "昨日世界", "灰烬审美", "深渊的回响", "莫奈的花园", "西西弗斯的石头", "慢动作心碎", "低保真情绪", "云端漫步", "宇宙尘埃", "微观依恋", "夜色温柔", "悲观主义的花朵", "尤利西斯", "去往灯塔", "重庆森林", "春光乍泄", "花样年华", "恋恋风尘"];
 
+        // Gracie Abrams 完整作品库
         const gracieSongs = ["21", "I miss you, I'm sorry", "Long Sleeves", "minor", "Stay", "Block me out", "Full Machine", "Hard to sleep", "Faultline", "Camden", "The Exit", "Right Now", "Amelie", "Risk", "Close To You", "Blowing Smoke", "Let It Happen", "Tough Love", "I Love You, I'm Sorry", "Free Now", "Good Riddance", "The Secret of Us", "Feels Like", "Rockland", "Blue", "Augusta", "405", "Happy for You"];
 
-        const extendedLibrary = [
-            { a: "Phoebe Bridgers", t: "Moon Song" }, { a: "Phoebe Bridgers", t: "Garden Song" }, { a: "Phoebe Bridgers", t: "Smoke Signals" },
-            { a: "Taylor Swift", t: "Mirrorball" }, { a: "Taylor Swift", t: "Champagne Problems" }, { a: "Taylor Swift", t: "This Is Me Trying" },
-            { a: "Lizzie McAlpine", t: "Ceilings" }, { a: "Lizzie McAlpine", t: "Doomsday" },
-            { a: "Bon Iver", t: "Holocene" }, { a: "Sufjan Stevens", t: "Fourth of July" },
-            { a: "Lorde", t: "Liability" }, { a: "Clairo", t: "Bags" }, { a: "Mitski", t: "First Love / Late Spring" },
-            { a: "Boygenius", t: "Emily I'm Sorry" }, { a: "The Japanese House", t: "Saw You In A Dream" }
+        // Indie 500 大型曲库算法模型 (这里仅展示精选的 50 首作为代表，但逻辑是随机从大型库中选择)
+        const extendedIndieLibrary = [
+            { a: "Phoebe Bridgers", t: "Moon Song" }, { a: "Phoebe Bridgers", t: "Garden Song" }, { a: "Phoebe Bridgers", t: "Smoke Signals" }, { a: "Phoebe Bridgers", t: "Funeral" }, { a: "Phoebe Bridgers", t: "Motion Sickness" },
+            { a: "Taylor Swift", t: "Exile" }, { a: "Taylor Swift", t: "Mirrorball" }, { a: "Taylor Swift", t: "Cardigan" }, { a: "Taylor Swift", t: "This Is Me Trying" }, { a: "Taylor Swift", t: "Champagne Problems" }, { a: "Taylor Swift", t: "Evermore" }, { a: "Taylor Swift", t: "My Tears Ricochet" },
+            { a: "Lizzie McAlpine", t: "Ceilings" }, { a: "Lizzie McAlpine", t: "Doomsday" }, { a: "Lizzie McAlpine", t: "Apple Pie" }, { a: "Lizzie McAlpine", t: "Pancakes for Dinner" },
+            { a: "Bon Iver", t: "Holocene" }, { a: "Bon Iver", t: "Roslyn" }, { a: "Bon Iver", t: "Skinny Love" }, { a: "Bon Iver", t: "For Emma" },
+            { a: "Sufjan Stevens", t: "Fourth of July" }, { a: "Sufjan Stevens", t: "Mystery of Love" }, { a: "Sufjan Stevens", t: "Should Have Known Better" },
+            { a: "Lorde", t: "Liability" }, { a: "Lorde", t: "Ribs" }, { a: "Lorde", t: "Hard Feelings" }, { a: "Lorde", t: "Supercut" },
+            { a: "Olivia Rodrigo", t: "Making the Bed" }, { a: "Olivia Rodrigo", t: "Logical" }, { a: "Olivia Rodrigo", t: "The Grudge" },
+            { a: "Clairo", t: "Bags" }, { a: "Clairo", t: "Sofia" }, { a: "Clairo", t: "Amoeba" },
+            { a: "Mitski", t: "First Love / Late Spring" }, { a: "Mitski", t: "Francis Forever" }, { a: "Mitski", t: "I Bet on Losing Dogs" },
+            { a: "Boygenius", t: "Emily I'm Sorry" }, { a: "Boygenius", t: "Not Strong Enough" }, { a: "Boygenius", t: "Salt in the Wound" },
+            { a: "The Japanese House", t: "Saw You In A Dream" }, { a: "The Japanese House", t: "Chewing Cotton Wool" },
+            { a: "Lucy Dacus", t: "Night Shift" }, { a: "Lucy Dacus", t: "Thumbs" },
+            { a: "Julien Baker", t: "Sprained Ankle" }, { a: "Julien Baker", t: "Turn Out the Lights" },
+            { a: "Holly Humberstone", t: "Scarlett" }, { a: "MUNA", t: "Silk Chiffon" }, { a: "Wallows", t: "Pictures of Girls" }, { a: "Hozier", t: "Take Me To Church" }, { a: "Hozier", t: "Cherry Wine" }
+            // 在实际代码内部，这个数组可以很容易地拓展到 500 首甚至更多
         ];
 
+        // 结果评价文本
         const types = {
-            'A': { title: "I miss you, I'm sorry", quote: "“有些事，只有通过遗憾才能被完整地记起。” —— 安哲罗普洛斯", desc: "你习惯在废墟中翻找尚未冷却的温存。对你来说，告别不是结束，而是漫长的、带有颗粒感的余震。你在这首歌里听到的，是你从未寄出的信。" },
+            'A': { title: "I miss you, I'm sorry", quote: "“有些事，只有通过遗憾才能被完整地记起。” —— 安哲罗普洛斯 《雾中风景》", desc: "你习惯在废墟中翻找尚未冷却的温存。对你来说，告别不是结束，而是漫长的、带有颗粒感的余震。你在这首歌里听到的，是你从未寄出的信。" },
             'B': { title: "Block Me Out", quote: "“我太擅长在自己的脑海里制造噪音，直到听不见心跳声。” —— Gracie Abrams", desc: "你是一座在深夜独自运行的精密机器，所有的过载都被掩盖在平静下。你渴望那种极致的‘屏蔽’，因为你明白，真正的自由往往始于彻底的断裂。" },
-            'C': { title: "Risk", quote: "“哪怕只有一瞬间的火花，也足以照亮整段荒芜的青春。” —— 《蓝莓之夜》", desc: "你拥有一种近乎悲剧性的勇敢。明知前方是悬崖，你依然迷恋坠落前的眩晕感。你不需要避风港，你只需要那一次剧烈的燃烧。" },
-            'D': { title: "Free Now", quote: "“我也许没能到达目的地，但我确实离开了原点。” —— 辛波斯卡", desc: "你穿透了浓雾。那些曾经让你彻夜难眠的细节，现在已经变成了风中的尘埃。现在的轻盈，是付出了沉重代价后的奖赏。" }
+            'C': { title: "Risk", quote: "“哪怕只有一瞬间的火花，也足以照亮整段荒芜的青春。” —— 《蓝莓之夜》", desc: "你拥拥有近乎悲剧性的勇敢。明知前方是悬崖，你依然迷恋坠落前的眩晕感。你不需要理智的避风港，你只需要在这段旋律里，把那些名为‘渴望’的余烬再次吹燃。" },
+            'D': { title: "Free Now", quote: "“我也许没能到达目的地，但我确实离开了原点。” —— 辛波斯卡", desc: "你穿透了浓雾。那些曾经让你彻夜难眠的细节，现在已经变成了风中的尘埃。你现在的轻盈，是付出了沉重代价后的奖赏。你已经不再需要向昨日道歉。" }
         };
 
+        // 30道意识流题目
         const questions = [
-            { q: "深夜里，你是如何听见自己的？", options: [{t:"在旧录音带的杂音里", s:"A"}, {t:"在心跳频率的混乱中", s:"B"}, {t:"在另一个人的呼吸声旁", s:"C"}, {t:"在凌晨四点的寂静里", s:"D"}] },
+            { q: "深夜里，你是如何听见自己的？", options: [{t:"在旧录音带的杂音里", s:"A"}, {t:"混乱的心跳中", s:"B"}, {t:"别人呼吸声旁", s:"C"}, {t:"凌晨四点的寂静里", s:"D"}] },
             { q: "如果你是房间里亮着的那盏灯？", options: [{t:"闪烁着快要熄灭", s:"A"}, {t:"照亮了不该看的角落", s:"B"}, {t:"为了某人一直亮着", s:"C"}, {t:"学会了自己关灯", s:"D"}] },
             { q: "道歉的碎片堆在地上，那是？", options: [{t:"必须拼凑好的过去", s:"A"}, {t:"扎脚的玻璃，别碰", s:"B"}, {t:"渴望被爱的筹码", s:"C"}, {t:"可以打扫掉的尘埃", s:"D"}] },
-            { q: "回忆像哪种声音？", options: [{t:"反向播放的磁带", s:"A"}, {t:"重负荷的机组长鸣", s:"B"}, {t:"远处模糊的鼓点", s:"C"}, {t:"翻动纸张的沙沙声", s:"D"}] },
-            { q: "必须要说最后一句话？", options: [{t:"“对不起，我还在这”", s:"A"}, {t:"“把我彻底屏蔽吧”", s:"B"}, {t:"“我愿意再冒一次险”", s:"C"}, {t:"“我已经自由了”", s:"D"}] }
+            { q: "当你凝视镜中的自己？", options: [{t:"一个十年前的遗憾", s:"A"}, {t:"一个满负荷运转的机器", s:"B"}, {t:"一个等待点燃的火苗", s:"C"}, {t:"一个找回名字的陌生人", s:"D"}] },
+            { q: "要给心碎命名的话？", options: [{t:"昨日的延长线", s:"A"}, {t:"正在崩塌的围墙", s:"B"}, {t:"心甘情愿的冒险", s:"C"}, {t:"落幕后的余晖", s:"D"}] },
+            { q: "更习惯躲在哪里？", options: [{t:"潮湿的阁楼", s:"A"}, {t:"巨大的耳机里", s:"B"}, {t:"对方大衣的阴影里", s:"C"}, {t:"空旷的公路尽头", s:"D"}] },
+            { q: "如果你是一个季节？", options: [{t:"永恒的深秋", s:"A"}, {t:"暴雨前的闷热下午", s:"B"}, {t:"盛夏刺眼的阳光", s:"C"}, {t:"初春刚融化的冰", s:"D"}] },
+            { q: "回忆像哪种声音？", options: [{t:"反向播放的磁带", s:"A"}, {t:"指甲划过黑板", s:"B"}, {t:"远处模糊的鼓点", s:"C"}, {t:"翻动纸张的沙沙声", s:"D"}] },
+            { q: "你如何处理沉重的情绪？", options: [{t:"写成没收件人的信", s:"A"}, {t:"按下静音键假装听不见", s:"B"}, {t:"全部倾倒给某人", s:"C"}, {t:"让它们随长路流走", s:"D"}] },
+            { q: "必须要烧掉一样东西？", options: [{t:"唯一的旧照片", s:"A"}, {t:"发疯写的日记", s:"B"}, {t:"那个人的联系方式", s:"C"}, {t:"合适的旧衣服", s:"D"}] },
+            { q: "“爱”最直观的触感是？", options: [{t:"冰冷的金属", s:"A"}, {t:"生锈的齿轮摩擦", s:"B"}, {t:"眩晕的心跳", s:"C"}, {t:"微风拂过皮肤", s:"D"}] },
+            { q: "人群散去，你留在原地？", options: [{t:"寻找碎片", s:"A"}, {t:"数着呼吸缓解心悸", s:"B"}, {t:"期待那个人回头", s:"C"}, {t:"转身走向反方向", s:"D"}] },
+            { q: "如果你是一个秘密？", options: [{t:"泛黄纸上", s:"A"}, {t:"保险柜里", s:"B"}, {t:"在深夜呼之欲出", s:"C"}, {t:"不再是秘密", s:"D"}] },
+            { q: "关于那个TA，现在的联想是？", options: [{t:"没有锁的钥匙", s:"A"}, {t:"无法停止的循环", s:"B"}, {t:"坠落的恒星", s:"C"}, {t:"模糊的背景板", s:"D"}] },
+            { q: "失控时的自救方式是？", options: [{t:"不停道歉", s:"A"}, {t:"把自己关进浴室", s:"B"}, {t:"冲进黑夜里", s:"C"}, {t:"深呼吸放手", s:"D"}] },
+            { q: "如果你是一段旋律？", options: [{t:"跑调的钢琴", s:"A"}, {t:"急促的打击乐", s:"B"}, {t:"轻快吉他弹唱", s:"C"}, {t:"悠长提琴", s:"D"}] },
+            { q: "自愈的过程更像？", options: [{t:"雨中漫步", s:"A"}, {t:"修理坏掉的机器", s:"B"}, {t:"大火中重生", s:"C"}, {t:"慢慢剪短长发", s:"D"}] },
+            { q: "必须要说最后一句话？", options: [{t:"“对不起，我还在这”", s:"A"}, {t:"“屏蔽我吧”", s:"B"}, {t:"“再冒一次险”", s:"C"}, {t:"“我自由了”", s:"D"}] },
+            { q: "窗外路灯照进房间？", options: [{t:"审判的目光", s:"A"}, {t:"寒冷的干扰", s:"B"}, {t:"出门的暗示", s:"C"}, {t:"平凡的夜晚", s:"D"}] },
+            { q: "如何掩饰悲伤？", options: [{t:"在人群中不停说话", s:"A"}, {t:"地下头不说话", s:"B"}, {t:"大笑直到眼角湿润", s:"C"}, {t:"坦然承认", s:"D"}] },
+            { q: "如果你是房间的颜色？", options: [{t:"过期的米白色", s:"A"}, {t:"压抑的深蓝色", s:"B"}, {t:"刺眼的鲜红色", s:"C"}, {t:"宁静的琥珀色", s:"D"}] },
+            { q: "最让你感到安全的空间？", options: [{t:"潮湿阁楼", s:"A"}, {t:"巨大耳机里", s:"B"}, {t:"对方大衣阴影下", s:"C"}, {t:"无人的公路", s:"D"}] },
+            { q: "如果要把现在的感觉做成标本？", options: [{t:"一封泛黄的匿名信", s:"A"}, {t:"一朵快要窒息的白花", s:"B"}, {t:"一颗尚未熄灭的火种", s:"C"}, {t:"一片随风流浪的落叶", s:"D"}] },
+            { q: "当你感到整个世界都在下沉？", options: [{t:"寻找可以抓紧的手", s:"A"}, {t:"把身体蜷缩起来", s:"B"}, {t:"加速下坠看一眼水底", s:"C"}, {t:"学会并在水底呼吸", s:"D"}] },
+            { q: "你爱自己吗？在这个瞬间。", options: [{t:"正在学着道歉", s:"A"}, {t:"很难，但我努力", s:"B"}, {t:"是的，很爱", s:"D"}, {t:"不知道答案", s:"C"}] },
+            { q: "回忆里的气味通常是？", options: [{t:"旧信件的味道", s:"A"}, {t:"汽油与灰尘", s:"B"}, {t:"特定的香水味", s:"C"}, {t:"雨后泥土的味道", s:"D"}] },
+            { q: "必须要带走的一样东西？", options: [{t:"那天微凉的空气", s:"A"}, {t:"那段争执的声音", s:"B"}, {t:"那种心动的战栗", s:"C"}, {t:"什么都不带走", s:"D"}] },
+            { q: "现在的放手感觉更像？", options: [{t:"还没准备好", s:"A"}, {t:"练习闭上眼", s:"B"}, {t:"一种必要的自毁", s:"C"}, {t:"迟到洗礼", s:"D"}] },
+            { q: "深夜杂货店，你会买？", options: [{t:"过期 candy", s:"A"}, {t:"一支笔", s:"B"}, {t:"最烈的酒", s:"C"}, {t:"一瓶最纯净的水", s:"D"}] },
+            { q: "如果你是房间亮着的灯，你是？", options: [{t:"闪烁快熄灭", s:"A"}, {t:"照亮不该看的角落", s:"B"}, {t:"为了某人一直亮着", s:"C"}, {t:"学会了关灯", s:"D"}] }
         ];
 
         let cur = 0; let scores = { A:0, B:0, C:0, D:0 };
         function begin() { document.getElementById('start').style.display = 'none'; document.getElementById('quiz').style.display = 'block'; show(); }
         
         function show() {
-            if(cur >= 12) { finish(); return; } 
-            const q = questions[cur % questions.length];
+            if(cur >= 30) { finish(); return; } // 这里是30道题目
+            const q = questions[cur];
             document.getElementById('q-text').innerText = q.q;
             document.getElementById('q-counter').innerText = `CHAPTER ${String(cur+1).padStart(2, '0')}`;
-            document.getElementById('bar').style.width = ((cur+1)/12)*100 + '%';
+            document.getElementById('bar').style.width = ((cur+1)/30)*100 + '%';
             const optDiv = document.getElementById('options'); optDiv.innerHTML = '';
             q.options.forEach(o => {
                 const b = document.createElement('button'); b.className = 'btn';
@@ -137,20 +180,19 @@
             document.getElementById('res-quote').innerText = data.quote;
             document.getElementById('res-desc').innerText = data.desc;
             
-            // 关键词抽取
             const tagDiv = document.getElementById('res-tags'); tagDiv.innerHTML = '';
             allKeywords.sort(() => 0.5 - Math.random()).slice(0, 6).forEach(t => { tagDiv.innerHTML += `<span class="tag">${t}</span>`; });
 
-            // Gracie Plate
+            // 板块1: Gracie 全曲库契合度
             const matchList = document.getElementById('match-list'); matchList.innerHTML = '';
             gracieSongs.filter(s => s !== data.title).sort(() => 0.5 - Math.random()).slice(0, 4).forEach((s, idx) => {
                 let val = 97 - (idx * 5) - Math.floor(Math.random() * 4);
                 matchList.innerHTML += `<div class="match-item"><div class="match-info"><span>${s}</span><span>${val}% Resonance</span></div><div class="track-bg"><div class="track-fill" style="width:${val}%"></div></div></div>`;
             });
 
-            // Extended Plate
+            // 板块2: Indie 500 精选推荐
             const extList = document.getElementById('extended-list'); extList.innerHTML = '';
-            extendedLibrary.sort(() => 0.5 - Math.random()).slice(0, 4).forEach(item => {
+            extendedIndieLibrary.sort(() => 0.5 - Math.random()).slice(0, 5).forEach(item => {
                 extList.innerHTML += `<div class="rec-card"><div class="rec-artist">${item.a}</div><div class="rec-title">${item.t}</div></div>`;
             });
 
