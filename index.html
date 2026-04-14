@@ -41,7 +41,7 @@
 <body>
 
     <audio id="bg-audio" loop>
-        <source src="bgm.mp3" type="audio/mpeg">
+        <source src="block-me-out.mp3" type="audio/mpeg">
     </audio>
 
     <div id="app">
@@ -102,7 +102,7 @@
         ];
 
         const types = {
-            'A': { title: "I miss you, I'm sorry", quote: "“有些事，只有通过遗憾才能被完整地记起。” —— 安哲罗普洛斯 《雾中风景》", desc: "你习惯在废墟中翻找尚未冷却的温存。对你来说，告别不是结束，而是漫长的、带有颗粒感的余震。" },
+            'A': { title: "I miss you, I'm sorry", quote: "“有些事，只有通过遗憾才能被完整地记起。” —— 安哲罗普洛斯", desc: "你习惯在废墟中翻找尚未冷却的温存。告别不是结束，而是漫长的、带有颗粒感的余震。" },
             'B': { title: "Block Me Out", quote: "“我太擅长在自己的脑海里制造噪音，直到听不见心跳声。” —— Gracie Abrams", desc: "你是一座在深夜独自运行的精密机器，所有的过载都被掩盖在平静下。你渴望彻底的‘屏蔽’。" },
             'C': { title: "Risk", quote: "“哪怕只有一瞬间的火花，也足以照亮整段荒芜的青春。” —— 《蓝莓之夜》", desc: "你拥拥有近乎悲剧性的勇敢。明知前方是悬崖，你依然迷恋坠落前的眩晕感。" },
             'D': { title: "Free Now", quote: "“我也许没能到达目的地，但我确实离开了原点。” —— 辛波斯卡", desc: "你穿透了浓雾。那些曾经让你彻夜难眠的细节，现在已经变成了风中的尘埃。" }
@@ -146,7 +146,8 @@
         function begin() { 
             document.getElementById('start').style.display = 'none'; 
             document.getElementById('quiz').style.display = 'block'; 
-            audio.play(); // 音乐在开始做题时触发
+            // 开始做题时触发背景音乐
+            audio.play().catch(e => console.log("Audio play failed:", e));
             show(); 
         }
         
