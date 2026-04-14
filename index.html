@@ -8,34 +8,23 @@
     <style>
         :root { --bg: #0a0a0a; --text: #f0f0f0; --accent: #9eb1c7; --glass: rgba(255, 255, 255, 0.03); }
         * { box-sizing: border-box; transition: all 0.3s ease; }
-        body {
-            margin: 0; background-color: var(--bg); color: var(--text);
-            font-family: 'Montserrat', sans-serif;
-            display: flex; justify-content: center; align-items: center; min-height: 100vh;
-            background-image: radial-gradient(circle at center, #151515 0%, #000 100%);
-        }
-        #app {
-            width: 95%; max-width: 500px; padding: 40px 20px;
-            background: var(--glass); backdrop-filter: blur(30px);
-            border: 1px solid rgba(255,255,255,0.08); text-align: center;
-            box-shadow: 0 40px 100px rgba(0,0,0,0.8);
-        }
+        body { margin: 0; background-color: var(--bg); color: var(--text); font-family: 'Montserrat', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; background-image: radial-gradient(circle at center, #151515 0%, #000 100%); padding: 20px 0; }
+        #app { width: 95%; max-width: 500px; padding: 40px 25px; background: var(--glass); backdrop-filter: blur(30px); border: 1px solid rgba(255,255,255,0.08); text-align: center; box-shadow: 0 40px 100px rgba(0,0,0,0.8); }
         .serif { font-family: 'Cormorant Garamond', serif; font-style: italic; }
-        .gracie-img {
-            width: 80px; height: 80px; border-radius: 50%; object-fit: cover;
-            filter: grayscale(100%); margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.1);
-        }
-        .btn {
-            display: block; width: 100%; padding: 14px; margin: 10px 0;
-            background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.1); cursor: pointer;
-            color: var(--text); font-family: 'Montserrat', sans-serif; font-size: 0.8rem;
-            text-align: left; padding-left: 20px; line-height: 1.4;
-        }
+        .gracie-img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; filter: grayscale(100%); margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.1); }
+        .btn { display: block; width: 100%; padding: 15px; margin: 10px 0; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.1); cursor: pointer; color: var(--text); font-family: 'Montserrat', sans-serif; font-size: 0.8rem; text-align: left; padding-left: 20px; line-height: 1.4; }
         .btn:hover { background: var(--text); color: #000; }
         .progress { width: 100%; height: 1px; background: rgba(255,255,255,0.05); margin-bottom: 25px; }
         #bar { width: 0%; height: 100%; background: var(--accent); }
         #quiz, #result { display: none; }
         #q-text { font-size: 1.4rem; min-height: 80px; line-height: 1.3; margin-bottom: 30px; }
+        .tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 20px 0; }
+        .tag { padding: 4px 12px; border: 1px solid var(--accent); font-size: 0.7rem; border-radius: 12px; color: var(--accent); }
+        .match-item { text-align: left; margin: 12px 0; font-size: 0.7rem; }
+        .match-bar-bg { width: 100%; height: 3px; background: rgba(255,255,255,0.1); margin-top: 6px; }
+        .match-bar-fill { height: 100%; background: var(--accent); transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1); }
+        .rec-list { text-align: left; background: rgba(255,255,255,0.03); padding: 20px; border-radius: 4px; margin-top: 25px; border: 1px solid rgba(255,255,255,0.05); }
+        .rec-title { font-size: 0.8rem; letter-spacing: 2px; margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; opacity: 0.6; }
     </style>
 </head>
 <body>
@@ -46,7 +35,7 @@
         <div id="start">
             <img src="gracie.jpg" class="gracie-img" onerror="this.style.opacity='0'">
             <h1 class="serif" style="font-size: 2.5rem; font-weight: 300; margin: 0;">Gracie Abrams Test</h1>
-            <p style="letter-spacing: 4px; font-size: 0.6rem; opacity: 0.4; margin-bottom: 40px;">30 FRAGMENTS OF REFLECTION</p>
+            <p style="letter-spacing: 5px; font-size: 0.6rem; opacity: 0.4; margin-bottom: 40px;">THE ECHO OF 30 FRAGMENTS</p>
             <button class="btn" style="text-align:center; padding-left:0;" onclick="begin()">ENTER THE VOID</button>
         </div>
 
@@ -60,9 +49,22 @@
         <div id="result">
             <img src="gracie.jpg" class="gracie-img" style="width: 60px; height: 60px;">
             <p style="font-size: 0.6rem; letter-spacing: 2px; opacity: 0.5;">YOUR RESONANCE</p>
-            <h1 id="res-title" class="serif" style="font-size: 2rem; color: var(--accent); margin: 10px 0;"></h1>
-            <p id="res-desc" class="serif" style="opacity: 0.7; line-height: 1.6; font-size: 1rem;"></p>
-            <button class="btn" onclick="location.reload()" style="margin-top: 30px; width: auto; padding: 10px 30px; display: inline-block; text-align:center;">RETRY</button>
+            <h1 id="res-title" class="serif" style="font-size: 2.2rem; color: var(--accent); margin: 10px 0;"></h1>
+            
+            <div id="res-tags" class="tags"></div>
+            <p id="res-desc" class="serif" style="opacity: 0.7; line-height: 1.8; font-size: 1rem;"></p>
+
+            <div id="match-scores" style="margin-top: 35px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 25px;">
+                <p style="font-size: 0.6rem; letter-spacing: 2px; opacity: 0.4; margin-bottom: 20px;">SONG TYPE MATCHING</p>
+                <div id="match-list"></div>
+            </div>
+
+            <div class="rec-list">
+                <div class="rec-title serif">Indie Curation (Phoebe, Mitski & More)</div>
+                <div id="rec-songs" style="font-size: 0.85rem; line-height: 2; opacity: 0.8;"></div>
+            </div>
+
+            <button class="btn" onclick="location.reload()" style="margin-top: 40px; width: auto; padding: 12px 40px; display: inline-block; text-align:center;">RETRY</button>
         </div>
     </div>
 
@@ -75,10 +77,10 @@
             { q: "如果要把这一刻的心碎命名，你会叫它？", options: [{t:"昨日的延长线", s:"A"}, {t:"正在崩塌的围墙", s:"B"}, {t:"一场心甘情愿的冒险", s:"C"}, {t:"落幕后的余晖", s:"D"}] },
             { q: "你更习惯躲在哪里？", options: [{t:"潮湿的阁楼", s:"A"}, {t:"噪音巨大的耳机里", s:"B"}, {t:"对方大衣的阴影里", s:"C"}, {t:"空旷的公路尽头", s:"D"}] },
             { q: "如果你是一个季节？", options: [{t:"永恒的深秋", s:"A"}, {t:"暴雨前的闷热下午", s:"B"}, {t:"盛夏最刺眼的阳光", s:"C"}, {t:"初春刚融化的冰层", s:"D"}] },
-            { q: "回忆像哪种声音？", options: [{t:"反向播放的磁带", s:"A"}, {t:"指甲划过黑板的长鸣", s:"B"}, {t:"远处传来的低音贝斯", s:"C"}, {t:"翻动旧纸张的沙沙声", s:"D"}] },
+            { q: "回忆像哪种声音？", options: [{t:"反转播放的磁带", s:"A"}, {t:"指甲划过黑板的长鸣", s:"B"}, {t:"远处传来的低音贝斯", s:"C"}, {t:"翻动旧纸张的沙沙声", s:"D"}] },
             { q: "你如何处理那些沉重的情绪？", options: [{t:"把它们写成没有收件人的信", s:"A"}, {t:"按下静音键，假装听不见", s:"B"}, {t:"把它们全部倾倒给某人", s:"C"}, {t:"让它们随着长路流走", s:"D"}] },
             { q: "如果你必须烧掉一样东西？", options: [{t:"唯一的一张旧照片", s:"A"}, {t:"昨晚发疯写的日记", s:"B"}, {t:"那个人的联系方式", s:"C"}, {t:"已经不合适的旧衣服", s:"D"}] },
-            { q: "关于“爱”，你最直观的触感是？", options: [{t:"冰冷的金属拉链", s:"A"}, {t:"生锈的齿轮摩擦", s:"B"}, {t:"加速的心跳带来的眩晕", s:"C"}, {t:"微风拂过皮肤的轻柔", s:"D"}] },
+            { q: "“爱”最直观的触感是？", options: [{t:"冰冷的金属拉链", s:"A"}, {t:"生锈的齿轮摩擦", s:"B"}, {t:"加速心跳带来的眩晕", s:"C"}, {t:"微风拂过皮肤的轻柔", s:"D"}] },
             { q: "当人群散去，你留在原地？", options: [{t:"寻找掉落的碎片", s:"A"}, {t:"数着呼吸缓解心悸", s:"B"}, {t:"期待那个人会回头", s:"C"}, {t:"转身走向反方向", s:"D"}] },
             { q: "如果你是一个秘密？", options: [{t:"写在已经泛黄的纸上", s:"A"}, {t:"藏在最深的保险柜里", s:"B"}, {t:"在每个深夜呼之欲出", s:"C"}, {t:"已经不再是秘密了", s:"D"}] },
             { q: "你的梦境通常是？", options: [{t:"黑白的默片", s:"A"}, {t:"失控的垂直坠落", s:"B"}, {t:"充满色彩的追逐战", s:"C"}, {t:"一片宁静的海面", s:"D"}] },
@@ -87,16 +89,16 @@
             { q: "如果你是一段旋律？", options: [{t:"略带跑调的钢琴", s:"A"}, {t:"急促的打击乐", s:"B"}, {t:"轻快的吉他弹唱", s:"C"}, {t:"悠长的大提琴", s:"D"}] },
             { q: "关于未来，你看到的是？", options: [{t:"灰色的雾气", s:"A"}, {t:"刺眼的白光", s:"B"}, {t:"变幻莫测的色彩", s:"C"}, {t:"地平线上的曙光", s:"D"}] },
             { q: "你的自愈过程像？", options: [{t:"在雨中漫步", s:"A"}, {t:"修补一架坏掉的机器", s:"B"}, {t:"在一场大火中重生", s:"C"}, {t:"慢慢剪短长发", s:"D"}] },
-            { q: "如果必须要说最后一句话？", options: [{t:"“对不起，我还在这”", s:"A"}, {t:"“把我彻底屏蔽吧”", s:"B"}, {t:"“我愿意再冒一次险”", s:"C"}, {t:"“我已经自由了”", s:"D"}] },
-            { q: "窗外路灯的光照进房间，你觉得那是？", options: [{t:"某种审判的目光", s:"A"}, {t:"寒冷的白色干扰", s:"B"}, {t:"邀请你出门的暗示", s:"C"}, {t:"再平凡不过的夜晚", s:"D"}] },
-            { q: "你习惯如何掩饰悲伤？", options: [{t:"在人群中不停地说话", s:"A"}, {t:"戴上兜帽低下头", s:"B"}, {t:"大笑直到眼角湿润", s:"C"}, {t:"坦然承认我在心碎", s:"D"}] },
-            { q: "如果你能带走回忆里的一样东西？", options: [{t:"那天微凉的空气", s:"A"}, {t:"那段争执的声音", s:"B"}, {t:"那种心动的战栗", s:"C"}, {t:"什么都不带走", s:"D"}] },
-            { q: "关于“放手”，你现在的感觉是？", options: [{t:"还没准备好，永远不", s:"A"}, {t:"正在练习闭上眼", s:"B"}, {t:"是一种必要的自毁", s:"C"}, {t:"是一场迟到的洗礼", s:"D"}] },
+            { q: "必须要说最后一句话？", options: [{t:"“对不起，我还在这”", s:"A"}, {t:"“把我彻底屏蔽吧”", s:"B"}, {t:"“我愿意再冒一次险”", s:"C"}, {t:"“我已经自由了”", s:"D"}] },
+            { q: "窗外路灯照进房间，你觉得是？", options: [{t:"某种审判的目光", s:"A"}, {t:"寒冷的白色干扰", s:"B"}, {t:"邀请你出门的暗示", s:"C"}, {t:"再平凡不过的夜晚", s:"D"}] },
+            { q: "你习惯如何掩饰悲伤？", options: [{t:"在人群中不停说话", s:"A"}, {t:"戴上兜帽低下头", s:"B"}, {t:"大笑直到眼角湿润", s:"C"}, {t:"坦然承认我在心碎", s:"D"}] },
+            { q: "带走回忆里的一样东西？", options: [{t:"那天微凉的空气", s:"A"}, {t:"那段争执的声音", s:"B"}, {t:"那种心动的战栗", s:"C"}, {t:"什么都不带走", s:"D"}] },
+            { q: "关于“放手”，现在的感觉是？", options: [{t:"还没准备好，永远不", s:"A"}, {t:"正在练习闭上眼", s:"B"}, {t:"是一种必要的自毁", s:"C"}, {t:"是一场迟到的洗礼", s:"D"}] },
             { q: "你在关系中最像哪种角色？", options: [{t:"那个总是在等的人", s:"A"}, {t:"那个总是在逃的人", s:"B"}, {t:"那个总在追的人", s:"C"}, {t:"那个已经走远的人", s:"D"}] },
-            { q: "深夜的杂货店里，你会买？", options: [{t:"过期很久的糖果", s:"A"}, {t:"一支不知道颜色的笔", s:"B"}, {t:"最烈的烈酒", s:"C"}, {t:"一瓶最纯净的水", s:"D"}] },
+            { q: "深夜杂货店，你会买？", options: [{t:"过期很久的糖果", s:"A"}, {t:"一支不知道颜色的笔", s:"B"}, {t:"最烈的烈酒", s:"C"}, {t:"一瓶最纯净的水", s:"D"}] },
             { q: "如果你是一棵树，你？", options: [{t:"在深秋落光了叶子", s:"A"}, {t:"正在暴风雨中摇晃", s:"B"}, {t:"为了阳光拼命生长", s:"C"}, {t:"扎根在安静的山谷", s:"D"}] },
             { q: "回忆里的气味通常是？", options: [{t:"旧信件的味道", s:"A"}, {t:"汽油与灰尘的味道", s:"B"}, {t:"某种特定的香水味", s:"C"}, {t:"雨后泥土的味道", s:"D"}] },
-            { q: "关于遗憾，你最后想说？", options: [{t:"“我会一直留着它”", s:"A"}, {t:"“这让我窒息”", s:"B"}, {t:"“我很庆幸发生过”", s:"C"}, {t:"“已经翻篇了”", s:"D"}] },
+            { q: "关于遗憾，最后想说？", options: [{t:"“我会一直留着它”", s:"A"}, {t:"“这让我窒息”", s:"B"}, {t:"“我很庆幸发生过”", s:"C"}, {t:"“已经翻篇了”", s:"D"}] },
             { q: "你爱自己吗？在这个瞬间。", options: [{t:"正在学着道歉", s:"A"}, {t:"很难，但我努力", s:"B"}, {t:"我很珍贵", s:"D"}, {t:"不知道答案", s:"C"}] }
         ];
 
@@ -123,14 +125,55 @@
         function finish() {
             document.getElementById('quiz').style.display = 'none';
             const win = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
-            const res = {
-                'A': { t: "I miss you, I'm sorry", d: "你活在旧日的回响里。你的心是一张反向播放的磁带，充满了温柔的遗憾与抱歉。" },
-                'B': { t: "Block Me Out / Full Machine", d: "你在极度的清醒与自我防御中挣扎。你试图变成一台精密的机器，来屏蔽这世界的喧杂。" },
-                'C': { t: "Risk / Close to You", d: "你是热烈、危险而直白的。哪怕知道前方是风险，你也会为了那一刻的共鸣而全速奔跑。" },
-                'D': { t: "Good Riddance / Free Now", d: "你终于剪断了那些沉重的锁链。带着愈合的伤痕，你在这个深夜里重获自由。" }
+            const resData = {
+                'A': { 
+                    t: "I miss you, I'm sorry", 
+                    k: ["怀旧主义", "温柔心碎", "细腻拉扯"], 
+                    d: "你活在回忆的延长线里。你的心是一张反向播放的磁带，充满了温柔的遗憾与抱歉。", 
+                    r: ["Phoebe Bridgers - Moon Song", "Mitski - Two Slow Dancers", "Holly Humberstone - Antichrist", "Lizzie McAlpine - Ceilings", "Gracie Abrams - Long Sleeves"], 
+                    s: { "Block Me Out": 75, "Risk": 35, "Free Now": 50, "Full Machine": 80 } 
+                },
+                'B': { 
+                    t: "Block Me Out", 
+                    k: ["焦虑核心", "自我屏蔽", "清醒挣扎"], 
+                    d: "你在极度的清醒与防御中挣扎。你试图变成一台精密的机器，来屏蔽这世界的喧杂。", 
+                    r: ["Mitski - A Pearl", "Phoebe Bridgers - Garden Song", "Holly Humberstone - Haunted House", "Lucy Dacus - Night Shift", "Gracie Abrams - Camden"], 
+                    s: { "I miss you, I'm sorry": 70, "Risk": 30, "Free Now": 65, "Rockland": 90 } 
+                },
+                'C': { 
+                    t: "Risk", 
+                    k: ["热烈冒险", "欲望直白", "火花"], 
+                    d: "你是热烈而勇敢的。哪怕知道前方是危险的悬崖，你也会为了那一刻的共鸣而全速奔跑。", 
+                    r: ["Mitski - Your Best American Girl", "Holly Humberstone - Scarlett", "Boygenius - Not Strong Enough", "Olivia Rodrigo - Lacy", "Gracie Abrams - Close to You"], 
+                    s: { "I miss you, I'm sorry": 50, "Block Me Out": 40, "Free Now": 80, "I Should Hate You": 85 } 
+                },
+                'D': { 
+                    t: "Free Now", 
+                    k: ["独立人格", "彻底释然", "清醒"], 
+                    d: "你终于剪断了锁链。虽然身上带着愈合的伤痕，但你已经找到了属于自己的呼吸频率。", 
+                    r: ["Phoebe Bridgers - I Know The End", "Holly Humberstone - Deep End", "Mitski - The Only Heartbreaker", "Clairo - Amoeba", "Gracie Abrams - Right Now"], 
+                    s: { "I miss you, I'm sorry": 45, "Block Me Out": 60, "Risk": 75, "Unlearn": 80 } 
+                }
             };
-            document.getElementById('res-title').innerText = res[win].t;
-            document.getElementById('res-desc').innerText = res[win].d;
+            const result = resData[win];
+            document.getElementById('res-title').innerText = result.t;
+            document.getElementById('res-desc').innerText = result.d;
+            
+            const tagDiv = document.getElementById('res-tags'); tagDiv.innerHTML = '';
+            result.k.forEach(t => { tagDiv.innerHTML += `<span class="tag">${t}</span>`; });
+
+            const matchList = document.getElementById('match-list'); matchList.innerHTML = '';
+            for (let song in result.s) {
+                matchList.innerHTML += `
+                    <div class="match-item">
+                        <span>${song}</span> <span style="float:right">${result.s[song]}%</span>
+                        <div class="match-bar-bg"><div class="match-bar-fill" style="width:${result.s[song]}%"></div></div>
+                    </div>`;
+            }
+
+            const recDiv = document.getElementById('rec-songs'); recDiv.innerHTML = '';
+            result.r.forEach(s => { recDiv.innerHTML += `<div>· ${s}</div>`; });
+
             document.getElementById('result').style.display = 'block';
         }
     </script>
