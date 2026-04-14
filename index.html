@@ -1,50 +1,55 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Architecture of Resonance</title>
+    <title>The Fragments of Echoes</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,400;1,600&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
     <style>
-        :root { --bg: #08090a; --text: #c0c0c0; --accent: #9eb1c7; }
-        body { 
-            margin: 0; background: var(--bg); color: var(--text); 
-            font-family: 'Montserrat', sans-serif; display: flex; 
-            justify-content: center; align-items: flex-start; 
-            min-height: 100vh; overflow-y: auto; padding: 50px 0;
-        }
-        #app { width: 90%; max-width: 450px; padding: 40px 20px; text-align: center; }
+        :root { --bg: #050607; --text: #a0a0a0; --accent: #8ba1b8; }
+        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Montserrat', sans-serif; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; overflow-y: auto; padding: 40px 0; }
+        #app { width: 90%; max-width: 440px; padding: 20px; text-align: center; }
         .serif { font-family: 'Cormorant Garamond', serif; font-style: italic; }
-        .photo-frame { width: 110px; height: 110px; margin: 0 auto 30px; border-radius: 50%; overflow: hidden; border: 0.5px solid rgba(255,255,255,0.1); }
-        .gracie-img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); }
-        .btn { 
-            display: block; width: 100%; padding: 20px; margin: 12px 0; 
-            background: none; border: 1px solid rgba(255,255,255,0.1); 
-            cursor: pointer; color: var(--text); font-size: 0.7rem; 
-            text-align: left; padding-left: 20px; letter-spacing: 2px; transition: 0.2s;
-        }
-        .btn:hover { background: #fff; color: #000; }
-        .progress { width: 100%; height: 1px; background: rgba(255,255,255,0.05); margin-bottom: 40px; }
-        #bar { width: 0%; height: 100%; background: var(--accent); transition: 0.4s; }
+        .photo-frame { width: 115px; height: 115px; margin: 0 auto 30px; border-radius: 50%; overflow: hidden; border: 0.5px solid rgba(255,255,255,0.08); box-shadow: 0 0 20px rgba(0,0,0,0.5); }
+        .gracie-img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%) contrast(1.2); }
+        
+        /* Poetic Buttons */
+        .btn { display: block; width: 100%; padding: 22px; margin: 12px 0; background: none; border: 1px solid rgba(255,255,255,0.08); cursor: pointer; color: var(--text); font-size: 0.65rem; text-align: left; padding-left: 20px; letter-spacing: 3px; transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1); text-transform: uppercase; }
+        .btn:hover { background: #fff; color: #000; padding-left: 35px; }
+        
+        .progress { width: 100%; height: 1px; background: rgba(255,255,255,0.05); margin-bottom: 50px; }
+        #bar { width: 0%; height: 100%; background: var(--accent); transition: 0.6s ease; }
+        
         #quiz, #result { display: none; }
-        #q-text { font-size: 1.6rem; min-height: 90px; line-height: 1.3; margin-bottom: 40px; color: #fff; }
-        .quote-box { margin: 30px 0; padding: 30px 20px; border-top: 0.5px solid rgba(255,255,255,0.1); border-bottom: 0.5px solid rgba(255,255,255,0.1); text-align: left; line-height: 1.8; font-size: 0.85rem; color: #eee; }
-        .tag { padding: 4px 12px; border: 0.5px solid rgba(255,255,255,0.15); font-size: 0.6rem; color: var(--accent); margin: 4px; display: inline-block; }
-        .match-item { text-align: left; margin: 22px 0; }
-        .match-info { display: flex; justify-content: space-between; font-size: 0.6rem; opacity: 0.4; letter-spacing: 2px; margin-bottom: 6px; }
-        .track-bg { height: 1px; background: rgba(255,255,255,0.05); }
-        .track-fill { height: 100%; background: var(--accent); width: 0; transition: width 2s; }
-        .label { font-size: 0.5rem; letter-spacing: 5px; opacity: 0.3; margin-bottom: 15px; text-transform: uppercase; }
+        #q-text { font-size: 1.4rem; min-height: 100px; line-height: 1.5; margin-bottom: 40px; color: #fff; font-weight: 300; letter-spacing: -0.5px; }
+        
+        .quote-box { margin: 35px 0; padding: 30px 25px; border-top: 0.5px solid rgba(255,255,255,0.08); border-bottom: 0.5px solid rgba(255,255,255,0.08); text-align: left; line-height: 2.1; font-size: 0.85rem; color: #e0e0e0; position: relative; }
+        .tag { padding: 4px 10px; border: 0.5px solid rgba(255,255,255,0.12); font-size: 0.55rem; color: var(--accent); margin: 3px; display: inline-block; letter-spacing: 1px; }
+        
+        /* Resonance Sections */
+        .match-item { text-align: left; margin: 25px 0; }
+        .match-info { display: flex; justify-content: space-between; font-size: 0.55rem; opacity: 0.4; letter-spacing: 2px; margin-bottom: 8px; text-transform: uppercase; }
+        .track-bg { height: 1px; background: rgba(255,255,255,0.04); overflow: hidden; }
+        .track-fill { height: 100%; background: var(--accent); width: 0; transition: width 3s ease; }
+        
+        .label { font-size: 0.5rem; letter-spacing: 7px; opacity: 0.3; margin-bottom: 15px; text-transform: uppercase; display: block; }
+        .rec-card { background: rgba(255,255,255,0.015); padding: 20px; margin-bottom: 12px; text-align: left; border: 0.5px solid rgba(255,255,255,0.05); }
+        .rec-artist { font-size: 0.5rem; opacity: 0.4; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 4px; }
+        .rec-title { font-size: 0.9rem; color: #fff; font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 300; }
     </style>
 </head>
 <body>
     <div id="app">
         <div id="start">
             <div class="photo-frame"><img src="gracie.jpg" class="gracie-img" alt="Gracie"></div>
-            <h1 class="serif" style="font-size: 2.2rem; margin-bottom: 5px;">碎裂的回响</h1>
-            <p class="label">The Secret of Fragments</p>
-            <p style="font-size: 0.7rem; opacity: 0.4; line-height: 2; margin: 40px 0;">“我就像一个在水下尖叫的人，<br>全世界都以为我在吐泡泡。”</p>
-            <button class="btn" style="text-align:center; padding-left:0;" onclick="begin()">开启存档</button>
+            <h1 class="serif" style="font-size: 2.8rem; margin-bottom: 5px; color: #fff; letter-spacing: -1px;">The Fragments of Echoes</h1>
+            <p class="label">A Psychometric Archive</p>
+            <p style="font-size: 0.7rem; opacity: 0.5; line-height: 2.8; margin: 45px 0; letter-spacing: 1.2px; font-weight: 300;">
+                "Every song you loved was a blueprint<br>
+                of the heart you once broke.<br>
+                Step into the silence, and listen to the ghosts."
+            </p>
+            <button class="btn" style="text-align:center; padding-left:0;" onclick="begin()">Enter the Void</button>
         </div>
 
         <div id="quiz">
@@ -55,61 +60,67 @@
         </div>
 
         <div id="result">
-            <p class="label">Resonance Profile</p>
-            <h1 id="res-title" class="serif" style="font-size: 2rem; margin: 10px 0; color: #fff;"></h1>
+            <div class="photo-frame"><img src="gracie.jpg" class="gracie-img" alt="Gracie"></div>
+            <p class="label">Resonance Result</p>
+            <h1 id="res-title" class="serif" style="font-size: 2.4rem; margin: 10px 0; color: #fff; letter-spacing: -1px;"></h1>
             <div id="res-tags"></div>
+            
             <div class="quote-box serif" id="res-quote"></div>
-            <p id="res-desc" class="serif" style="opacity: 0.7; line-height: 2.2; text-align: left; font-size: 0.85rem;"></p>
-            <div style="margin-top: 50px; text-align: left;">
-                <p class="label">Similar Resonance</p>
+            <p id="res-desc" class="serif" style="opacity: 0.6; line-height: 2.5; text-align: left; font-size: 0.88rem; padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.06);"></p>
+            
+            <div style="margin-top: 60px; text-align: left;">
+                <p class="label">I. Gracie Correlation</p>
                 <div id="match-list"></div>
             </div>
-            <button class="btn" onclick="location.reload()" style="margin-top: 60px; width: auto; padding: 12px 40px; display: inline-block; text-align:center;">重置存档</button>
+
+            <div style="margin-top: 60px; text-align: left;">
+                <p class="label">II. Extended Resonance</p>
+                <div id="extended-list"></div>
+            </div>
+            
+            <button class="btn" onclick="location.reload()" style="margin-top: 80px; width: auto; padding: 12px 55px; display: inline-block; text-align:center; font-size:0.6rem;">Dissolve the Memory</button>
         </div>
     </div>
 
     <script>
-        const allKeywords = ["末日余晖", "过期雨季", "蓝莓之夜", "潮湿阁楼", "失语霓虹", "碎裂胶片", "凌晨四点", "深海呼吸", "枯萎信笺", "电子荒原", "无声告别", "坠落行星", "铁锈记忆", "薄雾晨曦", "孤岛心理", "旧磁带跳帧", "空镜美学", "私人废墟", "潜意识漫游", "极简忧郁", "反刍遗憾", "黑白默片", "灵魂褶皱", "错位时空", "循环自毁", "致命温柔", "孤独观测者", "冷色调依恋", "瞬时永恒", "逃离地心", "玫瑰余烬", "北欧极夜", "无目的地漂流", "胶片颗粒感", "雨水收集器", "隔墙有耳", "沉没之城", "旧书店灰尘", "未完成的诗", "酒精与诗歌", "深夜公路电影", "迷失东京", "破碎银幕", "蓝色大门", "无人区玫瑰", "反生长", "静默审判", "记忆标本", "失眠症候群", "灵魂副作用", "虚构的亲密", "玻璃之城", "流动的盛宴", "昨日世界", "不确定的光", "灰烬审美", "野草生长", "感官仓库", "沉默的火山", "深渊的回响", "莫奈的花园", "荒诞戏剧", "局外人", "西西弗斯的石头", "慢动作心碎", "低保真情绪", "云端漫步", "枯竭的喷泉", "梦的解析", "时间简史", "宇宙尘埃", "微观依恋", "被禁忌的游戏", "永恒的女性", "夜色温柔", "悲观主义的花朵", "第七封印", "野草莓", "偷自行车的人", "四百击", "狂人皮埃罗", "尤利西斯", "荒原", "去往灯塔", "达洛维夫人", "波斯语课", "小城之春", "重庆森林", "春光乍泄", "花样年华", "东邪西毒", "恋恋风尘", "悲情城市", "恐怖分子", "牯岭街少年", "一一"];
+        // 词库配置
+        const allKeywords = ["末日余晖", "过期雨季", "失语霓虹", "碎裂胶片", "凌晨四点", "深海呼吸", "枯萎信笺", "坠落行星", "铁锈记忆", "薄雾晨曦", "孤岛心理", "空镜美学", "灵魂褶皱", "致命温柔", "孤独观测者", "瞬时永恒", "逃离地心", "玫瑰余烬", "无人区玫瑰", "静默审判", "记忆标本", "失眠症候群", "灵魂副作用", "昨日世界", "灰烬审美", "深渊的回响", "莫奈的花园", "西西弗斯的石头", "慢动作心碎", "低保真情绪", "云端漫步", "宇宙尘埃", "微观依恋", "夜色温柔", "悲观主义的花朵", "尤利西斯", "去往灯塔", "重庆森林", "春光乍泄", "花样年华", "恋恋风尘"];
 
-        const discography = {
-            'A': { s: ["I miss you, I'm sorry", "21", "minor", "Stay"], r: ["Taylor Swift - Exile", "Phoebe Bridgers - Moon Song"] },
-            'B': { s: ["Block Me Out", "Camden", "Faultline", "Right Now"], r: ["Olivia Rodrigo - Making the Bed", "Lizzie McAlpine - Ceilings"] },
-            'C': { s: ["Risk", "Close To You", "Tough Love", "Blowing Smoke"], r: ["Lorde - Green Light", "Conan Gray - Memories"] },
-            'D': { s: ["Free Now", "Rockland", "Good Riddance", "Blue"], r: ["Bon Iver - Holocene", "Sufjan Stevens - Fourth of July"] }
+        const gracieSongs = ["21", "I miss you, I'm sorry", "Long Sleeves", "minor", "Stay", "Block me out", "Full Machine", "Hard to sleep", "Faultline", "Camden", "The Exit", "Right Now", "Amelie", "Risk", "Close To You", "Blowing Smoke", "Let It Happen", "Tough Love", "I Love You, I'm Sorry", "Free Now", "Good Riddance", "The Secret of Us", "Feels Like", "Rockland", "Blue", "Augusta", "405", "Happy for You"];
+
+        const extendedLibrary = [
+            { a: "Phoebe Bridgers", t: "Moon Song" }, { a: "Phoebe Bridgers", t: "Garden Song" }, { a: "Phoebe Bridgers", t: "Smoke Signals" },
+            { a: "Taylor Swift", t: "Mirrorball" }, { a: "Taylor Swift", t: "Champagne Problems" }, { a: "Taylor Swift", t: "This Is Me Trying" },
+            { a: "Lizzie McAlpine", t: "Ceilings" }, { a: "Lizzie McAlpine", t: "Doomsday" },
+            { a: "Bon Iver", t: "Holocene" }, { a: "Sufjan Stevens", t: "Fourth of July" },
+            { a: "Lorde", t: "Liability" }, { a: "Clairo", t: "Bags" }, { a: "Mitski", t: "First Love / Late Spring" },
+            { a: "Boygenius", t: "Emily I'm Sorry" }, { a: "The Japanese House", t: "Saw You In A Dream" }
+        ];
+
+        const types = {
+            'A': { title: "I miss you, I'm sorry", quote: "“有些事，只有通过遗憾才能被完整地记起。” —— 安哲罗普洛斯", desc: "你习惯在废墟中翻找尚未冷却的温存。对你来说，告别不是结束，而是漫长的、带有颗粒感的余震。你在这首歌里听到的，是你从未寄出的信。" },
+            'B': { title: "Block Me Out", quote: "“我太擅长在自己的脑海里制造噪音，直到听不见心跳声。” —— Gracie Abrams", desc: "你是一座在深夜独自运行的精密机器，所有的过载都被掩盖在平静下。你渴望那种极致的‘屏蔽’，因为你明白，真正的自由往往始于彻底的断裂。" },
+            'C': { title: "Risk", quote: "“哪怕只有一瞬间的火花，也足以照亮整段荒芜的青春。” —— 《蓝莓之夜》", desc: "你拥有一种近乎悲剧性的勇敢。明知前方是悬崖，你依然迷恋坠落前的眩晕感。你不需要避风港，你只需要那一次剧烈的燃烧。" },
+            'D': { title: "Free Now", quote: "“我也许没能到达目的地，但我确实离开了原点。” —— 辛波斯卡", desc: "你穿透了浓雾。那些曾经让你彻夜难眠的细节，现在已经变成了风中的尘埃。现在的轻盈，是付出了沉重代价后的奖赏。" }
         };
 
         const questions = [
             { q: "深夜里，你是如何听见自己的？", options: [{t:"在旧录音带的杂音里", s:"A"}, {t:"在心跳频率的混乱中", s:"B"}, {t:"在另一个人的呼吸声旁", s:"C"}, {t:"在凌晨四点的寂静里", s:"D"}] },
-            { q: "如果你是房间里亮着的那盏灯？", options: [{t:"闪烁着快要熄灭", s:"A"}, {t:"照亮了不该看的角落", s:"B"}, {t:"为了某人一直亮着", s:"C"}, {t:"我已经学会了自己关灯", s:"D"}] },
-            { q: "道歉的碎片堆在地上，那是？", options: [{t:"必须拼凑好的过去", s:"A"}, {t:"扎脚的玻璃，别碰", s:"B"}, {t:"一种渴望被爱的筹码", s:"C"}, {t:"可以打扫掉的尘埃", s:"D"}] },
-            { q: "当你凝视镜中的自己？", options: [{t:"一个十年前的遗憾", s:"A"}, {t:"一个满负荷运转的机器", s:"B"}, {t:"一个等待点燃的火苗", s:"C"}, {t:"一个找回名字的陌生人", s:"D"}] },
-            { q: "要给心碎命名的话？", options: [{t:"昨日的延长线", s:"A"}, {t:"正在崩塌的围墙", s:"B"}, {t:"心甘情愿的冒险", s:"C"}, {t:"落幕后的余晖", s:"D"}] },
-            { q: "更习惯躲在哪里？", options: [{t:"潮湿的阁楼", s:"A"}, {t:"巨大的耳机里", s:"B"}, {t:"对方大衣的阴影里", s:"C"}, {t:"空旷的公路尽头", s:"D"}] },
-            { q: "如果你是一个季节？", options: [{t:"永恒的深秋", s:"A"}, {t:"暴雨前的闷热", s:"B"}, {t:"盛夏最刺眼的阳光", s:"C"}, {t:"初春刚融化的冰", s:"D"}] },
-            { q: "回忆像哪种声音？", options: [{t:"反向播放的磁带", s:"A"}, {t:"指甲划过黑板", s:"B"}, {t:"远处传来的低音", s:"C"}, {t:"翻动旧纸张的沙沙声", s:"D"}] },
-            { q: "如何处理沉重的情绪？", options: [{t:"写成没收件人的信", s:"A"}, {t:"按下静音键", s:"B"}, {t:"全部倾倒给某人", s:"C"}, {t:"让它们随长路流走", s:"D"}] },
-            { q: "必须要烧掉一样东西？", options: [{t:"唯一的旧照片", s:"A"}, {t:"昨晚发疯写的日记", s:"B"}, {t:"那个人的联系方式", s:"C"}, {t:"不再合适的旧衣服", s:"D"}] },
-            { q: "“爱”最直观的触感？", options: [{t:"冰冷的金属拉链", s:"A"}, {t:"生锈的齿轮", s:"B"}, {t:"眩晕的心跳", s:"C"}, {t:"微风拂过皮肤", s:"D"}] },
-            { q: "当人群散去，你？", options: [{t:"寻找掉落的碎片", s:"A"}, {t:"数着呼吸缓解心悸", s:"B"}, {t:"期待那个人回头", s:"C"}, {t:"转身走向反方向", s:"D"}] },
-            { q: "如果你是一个秘密？", options: [{t:"写在泛黄的纸上", s:"A"}, {t:"藏在保险柜里", s:"B"}, {t:"在深夜呼之欲出", s:"C"}, {t:"已经不再是秘密", s:"D"}] },
-            { q: "关于那个TA，现在的联想？", options: [{t:"没有锁的钥匙", s:"A"}, {t:"无法停止的循环", s:"B"}, {t:"坠落的恒星", s:"C"}, {t:"一张模糊的背景板", s:"D"}] },
+            { q: "如果你是房间里亮着的那盏灯？", options: [{t:"闪烁着快要熄灭", s:"A"}, {t:"照亮了不该看的角落", s:"B"}, {t:"为了某人一直亮着", s:"C"}, {t:"学会了自己关灯", s:"D"}] },
+            { q: "道歉的碎片堆在地上，那是？", options: [{t:"必须拼凑好的过去", s:"A"}, {t:"扎脚的玻璃，别碰", s:"B"}, {t:"渴望被爱的筹码", s:"C"}, {t:"可以打扫掉的尘埃", s:"D"}] },
+            { q: "回忆像哪种声音？", options: [{t:"反向播放的磁带", s:"A"}, {t:"重负荷的机组长鸣", s:"B"}, {t:"远处模糊的鼓点", s:"C"}, {t:"翻动纸张的沙沙声", s:"D"}] },
             { q: "必须要说最后一句话？", options: [{t:"“对不起，我还在这”", s:"A"}, {t:"“把我彻底屏蔽吧”", s:"B"}, {t:"“我愿意再冒一次险”", s:"C"}, {t:"“我已经自由了”", s:"D"}] }
         ];
 
         let cur = 0; let scores = { A:0, B:0, C:0, D:0 };
-
-        function begin() {
-            document.getElementById('start').style.display = 'none';
-            document.getElementById('quiz').style.display = 'block';
-            show();
-        }
-
+        function begin() { document.getElementById('start').style.display = 'none'; document.getElementById('quiz').style.display = 'block'; show(); }
+        
         function show() {
-            if(cur >= questions.length) { finish(); return; }
-            const q = questions[cur];
+            if(cur >= 12) { finish(); return; } 
+            const q = questions[cur % questions.length];
             document.getElementById('q-text').innerText = q.q;
             document.getElementById('q-counter').innerText = `CHAPTER ${String(cur+1).padStart(2, '0')}`;
-            document.getElementById('bar').style.width = ((cur+1)/questions.length)*100 + '%';
+            document.getElementById('bar').style.width = ((cur+1)/12)*100 + '%';
             const optDiv = document.getElementById('options'); optDiv.innerHTML = '';
             q.options.forEach(o => {
                 const b = document.createElement('button'); b.className = 'btn';
@@ -121,27 +132,26 @@
         function finish() {
             document.getElementById('quiz').style.display = 'none';
             const win = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
-            const meta = {
-                'A': { t: "I miss you, I'm sorry", q: "“我不确定我们要怎么在同一个世界共存，如果你不再爱我。”", d: "你倾向于在遗憾中确认存在的意义。对你而言，告别不是结束，而是漫长的、带有颗粒感的余震。" },
-                'B': { t: "Block Me Out", q: "“我太擅长在自己的脑海里制造噪音，直到听不见心跳声。”", d: "你是一座超负荷的工厂。你渴望被屏蔽，因为只有在极致的寂静中，你才能感到那种如释重负的安全感。" },
-                'C': { t: "Risk", q: "“即使会造成无法挽回的破坏，我也想看它最后燃烧的样子。”", d: "你是那种明知危险却依然选择纵身一跃的人。你不需要理解，只需要那一瞬间的剧烈跳动。" },
-                'D': { t: "Free Now", q: "“我终于不用再为了留在谁的生活里而裁剪自己的翅膀。”", d: "你穿透了浓雾。现在的你拥有一种劫后余生的轻盈，那是一种不再需要向任何人道歉的自由。" }
-            };
-
-            document.getElementById('res-title').innerText = meta[win].t;
-            document.getElementById('res-quote').innerText = meta[win].q;
-            document.getElementById('res-desc').innerText = meta[win].d;
+            const data = types[win];
+            document.getElementById('res-title').innerText = data.title;
+            document.getElementById('res-quote').innerText = data.quote;
+            document.getElementById('res-desc').innerText = data.desc;
             
+            // 关键词抽取
             const tagDiv = document.getElementById('res-tags'); tagDiv.innerHTML = '';
-            allKeywords.sort(() => 0.5 - Math.random()).slice(0, 6).forEach(t => {
-                tagDiv.innerHTML += `<span class="tag">${t}</span>`;
+            allKeywords.sort(() => 0.5 - Math.random()).slice(0, 6).forEach(t => { tagDiv.innerHTML += `<span class="tag">${t}</span>`; });
+
+            // Gracie Plate
+            const matchList = document.getElementById('match-list'); matchList.innerHTML = '';
+            gracieSongs.filter(s => s !== data.title).sort(() => 0.5 - Math.random()).slice(0, 4).forEach((s, idx) => {
+                let val = 97 - (idx * 5) - Math.floor(Math.random() * 4);
+                matchList.innerHTML += `<div class="match-item"><div class="match-info"><span>${s}</span><span>${val}% Resonance</span></div><div class="track-bg"><div class="track-fill" style="width:${val}%"></div></div></div>`;
             });
 
-            const matchList = document.getElementById('match-list'); matchList.innerHTML = '';
-            const combined = [...discography[win].s, ...discography[win].r];
-            combined.sort(() => 0.5 - Math.random()).slice(0, 5).forEach(s => {
-                let val = Math.floor(Math.random() * 20) + 75;
-                matchList.innerHTML += `<div class="match-item"><div class="match-info"><span>${s}</span><span>${val}%</span></div><div class="track-bg"><div class="track-fill" style="width:${val}%"></div></div></div>`;
+            // Extended Plate
+            const extList = document.getElementById('extended-list'); extList.innerHTML = '';
+            extendedLibrary.sort(() => 0.5 - Math.random()).slice(0, 4).forEach(item => {
+                extList.innerHTML += `<div class="rec-card"><div class="rec-artist">${item.a}</div><div class="rec-title">${item.t}</div></div>`;
             });
 
             document.getElementById('result').style.display = 'block';
