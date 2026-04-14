@@ -40,9 +40,19 @@
         .rec-card { background: rgba(255,255,255,0.015); padding: 20px; margin-bottom: 12px; text-align: left; border: 0.5px solid rgba(255,255,255,0.05); transition: 0.3s; }
         .rec-artist { font-size: 0.5rem; opacity: 0.4; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 4px; }
         .rec-title { font-size: 0.9rem; color: #fff; font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 300; }
+
+        /* Audio Control Button */
+        #music-control { position: fixed; bottom: 20px; right: 20px; font-size: 0.5rem; opacity: 0.3; cursor: pointer; color: #fff; border: 1px solid rgba(255,255,255,0.2); padding: 8px 12px; letter-spacing: 2px; text-transform: uppercase; transition: 0.3s; display: none; }
+        #music-control:hover { opacity: 1; border-color: #fff; }
     </style>
 </head>
 <body>
+
+    <audio id="bg-audio" loop>
+        <source src="bgm.mp3" type="audio/mpeg">
+    </audio>
+    <div id="music-control" onclick="toggleMusic()">Music: ON</div>
+
     <div id="app">
         <div id="start">
             <div class="photo-frame"><img src="gracie.jpg" class="gracie-img" alt="Gracie"></div>
@@ -88,40 +98,38 @@
     </div>
 
     <script>
-        // 意识流词库
+        const audio = document.getElementById('bg-audio');
+        const musicBtn = document.getElementById('music-control');
+
+        // 音乐控制逻辑
+        function toggleMusic() {
+            if (audio.paused) {
+                audio.play();
+                musicBtn.innerText = "Music: ON";
+            } else {
+                audio.pause();
+                musicBtn.innerText = "Music: OFF";
+            }
+        }
+
+        // 词库与曲库数据
         const allKeywords = ["末日余晖", "过期雨季", "失语霓虹", "碎裂胶片", "凌晨四点", "深海呼吸", "枯萎信笺", "坠落行星", "铁锈记忆", "薄雾晨曦", "孤岛心理", "空镜美学", "灵魂褶皱", "致命温柔", "孤独观测者", "瞬时永恒", "逃离地心", "玫瑰余烬", "无人区玫瑰", "静默审判", "记忆标本", "失眠症候群", "灵魂副作用", "昨日世界", "灰烬审美", "深渊的回响", "莫奈的花园", "西西弗斯的石头", "慢动作心碎", "低保真情绪", "云端漫步", "宇宙尘埃", "微观依恋", "夜色温柔", "悲观主义的花朵", "尤利西斯", "去往灯塔", "重庆森林", "春光乍泄", "花样年华", "恋恋风尘"];
-
-        // Gracie Abrams 完整作品库
         const gracieSongs = ["21", "I miss you, I'm sorry", "Long Sleeves", "minor", "Stay", "Block me out", "Full Machine", "Hard to sleep", "Faultline", "Camden", "The Exit", "Right Now", "Amelie", "Risk", "Close To You", "Blowing Smoke", "Let It Happen", "Tough Love", "I Love You, I'm Sorry", "Free Now", "Good Riddance", "The Secret of Us", "Feels Like", "Rockland", "Blue", "Augusta", "405", "Happy for You"];
-
-        // Indie 500 大型曲库算法模型 (这里仅展示精选的 50 首作为代表，但逻辑是随机从大型库中选择)
         const extendedIndieLibrary = [
             { a: "Phoebe Bridgers", t: "Moon Song" }, { a: "Phoebe Bridgers", t: "Garden Song" }, { a: "Phoebe Bridgers", t: "Smoke Signals" }, { a: "Phoebe Bridgers", t: "Funeral" }, { a: "Phoebe Bridgers", t: "Motion Sickness" },
-            { a: "Taylor Swift", t: "Exile" }, { a: "Taylor Swift", t: "Mirrorball" }, { a: "Taylor Swift", t: "Cardigan" }, { a: "Taylor Swift", t: "This Is Me Trying" }, { a: "Taylor Swift", t: "Champagne Problems" }, { a: "Taylor Swift", t: "Evermore" }, { a: "Taylor Swift", t: "My Tears Ricochet" },
-            { a: "Lizzie McAlpine", t: "Ceilings" }, { a: "Lizzie McAlpine", t: "Doomsday" }, { a: "Lizzie McAlpine", t: "Apple Pie" }, { a: "Lizzie McAlpine", t: "Pancakes for Dinner" },
-            { a: "Bon Iver", t: "Holocene" }, { a: "Bon Iver", t: "Roslyn" }, { a: "Bon Iver", t: "Skinny Love" }, { a: "Bon Iver", t: "For Emma" },
-            { a: "Sufjan Stevens", t: "Fourth of July" }, { a: "Sufjan Stevens", t: "Mystery of Love" }, { a: "Sufjan Stevens", t: "Should Have Known Better" },
-            { a: "Lorde", t: "Liability" }, { a: "Lorde", t: "Ribs" }, { a: "Lorde", t: "Hard Feelings" }, { a: "Lorde", t: "Supercut" },
-            { a: "Olivia Rodrigo", t: "Making the Bed" }, { a: "Olivia Rodrigo", t: "Logical" }, { a: "Olivia Rodrigo", t: "The Grudge" },
-            { a: "Clairo", t: "Bags" }, { a: "Clairo", t: "Sofia" }, { a: "Clairo", t: "Amoeba" },
-            { a: "Mitski", t: "First Love / Late Spring" }, { a: "Mitski", t: "Francis Forever" }, { a: "Mitski", t: "I Bet on Losing Dogs" },
-            { a: "Boygenius", t: "Emily I'm Sorry" }, { a: "Boygenius", t: "Not Strong Enough" }, { a: "Boygenius", t: "Salt in the Wound" },
-            { a: "The Japanese House", t: "Saw You In A Dream" }, { a: "The Japanese House", t: "Chewing Cotton Wool" },
-            { a: "Lucy Dacus", t: "Night Shift" }, { a: "Lucy Dacus", t: "Thumbs" },
-            { a: "Julien Baker", t: "Sprained Ankle" }, { a: "Julien Baker", t: "Turn Out the Lights" },
-            { a: "Holly Humberstone", t: "Scarlett" }, { a: "MUNA", t: "Silk Chiffon" }, { a: "Wallows", t: "Pictures of Girls" }, { a: "Hozier", t: "Take Me To Church" }, { a: "Hozier", t: "Cherry Wine" }
-            // 在实际代码内部，这个数组可以很容易地拓展到 500 首甚至更多
+            { a: "Taylor Swift", t: "Exile" }, { a: "Taylor Swift", t: "Mirrorball" }, { a: "Taylor Swift", t: "Cardigan" }, { a: "Taylor Swift", t: "This Is Me Trying" }, { a: "Taylor Swift", t: "Champagne Problems" },
+            { a: "Lizzie McAlpine", t: "Ceilings" }, { a: "Lizzie McAlpine", t: "Doomsday" }, { a: "Bon Iver", t: "Holocene" }, { a: "Bon Iver", t: "Roslyn" },
+            { a: "Sufjan Stevens", t: "Fourth of July" }, { a: "Lorde", t: "Liability" }, { a: "Mitski", t: "First Love / Late Spring" },
+            { a: "Boygenius", t: "Emily I'm Sorry" }, { a: "The Japanese House", t: "Saw You In A Dream" }, { a: "Lucy Dacus", t: "Night Shift" }
         ];
 
-        // 结果评价文本
         const types = {
-            'A': { title: "I miss you, I'm sorry", quote: "“有些事，只有通过遗憾才能被完整地记起。” —— 安哲罗普洛斯 《雾中风景》", desc: "你习惯在废墟中翻找尚未冷却的温存。对你来说，告别不是结束，而是漫长的、带有颗粒感的余震。你在这首歌里听到的，是你从未寄出的信。" },
-            'B': { title: "Block Me Out", quote: "“我太擅长在自己的脑海里制造噪音，直到听不见心跳声。” —— Gracie Abrams", desc: "你是一座在深夜独自运行的精密机器，所有的过载都被掩盖在平静下。你渴望那种极致的‘屏蔽’，因为你明白，真正的自由往往始于彻底的断裂。" },
-            'C': { title: "Risk", quote: "“哪怕只有一瞬间的火花，也足以照亮整段荒芜的青春。” —— 《蓝莓之夜》", desc: "你拥拥有近乎悲剧性的勇敢。明知前方是悬崖，你依然迷恋坠落前的眩晕感。你不需要理智的避风港，你只需要在这段旋律里，把那些名为‘渴望’的余烬再次吹燃。" },
-            'D': { title: "Free Now", quote: "“我也许没能到达目的地，但我确实离开了原点。” —— 辛波斯卡", desc: "你穿透了浓雾。那些曾经让你彻夜难眠的细节，现在已经变成了风中的尘埃。你现在的轻盈，是付出了沉重代价后的奖赏。你已经不再需要向昨日道歉。" }
+            'A': { title: "I miss you, I'm sorry", quote: "“有些事，只有通过遗憾才能被完整地记起。” —— 安哲罗普洛斯 《雾中风景》", desc: "你习惯在废墟中翻找尚未冷却的温存。告别不是结束，而是漫长的、带有颗粒感的余震。" },
+            'B': { title: "Block Me Out", quote: "“我太擅长在自己的脑海里制造噪音，直到听不见心跳声。” —— Gracie Abrams", desc: "你是一座在深夜独自运行的精密机器，所有的过载都被掩盖在平静下。你渴望彻底的‘屏蔽’。" },
+            'C': { title: "Risk", quote: "“哪怕只有一瞬间的火花，也足以照亮整段荒芜的青春。” —— 《蓝莓之夜》", desc: "你拥拥有近乎悲剧性的勇敢。明知前方是悬崖，你依然迷恋坠落前的眩晕感。" },
+            'D': { title: "Free Now", quote: "“我也许没能到达目的地，但我确实离开了原点。” —— 辛波斯卡", desc: "你穿透了浓雾。那些曾经让你彻夜难眠的细节，现在已经变成了风中的尘埃。" }
         };
 
-        // 30道意识流题目
         const questions = [
             { q: "深夜里，你是如何听见自己的？", options: [{t:"在旧录音带的杂音里", s:"A"}, {t:"混乱的心跳中", s:"B"}, {t:"别人呼吸声旁", s:"C"}, {t:"凌晨四点的寂静里", s:"D"}] },
             { q: "如果你是房间里亮着的那盏灯？", options: [{t:"闪烁着快要熄灭", s:"A"}, {t:"照亮了不该看的角落", s:"B"}, {t:"为了某人一直亮着", s:"C"}, {t:"学会了自己关灯", s:"D"}] },
@@ -156,10 +164,17 @@
         ];
 
         let cur = 0; let scores = { A:0, B:0, C:0, D:0 };
-        function begin() { document.getElementById('start').style.display = 'none'; document.getElementById('quiz').style.display = 'block'; show(); }
+
+        function begin() { 
+            document.getElementById('start').style.display = 'none'; 
+            document.getElementById('quiz').style.display = 'block'; 
+            musicBtn.style.display = 'block';
+            audio.play(); // 伴随开启测试播放音乐
+            show(); 
+        }
         
         function show() {
-            if(cur >= 30) { finish(); return; } // 这里是30道题目
+            if(cur >= 30) { finish(); return; }
             const q = questions[cur];
             document.getElementById('q-text').innerText = q.q;
             document.getElementById('q-counter').innerText = `CHAPTER ${String(cur+1).padStart(2, '0')}`;
@@ -183,14 +198,12 @@
             const tagDiv = document.getElementById('res-tags'); tagDiv.innerHTML = '';
             allKeywords.sort(() => 0.5 - Math.random()).slice(0, 6).forEach(t => { tagDiv.innerHTML += `<span class="tag">${t}</span>`; });
 
-            // 板块1: Gracie 全曲库契合度
             const matchList = document.getElementById('match-list'); matchList.innerHTML = '';
             gracieSongs.filter(s => s !== data.title).sort(() => 0.5 - Math.random()).slice(0, 4).forEach((s, idx) => {
                 let val = 97 - (idx * 5) - Math.floor(Math.random() * 4);
                 matchList.innerHTML += `<div class="match-item"><div class="match-info"><span>${s}</span><span>${val}% Resonance</span></div><div class="track-bg"><div class="track-fill" style="width:${val}%"></div></div></div>`;
             });
 
-            // 板块2: Indie 500 精选推荐
             const extList = document.getElementById('extended-list'); extList.innerHTML = '';
             extendedIndieLibrary.sort(() => 0.5 - Math.random()).slice(0, 5).forEach(item => {
                 extList.innerHTML += `<div class="rec-card"><div class="rec-artist">${item.a}</div><div class="rec-title">${item.t}</div></div>`;
