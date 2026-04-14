@@ -63,8 +63,14 @@
             <div id="res-tags"></div>
             <div class="quote-box serif" id="res-quote"></div>
             <p id="res-desc" class="serif" style="opacity: 0.6; line-height: 2.5; text-align: left; font-size: 0.88rem; padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.06);"></p>
-            <div style="margin-top: 60px; text-align: left;"><p class="label">Section I: Gracie Core Correlation</p><div id="match-list"></div></div>
-            <div style="margin-top: 60px; text-align: left;"><p class="label">Section II: Extended Indie Resonance</p><div id="extended-list"></div></div>
+            <div style="margin-top: 60px; text-align: left;">
+                <p class="label">Section I: Gracie Core Correlation</p>
+                <div id="match-list"></div>
+            </div>
+            <div style="margin-top: 60px; text-align: left;">
+                <p class="label">Section II: Extended Indie Resonance</p>
+                <div id="extended-list"></div>
+            </div>
             <button class="btn" onclick="location.reload()" style="margin-top: 80px; width: auto; padding: 12px 55px; display: inline-block; text-align:center;">Dissolve the Memory</button>
         </div>
     </div>
@@ -72,35 +78,25 @@
     <script>
         const audio = document.getElementById('bg-audio');
 
-        // 音频预激活逻辑
-        function initAudio() { 
-            audio.play().then(() => { 
-                document.removeEventListener('click', initAudio); 
-                document.removeEventListener('touchstart', initAudio); 
-            }).catch(()=>{}); 
-        }
-        document.addEventListener('click', initAudio);
-        document.addEventListener('touchstart', initAudio);
-
+        // 歌曲与歌手真实库
         const gracieSongs = ["Mean It", "Stay", "21", "I miss you, I'm sorry", "Long Sleeves", "minor", "tehe", "Friend", "Brush Fire", "Unlearn", "Rockland", "Augusta", "The Bottom", "Mess It Up", "Alright", "Camden", "Feels Like", "Hard to sleep", "Faultline", "Block me out", "Difficult", "Where do we go now?", "Amelie", "Abby", "Full Machine", "Will you cry?", "I should hate you", "Best", "Better", "Right Now", "The Exit", "Cedar", "Risk", "Close To You", "Blowing Smoke", "Let It Happen", "Tough Love", "I Love You, I'm Sorry", "Free Now", "Normal Thing", "Gave You I Gave You I", "The Secret of Us", "That’s So True", "I Fight It", "In Between", "Spark", "Packing It Up"];
 
         const allTags = ["末日余晖", "过期雨季", "失语霓虹", "碎裂胶片", "凌晨四点", "深海呼吸", "枯萎信笺", "坠落行星", "铁锈记忆", "薄雾晨曦", "孤岛心理", "空镜美学", "灵魂褶皱", "致命温柔", "孤独观测者", "瞬时永恒", "逃离地心", "玫瑰余烬", "无人区玫瑰", "静默审判", "记忆标本", "失眠症候群", "灵魂副作用", "昨日世界", "灰烬审美", "深渊的回响", "莫奈的花园", "西西弗斯", "慢动作心碎", "低保真情绪", "微观依恋", "夜色温柔", "悲观主义", "重庆森林", "春光乍泄", "恋恋风尘", "北野武蓝", "盐系寂寞", "半衰期", "情感放射", "潮湿主义", "旧电影质感", "无解的题", "真空地带", "听觉残留", "心碎出口", "蓝色调式", "被动荒废", "影子练习", "过敏体质", "降噪生活", "平行失语", "昨日重现", "时间缝隙", "白噪音", "梦境碎片", "触觉失灵", "深蓝梦呓", "午夜飞行", "无目的流浪", "废弃电台", "降落练习", "隐形裂痕", "情绪过载", "冷色调告别", "匿名信件", "远方共振", "旧磁带", "复古伤感", "半透明", "琥珀色记忆", "荒野呼唤", "私密频率", "低空飞行", "极简孤寂", "雾中漫行", "光影废墟", "末班车", "空房间", "无声尖叫", "灵魂寄宿", "幻肢痛", "单色世界", "雨水收集", "微凉体温", "心室颤动", "旧报纸", "黑白默片", "倒放的人生", "破碎共识", "冷战美学", "灰度空间", "呼吸刻度", "情感幽灵", "数字葬礼", "霓虹废土", "寂静之声", "无名氏", "漂流瓶", "最后一次点火"];
 
-        // 真实对应的歌手与歌曲库
         const extLib = [
-            {a:"Phoebe Bridgers", t:"Moon Song"}, {a:"Phoebe Bridgers", t:"Motion Sickness"}, {a:"Phoebe Bridgers", t:"Scott Street"}, {a:"Phoebe Bridgers", t:"Garden Song"}, {a:"Phoebe Bridgers", t:"Smoke Signals"}, {a:"Phoebe Bridgers", t:"Funeral"},
-            {a:"Lizzie McAlpine", t:"ceilings"}, {a:"Lizzie McAlpine", t:"doomsday"}, {a:"Lizzie McAlpine", t:"Pancakes for Dinner"}, {a:"Lizzie McAlpine", t:"Apple Pie"}, {a:"Lizzie McAlpine", t:"all my ghosts"},
-            {a:"Taylor Swift", t:"marjorie"}, {a:"Taylor Swift", t:"mirrorball"}, {a:"Taylor Swift", t:"cardigan"}, {a:"Taylor Swift", t:"august"}, {a:"Taylor Swift", t:"this is me trying"}, {a:"Taylor Swift", t:"tolerate it"}, {a:"Taylor Swift", t:"champagne problems"},
+            {a:"Phoebe Bridgers", t:"Moon Song"}, {a:"Phoebe Bridgers", t:"Motion Sickness"}, {a:"Phoebe Bridgers", t:"Scott Street"}, {a:"Phoebe Bridgers", t:"Garden Song"}, {a:"Phoebe Bridgers", t:"Smoke Signals"},
+            {a:"Lizzie McAlpine", t:"ceilings"}, {a:"Lizzie McAlpine", t:"doomsday"}, {a:"Lizzie McAlpine", t:"Apple Pie"}, {a:"Lizzie McAlpine", t:"Erase Me"}, {a:"Lizzie McAlpine", t:"Pancakes for Dinner"},
+            {a:"Taylor Swift", t:"cardigan"}, {a:"Taylor Swift", t:"august"}, {a:"Taylor Swift", t:"marjorie"}, {a:"Taylor Swift", t:"mirrorball"}, {a:"Taylor Swift", t:"tolerate it"}, {a:"Taylor Swift", t:"this is me trying"}, {a:"Taylor Swift", t:"champagne problems"},
             {a:"Lorde", t:"Liability"}, {a:"Lorde", t:"Ribs"}, {a:"Lorde", t:"The Louvre"}, {a:"Lorde", t:"Writer In The Dark"}, {a:"Lorde", t:"Hard Feelings"},
-            {a:"Mitski", t:"First Love / Late Spring"}, {a:"Mitski", t:"I Bet on Losing Dogs"}, {a:"Mitski", t:"Francis Forever"}, {a:"Mitski", t:"Washing Machine Heart"}, {a:"Mitski", t:"Your Best American Girl"},
-            {a:"Bon Iver", t:"Roslyn"}, {a:"Bon Iver", t:"Holocene"}, {a:"Bon Iver", t:"Skinny Love"}, {a:"Bon Iver", t:"715 - CRΣΣKS"}, {a:"Bon Iver", t:"Re: Stacks"},
+            {a:"Clairo", t:"Bags"}, {a:"Clairo", t:"Amoeba"}, {a:"Clairo", t:"Sofia"}, {a:"Clairo", t:"Blouse"}, {a:"Clairo", t:"Harbor"},
+            {a:"Mitski", t:"First Love / Late Spring"}, {a:"Mitski", t:"I Bet on Losing Dogs"}, {a:"Mitski", t:"Francis Forever"}, {a:"Mitski", t:"Washing Machine Heart"},
+            {a:"Bon Iver", t:"Roslyn"}, {a:"Bon Iver", t:"Holocene"}, {a:"Bon Iver", t:"Skinny Love"}, {a:"Bon Iver", t:"715 - CRΣΣKS"}, {a:"Bon Iver", t:"Beach Baby"},
+            {a:"Sufjan Stevens", t:"Mystery of Love"}, {a:"Sufjan Stevens", t:"Fourth of July"}, {a:"Sufjan Stevens", t:"Visions of Gideon"},
             {a:"Boygenius", t:"Emily I'm Sorry"}, {a:"Boygenius", t:"Not Strong Enough"}, {a:"Boygenius", t:"Cool About It"}, {a:"Boygenius", t:"True Blue"},
-            {a:"Clairo", t:"Bags"}, {a:"Clairo", t:"Amoeba"}, {a:"Clairo", t:"Sofia"}, {a:"Clairo", t:"Blouse"},
-            {a:"Sufjan Stevens", t:"Fourth of July"}, {a:"Sufjan Stevens", t:"Mystery of Love"}, {a:"Sufjan Stevens", t:"Visions of Gideon"},
             {a:"Cigarettes After Sex", t:"Apocalypse"}, {a:"Cigarettes After Sex", t:"K."}, {a:"Cigarettes After Sex", t:"Sunsetz"}, {a:"Cigarettes After Sex", t:"Cry"},
-            {a:"Mazzy Star", t:"Fade Into You"}, {a:"Faye Webster", t:"Kingston"}, {a:"Faye Webster", t:"In a Good Way"},
-            {a:"Adrianne Lenker", t:"Anything"}, {a:"Big Thief", t:"Simulation Swarm"}, {a:"Big Thief", t:"Paul"},
-            {a:"Arlo Parks", t:"Black Dog"}, {a:"Arlo Parks", t:"Eugene"}, {a:"Soccer Mommy", t:"Your Dog"}, {a:"Soccer Mommy", t:"circle the drain"},
+            {a:"The Japanese House", t:"Saw You In A Dream"}, {a:"The Japanese House", t:"Sunshine Baby"}, {a:"The Japanese House", t:"Wild"},
+            {a:"Adrianne Lenker", t:"Anything"}, {a:"Adrianne Lenker", t:"dragon eyes"}, {a:"Big Thief", t:"Simulation Swarm"}, {a:"Big Thief", t:"Paul"},
+            {a:"Arlo Parks", t:"Black Dog"}, {a:"Arlo Parks", t:"Eugene"}, {a:"Faye Webster", t:"Kingston"}, {a:"Faye Webster", t:"In a Good Way"},
             {a:"Lucy Dacus", t:"Night Shift"}, {a:"Lucy Dacus", t:"Thumbs"}, {a:"Julien Baker", t:"Appointments"}, {a:"Julien Baker", t:"Faith Healer"},
             {a:"Conan Gray", t:"Heather"}, {a:"Conan Gray", t:"Astronomy"}, {a:"Conan Gray", t:"Family Line"},
             {a:"Olivia Rodrigo", t:"logical"}, {a:"Olivia Rodrigo", t:"the grudge"}, {a:"Olivia Rodrigo", t:"making the bed"},
@@ -111,14 +107,13 @@
             {a:"Beabadoobee", t:"Coffee"}, {a:"Beabadoobee", t:"Glue Song"}, {a:"Men I Trust", t:"Show Me How"},
             {a:"Frank Ocean", t:"Self Control"}, {a:"Frank Ocean", t:"White Ferrari"}, {a:"Frank Ocean", t:"Ivy"},
             {a:"Radiohead", t:"No Surprises"}, {a:"Radiohead", t:"Exit Music (For A Film)"}, {a:"Radiohead", t:"True Love Waits"},
-            {a:"Beach House", t:"Space Song"}, {a:"Beach House", t:"Myth"}, {a:"Beach House", t:"Silver Soul"},
+            {a:"Beach House", t:"Space Song"}, {a:"Beach House", t:"Myth"}, {a:"Beach House", t:"PPP"},
             {a:"Elliott Smith", t:"Between the Bars"}, {a:"Elliott Smith", t:"Angeles"}, {a:"Elliott Smith", t:"Say Yes"},
             {a:"Billie Eilish", t:"What Was I Made For?"}, {a:"Billie Eilish", t:"i love you"}, {a:"Billie Eilish", t:"TV"},
-            {a:"Weyes Blood", t:"Movies"}, {a:"Weyes Blood", t:"God Turn Me Into a Flower"},
-            {a:"Sasha Alex Sloan", t:"Dancing With Your Ghost"}, {a:"Finneas", t:"Die Alone"},
-            {a:"NIKI", t:"Lose"}, {a:"NIKI", t:"Backburner"}, {a:"NIKI", t:"Oceans & Engines"},
-            {a:"Bruno Major", t:"Nothing"}, {a:"Rex Orange County", t:"Pluto Projector"},
-            {a:"Tom Odell", t:"Another Love"}, {a:"Kodaline", t:"All I Want"}, {a:"SYML", t:"Where's My Love"},
+            {a:"Weyes Blood", t:"Movies"}, {a:"Weyes Blood", t:"God Turn Me Into a Flower"}, {a:"Weyes Blood", t:"Andromeda"},
+            {a:"Sasha Alex Sloan", t:"Dancing With Your Ghost"}, {a:"Sasha Alex Sloan", t:"Older"}, {a:"NIKI", t:"Lose"}, {a:"NIKI", t:"Backburner"},
+            {a:"Bruno Major", t:"Nothing"}, {a:"Rex Orange County", t:"Pluto Projector"}, {a:"Tom Odell", t:"Another Love"},
+            {a:"Kodaline", t:"All I Want"}, {a:"SYML", t:"Where's My Love"}, {a:"Sleeping At Last", t:"Saturn"},
             {a:"Novo Amor", t:"Anchor"}, {a:"Gregory Alan Isakov", t:"Big Black Car"}, {a:"Damien Rice", t:"The Blower's Daughter"}
         ];
 
@@ -166,15 +161,11 @@
         let scores = { A:0, B:0, C:0, D:0 };
 
         function begin() { 
-            // 切换 UI
             document.getElementById('start').style.display = 'none'; 
             document.getElementById('quiz').style.display = 'block'; 
-            
-            // 播放音乐（增加错误捕获，防止因音频文件缺失卡死页面）
             if(audio) {
-                audio.play().catch(e => console.warn("音频文件加载失败或播放受限"));
+                audio.play().catch(e => console.log("Audio play blocked"));
             }
-            
             show(); 
         }
 
@@ -210,15 +201,13 @@
             document.getElementById('res-quote').innerText = data.quote;
             document.getElementById('res-desc').innerText = data.desc;
             
-            // 生成随机标签
             const tagDiv = document.getElementById('res-tags'); 
             tagDiv.innerHTML = '';
-            const shuffledTags = [...allTags].sort(() => 0.5 - Math.random());
-            shuffledTags.slice(0, 10).forEach(t => { 
+            const finalTags = [...allTags].sort(() => 0.5 - Math.random()).slice(0, 10);
+            finalTags.forEach(t => { 
                 tagDiv.innerHTML += `<span class="tag">${t}</span>`; 
             });
             
-            // Section I: Gracie Songs
             const matchList = document.getElementById('match-list'); 
             matchList.innerHTML = '';
             gracieSongs.filter(s => s !== data.title)
@@ -233,5 +222,15 @@
                     </div>`;
             });
 
-            // Section II: Extended Indie (使用真实歌手数据)
-            const extList = document.getE
+            const extList = document.getElementById('extended-list'); 
+            extList.innerHTML = '';
+            const finalExt = [...extLib].sort(() => 0.5 - Math.random()).slice(0, 8);
+            finalExt.forEach(item => {
+                extList.innerHTML += `
+                    <div class="rec-card">
+                        <div class="rec-artist">${item.a}</div>
+                        <div class="rec-title">${item.t}</div>
+                    </div>`;
+            });
+            
+            document.
