@@ -3,38 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gracie Abrams | The Complete Echo</title>
+    <title>Gracie Abrams Test</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,300&family=Montserrat:wght@200;400&display=swap" rel="stylesheet">
     <style>
-        :root { --bg: #0d0d0d; --text: #e0e0e0; --accent: #9eb1c7; --glass: rgba(255, 255, 255, 0.03); }
-        * { box-sizing: border-box; transition: all 0.4s ease; }
+        :root { --bg: #0a0a0a; --text: #f0f0f0; --accent: #9eb1c7; --glass: rgba(255, 255, 255, 0.03); }
+        * { box-sizing: border-box; transition: all 0.3s ease; }
         body {
             margin: 0; background-color: var(--bg); color: var(--text);
             font-family: 'Montserrat', sans-serif;
             display: flex; justify-content: center; align-items: center; min-height: 100vh;
-            background-image: radial-gradient(circle at center, #1a1a1a 0%, #050505 100%);
+            background-image: radial-gradient(circle at center, #151515 0%, #000 100%);
+            overflow-x: hidden;
         }
         #app {
-            width: 90%; max-width: 500px; padding: 40px 25px;
+            width: 95%; max-width: 500px; padding: 40px 20px;
             background: var(--glass); backdrop-filter: blur(30px);
             border: 1px solid rgba(255,255,255,0.08); text-align: center;
             box-shadow: 0 40px 100px rgba(0,0,0,0.8);
         }
-        .serif { font-family: 'Cormorant Garamond', serif; font-style: italic; }
+        .serif { font-family: 'Cormorant Gramamond', serif; font-style: italic; }
         .gracie-img {
-            width: 90px; height: 90px; border-radius: 50%; object-fit: cover;
+            width: 80px; height: 80px; border-radius: 50%; object-fit: cover;
             filter: grayscale(100%); margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.1);
         }
         .btn {
-            display: block; width: 100%; padding: 14px; margin: 10px 0;
+            display: block; width: 100%; padding: 12px; margin: 8px 0;
             background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.1); cursor: pointer;
-            color: var(--text); font-family: 'Montserrat', sans-serif; font-size: 0.8rem;
+            color: var(--text); font-family: 'Montserrat', sans-serif; font-size: 0.75rem;
+            text-align: left; padding-left: 20px;
         }
-        .btn:hover { background: var(--text); color: #000; transform: scale(1.02); }
-        .progress { width: 100%; height: 1px; background: rgba(255,255,255,0.05); margin-bottom: 25px; }
+        .btn:hover { background: var(--text); color: #000; }
+        .progress { width: 100%; height: 2px; background: rgba(255,255,255,0.05); margin-bottom: 25px; }
         #bar { width: 0%; height: 100%; background: var(--accent); }
         #quiz, #result { display: none; }
-        #q-text { font-size: 1.4rem; min-height: 70px; line-height: 1.3; }
+        #q-text { font-size: 1.3rem; min-height: 60px; line-height: 1.4; margin-bottom: 30px; }
     </style>
 </head>
 <body>
@@ -44,93 +46,94 @@
     <div id="app">
         <div id="start">
             <img src="gracie.jpg" class="gracie-img" onerror="this.style.opacity='0'">
-            <h1 class="serif" style="font-size: 2.2rem; font-weight: 300; margin: 0;">The Echo Chamber.</h1>
-            <p style="letter-spacing: 3px; font-size: 0.6rem; opacity: 0.4; margin-bottom: 30px;">FIND YOUR GRACIE ANTHEM</p>
-            <button class="btn" onclick="begin()">START REFLECTION</button>
+            <h1 class="serif" style="font-size: 2.5rem; font-weight: 300; margin: 0;">Gracie Abrams Test</h1>
+            <p style="letter-spacing: 4px; font-size: 0.6rem; opacity: 0.4; margin-bottom: 40px;">THE ECHO OF 30 MEMORIES</p>
+            <button class="btn" style="text-align:center; padding-left:0;" onclick="begin()">BEGIN REFLECTION</button>
         </div>
 
         <div id="quiz">
             <div class="progress"><div id="bar"></div></div>
+            <p id="q-num" style="font-size: 0.6rem; opacity: 0.3; letter-spacing: 2px; margin-bottom: 10px;"></p>
             <p id="q-text" class="serif"></p>
             <div id="options"></div>
         </div>
 
         <div id="result">
-            <img src="gracie.jpg" class="gracie-img" style="width: 70px; height: 70px;">
-            <p style="font-size: 0.6rem; letter-spacing: 2px; opacity: 0.5;">YOUR DESTINY SONG</p>
-            <h1 id="res-title" class="serif" style="font-size: 2rem; color: var(--accent); margin: 10px 0;"></h1>
-            <p id="res-desc" class="serif" style="opacity: 0.7; line-height: 1.6; font-size: 1rem; padding: 0 10px;"></p>
-            <button class="btn" onclick="location.reload()" style="margin-top: 30px; width: auto; padding: 10px 30px; display: inline-block;">RETRY</button>
+            <img src="gracie.jpg" class="gracie-img" style="width: 60px; height: 60px;">
+            <p style="font-size: 0.6rem; letter-spacing: 2px; opacity: 0.5;">YOUR SIGNATURE SONG</p>
+            <h1 id="res-title" class="serif" style="font-size: 1.8rem; color: var(--accent); margin: 10px 0;"></h1>
+            <p id="res-desc" class="serif" style="opacity: 0.7; line-height: 1.6; font-size: 0.95rem;"></p>
+            <button class="btn" onclick="location.reload()" style="margin-top: 30px; width: auto; padding: 10px 30px; display: inline-block; text-align:center;">RETRY</button>
         </div>
     </div>
 
     <script>
         const questions = [
-            { q: "深夜你无法入睡的原因通常是？", options: [
-                {t:"脑海中反复回放一段对话", s:"A"}, {t:"对未来的不确定感到焦虑", s:"B"}, 
-                {t:"沉溺在对某个人的想念中", s:"C"}, {t:"纯粹享受孤独的清醒", s:"D"}
-            ]},
-            { q: "如果要把这一刻的心情写下来，你会？", options: [
-                {t:"写一封永远不会寄出的信", s:"A"}, {t:"在备忘录里打下杂乱的字句", s:"B"}, 
-                {t:"画一个只有自己懂的符号", s:"C"}, {t:"撕碎手边的一张纸", s:"D"}
-            ]},
-            { q: "关于爱，你现在的状态更接近？", options: [
-                {t:"卑微地渴望被注意到", s:"A"}, {t:"冷静地想要逃离这一切", s:"B"}, 
-                {t:"在回忆里反复拉扯自己", s:"C"}, {t:"已经学会了和自己相处", s:"D"}
-            ]},
-            { q: "你最喜欢的环境是？", options: [
-                {t:"下雨时的窗边", s:"A"}, {t:"疾驰的车内后座", s:"B"}, 
-                {t:"光线昏暗的卧室", s:"C"}, {t:"清晨无人的街道", s:"D"}
-            ]},
-            { q: "如果一段关系结束了，你会？", options: [
-                {t:"不停地道歉，试图挽回", s:"A"}, {t:"屏蔽对方所有的动态", s:"B"}, 
-                {t:"留着所有的合照不删", s:"C"}, {t:"写一首歌送给对方", s:"D"}
-            ]}
+            { q: "深夜你无法入睡的原因通常是？", options: [{t:"回想一段对话", s:"A"}, {t:"对未来的焦虑", s:"B"}, {t:"想念某个人", s:"C"}, {t:"享受孤独", s:"D"}] },
+            { q: "关于道歉，你的态度是？", options: [{t:"反复说直到对方原谅", s:"A"}, {t:"在心里说一万次", s:"B"}, {t:"不想说，但觉得亏欠", s:"C"}, {t:"已经不重要了", s:"D"}] },
+            { q: "如果你是一个季节，你会是？", options: [{t:"刚入冬的初霜", s:"A"}, {t:"闷热的雷雨前夕", s:"B"}, {t:"盛夏的傍晚", s:"C"}, {t:"深秋的落叶", s:"D"}] },
+            { q: "爱一个人的时候，你更像？", options: [{t:"卑微的影子", s:"A"}, {t:"失控的机器", s:"B"}, {t:"飞蛾扑火", s:"C"}, {t:"平静的湖水", s:"D"}] },
+            { q: "关于遗憾，你会？", options: [{t:"反复咀嚼", s:"A"}, {t:"试图屏蔽", s:"B"}, {t:"将其美化", s:"C"}, {t:"坦然接受", s:"D"}] },
+            { q: "你最喜欢的环境是？", options: [{t:"雨天的窗边", s:"A"}, {t:"高速公路的后座", s:"B"}, {t:"拥挤的派对边缘", s:"C"}, {t:"空旷的草地", s:"D"}] },
+            { q: "当焦虑蔓延时，你会？", options: [{t:"把自己反锁", s:"A"}, {t:"不停地走动", s:"B"}, {t:"寻找TA的痕迹", s:"C"}, {t:"听忧郁的歌", s:"D"}] },
+            { q: "如果你是一个秘密，你希望？", options: [{t:"永远烂在心里", s:"A"}, {t:"被温柔地发现", s:"B"}, {t:"变成一个谎言", s:"C"}, {t:"被写进歌里", s:"D"}] },
+            { q: "关于“错过”，你觉得？", options: [{t:"是注定的悲剧", s:"A"}, {t:"是解脱的开始", s:"B"}, {t:"是未完的故事", s:"C"}, {t:"是成长的代价", s:"D"}] },
+            { q: "你会为了爱去冒险吗？", options: [{t:"不敢，怕受伤", s:"A"}, {t:"一直在冒险却失败", s:"B"}, {t:"会，哪怕粉身碎骨", s:"C"}, {t:"现在只想安稳", s:"D"}] },
+            // 继续补充到30题...
+            { q: "你的社交习惯更接近？", options: [{t:"透明的观察者", s:"A"}, {t:"勉强的配合者", s:"B"}, {t:"热情的投入者", s:"C"}, {t:"孤独的幸存者", s:"D"}] },
+            { q: "如果要把这一刻记录下来？", options: [{t:"拍一张模糊的照片", s:"A"}, {t:"写一段杂乱的字", s:"B"}, {t:"画一个心碎的符号", s:"C"}, {t:"什么都不留", s:"D"}] },
+            { q: "你最怕哪种沉默？", options: [{t:"对坐无言", s:"A"}, {t:"独自一人的空洞", s:"B"}, {t:"被拉黑后的死寂", s:"C"}, {t:"争吵后的冷战", s:"D"}] },
+            { q: "关于“放手”，你认为？", options: [{t:"不可能做到", s:"A"}, {t:"需要漫长的自我斗争", s:"B"}, {t:"是给对方最后的爱", s:"C"}, {t:"是一种自由", s:"D"}] },
+            { q: "你更习惯在什么时候崩溃？", options: [{t:"深夜无人时", s:"A"}, {t:"大雨滂沱时", s:"B"}, {t:"在人群中强颜欢笑时", s:"C"}, {t:"在阳光明媚的下午", s:"D"}] },
+            { q: "你觉得最好的关系是？", options: [{t:"彼此纠缠", s:"A"}, {t:"互相救赎", s:"B"}, {t:"热烈燃烧", s:"C"}, {t:"各自安好", s:"D"}] },
+            { q: "如果你能改写回忆？", options: [{t:"改写那个结尾", s:"A"}, {t:"改写整个相遇", s:"B"}, {t:"保留所有痛苦", s:"C"}, {t:"把TA抹去", s:"D"}] },
+            { q: "关于未来，你的感受是？", options: [{t:"恐惧", s:"A"}, {t:"麻木", s:"B"}, {t:"期待", s:"C"}, {t:"释然", s:"D"}] },
+            { q: "你觉得自己像什么？", options: [{t:"破碎的镜子", s:"A"}, {t:"生锈的齿轮", s:"B"}, {t:"燃烧的星火", s:"C"}, {t:"飘散的云", s:"D"}] },
+            { q: "你会因为一首歌想起TA吗？", options: [{t:"每首歌都是TA", s:"A"}, {t:"只有悲伤的歌", s:"B"}, {t:"会，但会微笑", s:"C"}, {t:"已经不会了", s:"D"}] },
+            { q: "如果爱是一种颜色？", options: [{t:"忧郁的蓝", s:"A"}, {t:"压抑的灰", s:"B"}, {t:"危险的红", s:"C"}, {t:"纯净的白", s:"D"}] },
+            { q: "你如何评价自己的心？", options: [{t:"千疮百孔", s:"A"}, {t:"被冰封了", s:"B"}, {t:"依然温热", s:"C"}, {t:"空空如也", s:"D"}] },
+            { q: "你会给前任发消息吗？", options: [{t:"写好了但不敢发", s:"A"}, {t:"酒后控制不住", s:"B"}, {t:"已经互删了", s:"C"}, {t:"没有必要了", s:"D"}] },
+            { q: "你觉得自己更脆弱还是坚强？", options: [{t:"极度脆弱", s:"A"}, {t:"外强中干", s:"B"}, {t:"因爱而坚强", s:"C"}, {t:"无所谓了", s:"D"}] },
+            { q: "你渴望被拯救吗？", options: [{t:"非常渴望", s:"A"}, {t:"不信有人能救我", s:"B"}, {t:"我会自救", s:"C"}, {t:"我已经获救了", s:"D"}] },
+            { q: "如果人生是一场电影？", options: [{t:"悲剧结尾", s:"A"}, {t:"悬疑片", s:"B"}, {t:"爱情公路片", s:"C"}, {t:"纪录片", s:"D"}] },
+            { q: "你在关系中最在意？", options: [{t:"安全感", s:"A"}, {t:"诚实", s:"B"}, {t:"激情", s:"C"}, {t:"空间", s:"D"}] },
+            { q: "如果要把这一刻送给某人？", options: [{t:"送给那个离开的人", s:"B"}, {t:"送给现在的自己", s:"D"}, {t:"送给未来的爱人", s:"C"}, {t:"送给过去的自己", s:"A"}] },
+            { q: "你现在想哭吗？", options: [{t:"眼眶已经湿了", s:"A"}, {t:"哭不出来", s:"B"}, {t:"很平静", s:"D"}, {t:"想笑", s:"C"}] },
+            { q: "最后一个问题，你爱自己吗？", options: [{t:"正在努力学习", s:"A"}, {t:"很难做到", s:"B"}, {t:"是的，很爱", s:"D"}, {t:"不知道", s:"C"}] }
         ];
 
-        let cur = 0;
-        let scores = { A:0, B:0, C:0, D:0 };
-
+        let cur = 0; let scores = { A:0, B:0, C:0, D:0 };
         function begin() {
-            const m = document.getElementById('bgm'); m.volume = 0.4; m.play().catch(() => {});
+            document.getElementById('bgm').volume = 0.4;
+            document.getElementById('bgm').play().catch(() => {});
             document.getElementById('start').style.display = 'none';
             document.getElementById('quiz').style.display = 'block';
             show();
         }
-
         function show() {
             const q = questions[cur];
+            document.getElementById('q-num').innerText = `REFLECTION ${cur + 1} / 30`;
             document.getElementById('q-text').innerText = q.q;
-            document.getElementById('bar').style.width = ((cur+1)/questions.length)*100 + '%';
-            const optDiv = document.getElementById('options');
-            optDiv.innerHTML = '';
+            document.getElementById('bar').style.width = ((cur+1)/30)*100 + '%';
+            const optDiv = document.getElementById('options'); optDiv.innerHTML = '';
             q.options.forEach(o => {
-                const b = document.createElement('button');
-                b.className = 'btn'; b.innerText = o.t;
-                b.onclick = () => { scores[o.s]++; next(); };
+                const b = document.createElement('button'); b.className = 'btn';
+                b.innerText = o.t; b.onclick = () => { scores[o.s]++; next(); };
                 optDiv.appendChild(b);
             });
         }
-
-        function next() {
-            cur++;
-            if(cur < questions.length) show();
-            else finish();
-        }
-
+        function next() { cur++; if(cur < 30) show(); else finish(); }
         function finish() {
             document.getElementById('quiz').style.display = 'none';
-            const winner = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
-            
-            const results = {
-                'A': { t: "I miss you, I'm sorry", d: "你是感性的、诚实的。你宁愿沉溺在道歉中，也不愿面对真正的失去。" },
-                'B': { t: "Block Me Out", d: "你是一个复杂的矛盾体。你试图屏蔽世界，却在安静中听到了最响亮的焦虑。" },
-                'C': { t: "Risk / Close to You", d: "你充满了生命力。哪怕知道有风险，你也愿意为了那一瞬间的靠近而倾尽所有。" },
-                'D': { t: "Good Riddance / Free Now", d: "你已经准备好放手了。在这个测试的尽头，你找到了属于自己的自由。" }
+            const win = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
+            const res = {
+                'A': { t: "I miss you, I'm sorry", d: "你活在回忆的滤镜里，心碎对你来说是一种常态。你用温柔的抱歉掩饰着最深的不舍。" },
+                'B': { t: "Block Me Out / Full Machine", d: "你在极度的清醒与焦虑中挣扎，试图把自己变成毫无感情的机器来对抗混乱的世界。" },
+                'C': { t: "Risk / Close to You", d: "你是热烈而勇敢的。哪怕前路是深渊，你也会为了那一刻的火花全力奔跑。" },
+                'D': { t: "Good Riddance / Free Now", d: "你终于学会了与自己和解。虽然身上带着旧伤疤，但你已经准备好迎接全新的自由。" }
             };
-
-            document.getElementById('res-title').innerText = results[winner].t;
-            document.getElementById('res-desc').innerText = results[winner].d;
+            document.getElementById('res-title').innerText = res[win].t;
+            document.getElementById('res-desc').innerText = res[win].d;
             document.getElementById('result').style.display = 'block';
         }
     </script>
