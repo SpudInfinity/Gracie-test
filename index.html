@@ -6,174 +6,94 @@
     <title>The Architecture of Resonance</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,400;1,600&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
     <style>
-        :root { 
-            --bg: #08090a; --text: #e0e0e0; --accent: #9eb1c7; 
-            --gracie-yellow: #fdf5e6; --glass: rgba(15, 18, 20, 0.8);
-        }
-        
-        /* 核心修复：允许纵向滚动，不再锁死高度 */
+        :root { --bg: #08090a; --text: #c0c0c0; --accent: #9eb1c7; }
         body { 
-            margin: 0; background-color: var(--bg); color: var(--text); 
-            font-family: 'Montserrat', sans-serif; 
-            display: flex; justify-content: center; align-items: flex-start; /* 改为起点对齐 */
-            min-height: 100vh; overflow-x: hidden; overflow-y: auto; /* 关键：启用滚动 */
-            padding: 40px 0; transition: background-color 2s ease;
+            margin: 0; background: var(--bg); color: var(--text); 
+            font-family: 'Montserrat', sans-serif; display: flex; 
+            justify-content: center; align-items: flex-start; 
+            min-height: 100vh; overflow-y: auto; padding: 50px 0;
         }
-
-        /* 自然场景背景叠加：柔和光影 */
-        .nature-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: 
-                radial-gradient(circle at 10% 10%, rgba(60, 80, 60, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 90% 90%, rgba(40, 40, 60, 0.15) 0%, transparent 50%),
-                url('https://www.transparenttextures.com/patterns/natural-paper.png');
-            z-index: -3; pointer-events: none;
-        }
-
-        /* 动态生成的黑星星 */
-        .black-star {
-            position: fixed; color: #000; font-size: 20px; z-index: -1;
-            opacity: 0.4; pointer-events: none; animation: starBreathe 4s infinite ease-in-out;
-        }
-        @keyframes starBreathe { 0%, 100% { transform: scale(1); opacity: 0.2; } 50% { transform: scale(1.5); opacity: 0.6; } }
-
-        /* 藤蔓/花朵装饰 (SVG 实现) */
-        .vine-deco {
-            position: fixed; width: 350px; height: 350px;
-            background: rgba(255,255,255,0.03);
-            -webkit-mask: url('https://api.iconify.design/game-icons:vine-leaf.svg') no-repeat center;
-            mask: url('https://api.iconify.design/game-icons:vine-leaf.svg') no-repeat center;
-            z-index: -2; pointer-events: none;
-        }
-
-        #app { 
-            width: 92%; max-width: 500px; padding: 60px 30px; 
-            background: var(--glass); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
-            border: 1px solid rgba(255,255,255,0.08); text-align: center; 
-            box-shadow: 0 40px 100px rgba(0,0,0,0.7); position: relative;
-            z-index: 10; margin-bottom: 50px;
-        }
-
+        #app { width: 90%; max-width: 450px; padding: 40px 20px; text-align: center; }
         .serif { font-family: 'Cormorant Garamond', serif; font-style: italic; }
-        .album-era { font-size: 0.55rem; letter-spacing: 5px; opacity: 0.4; text-transform: uppercase; margin-bottom: 20px; }
-
+        .photo-frame { width: 110px; height: 110px; margin: 0 auto 30px; border-radius: 50%; overflow: hidden; border: 0.5px solid rgba(255,255,255,0.1); }
+        .gracie-img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); }
         .btn { 
-            display: block; width: 100%; padding: 20px; margin: 15px 0; 
-            background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.1); 
-            cursor: pointer; color: var(--text); font-family: 'Montserrat', sans-serif; 
-            font-size: 0.75rem; text-align: left; padding-left: 25px; letter-spacing: 2px; transition: 0.4s;
+            display: block; width: 100%; padding: 20px; margin: 12px 0; 
+            background: none; border: 1px solid rgba(255,255,255,0.1); 
+            cursor: pointer; color: var(--text); font-size: 0.7rem; 
+            text-align: left; padding-left: 20px; letter-spacing: 2px; transition: 0.2s;
         }
-        .btn:hover { background: var(--gracie-yellow); color: #000; transform: translateX(8px); }
-
-        .progress-container { width: 100%; height: 1px; background: rgba(255,255,255,0.05); margin-bottom: 40px; }
-        #bar { width: 0%; height: 100%; background: var(--accent); transition: 0.8s; }
-
+        .btn:hover { background: #fff; color: #000; }
+        .progress { width: 100%; height: 1px; background: rgba(255,255,255,0.05); margin-bottom: 40px; }
+        #bar { width: 0%; height: 100%; background: var(--accent); transition: 0.4s; }
         #quiz, #result { display: none; }
-        #q-text { font-size: 1.6rem; min-height: 100px; line-height: 1.3; margin-bottom: 40px; }
-
-        .quote-box { margin: 30px 0; padding: 30px; background: rgba(255,255,255,0.02); border-left: 2px solid var(--accent); text-align: left; line-height: 1.8; font-size: 0.95rem; }
-        .tag { padding: 4px 12px; border: 0.5px solid rgba(255,255,255,0.1); font-size: 0.6rem; color: var(--accent); margin: 3px; display: inline-block; letter-spacing: 1px; }
-        
-        .match-item { text-align: left; margin: 25px 0; font-size: 0.65rem; letter-spacing: 2px; opacity: 0.7; }
-        .match-bar-bg { width: 100%; height: 1px; background: rgba(255,255,255,0.05); margin-top: 10px; }
-        .match-bar-fill { height: 100%; background: var(--accent); width: 0; transition: width 2s ease-out; }
+        #q-text { font-size: 1.6rem; min-height: 90px; line-height: 1.3; margin-bottom: 40px; color: #fff; }
+        .quote-box { margin: 30px 0; padding: 30px 20px; border-top: 0.5px solid rgba(255,255,255,0.1); border-bottom: 0.5px solid rgba(255,255,255,0.1); text-align: left; line-height: 1.8; font-size: 0.85rem; color: #eee; }
+        .tag { padding: 4px 12px; border: 0.5px solid rgba(255,255,255,0.15); font-size: 0.6rem; color: var(--accent); margin: 4px; display: inline-block; }
+        .match-item { text-align: left; margin: 22px 0; }
+        .match-info { display: flex; justify-content: space-between; font-size: 0.6rem; opacity: 0.4; letter-spacing: 2px; margin-bottom: 6px; }
+        .track-bg { height: 1px; background: rgba(255,255,255,0.05); }
+        .track-fill { height: 100%; background: var(--accent); width: 0; transition: width 2s; }
+        .label { font-size: 0.5rem; letter-spacing: 5px; opacity: 0.3; margin-bottom: 15px; text-transform: uppercase; }
     </style>
 </head>
 <body>
-
-    <div class="nature-overlay"></div>
-    <div class="vine-deco" style="top: -100px; left: -100px; opacity: 0.1;"></div>
-    <div class="vine-deco" style="bottom: -100px; right: -100px; opacity: 0.1; transform: rotate(180deg);"></div>
-
     <div id="app">
         <div id="start">
-            <p class="album-era">Fragile States of Mind</p>
-            <h1 class="serif" style="font-size: 3.5rem; margin: 20px 0;">Unlearn Us.</h1>
-            <div style="font-size: 1.5rem; letter-spacing: 15px; margin-bottom: 40px; color: #000;">★ ★ ★</div>
-            <p style="font-size: 0.6rem; opacity: 0.4; letter-spacing: 4px; margin-bottom: 60px;">BOTANICALS / BLACK STARS / FULL SONGS</p>
-            <button class="btn" style="text-align:center; padding-left:0;" onclick="begin()">ENTER THE ATTIC</button>
+            <div class="photo-frame"><img src="gracie.jpg" class="gracie-img" alt="Gracie"></div>
+            <h1 class="serif" style="font-size: 2.2rem; margin-bottom: 5px;">碎裂的回响</h1>
+            <p class="label">The Secret of Fragments</p>
+            <p style="font-size: 0.7rem; opacity: 0.4; line-height: 2; margin: 40px 0;">“我就像一个在水下尖叫的人，<br>全世界都以为我在吐泡泡。”</p>
+            <button class="btn" style="text-align:center; padding-left:0;" onclick="begin()">开启存档</button>
         </div>
 
         <div id="quiz">
-            <div class="progress-container"><div id="bar"></div></div>
+            <div class="progress"><div id="bar"></div></div>
+            <p class="label" id="q-counter">Chapter 01</p>
             <p id="q-text" class="serif"></p>
             <div id="options"></div>
         </div>
 
         <div id="result">
-            <p class="album-era">The Final Resonance</p>
-            <h1 id="res-title" class="serif" style="font-size: 2.8rem; margin: 15px 0;"></h1>
+            <p class="label">Resonance Profile</p>
+            <h1 id="res-title" class="serif" style="font-size: 2rem; margin: 10px 0; color: #fff;"></h1>
             <div id="res-tags"></div>
             <div class="quote-box serif" id="res-quote"></div>
-            <p id="res-desc" class="serif" style="opacity: 0.8; text-align: left; line-height: 2; padding: 0 5px;"></p>
-            
-            <div style="margin-top: 60px; text-align: left; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 30px;">
-                <p class="album-era">Vibrational Soul-Tracks</p>
+            <p id="res-desc" class="serif" style="opacity: 0.7; line-height: 2.2; text-align: left; font-size: 0.85rem;"></p>
+            <div style="margin-top: 50px; text-align: left;">
+                <p class="label">Similar Resonance</p>
                 <div id="match-list"></div>
             </div>
-            <button class="btn" onclick="location.reload()" style="margin-top: 60px; width: auto; padding: 12px 50px; display: inline-block; text-align:center; font-size: 0.6rem;">RE-OPEN ARCHIVE</button>
+            <button class="btn" onclick="location.reload()" style="margin-top: 60px; width: auto; padding: 12px 40px; display: inline-block; text-align:center;">重置存档</button>
         </div>
     </div>
 
     <script>
-        // 生成黑星星
-        function createStars() {
-            for(let i=0; i<18; i++) {
-                let star = document.createElement('div');
-                star.className = 'black-star'; star.innerHTML = '★';
-                star.style.left = Math.random() * 100 + 'vw';
-                star.style.top = Math.random() * 100 + 'vh';
-                star.style.animationDelay = Math.random() * 5 + 's';
-                document.body.appendChild(star);
-            }
-        }
-        createStars();
+        const allKeywords = ["末日余晖", "过期雨季", "蓝莓之夜", "潮湿阁楼", "失语霓虹", "碎裂胶片", "凌晨四点", "深海呼吸", "枯萎信笺", "电子荒原", "无声告别", "坠落行星", "铁锈记忆", "薄雾晨曦", "孤岛心理", "旧磁带跳帧", "空镜美学", "私人废墟", "潜意识漫游", "极简忧郁", "反刍遗憾", "黑白默片", "灵魂褶皱", "错位时空", "循环自毁", "致命温柔", "孤独观测者", "冷色调依恋", "瞬时永恒", "逃离地心", "玫瑰余烬", "北欧极夜", "无目的地漂流", "胶片颗粒感", "雨水收集器", "隔墙有耳", "沉没之城", "旧书店灰尘", "未完成的诗", "酒精与诗歌", "深夜公路电影", "迷失东京", "破碎银幕", "蓝色大门", "无人区玫瑰", "反生长", "静默审判", "记忆标本", "失眠症候群", "灵魂副作用", "虚构的亲密", "玻璃之城", "流动的盛宴", "昨日世界", "不确定的光", "灰烬审美", "野草生长", "感官仓库", "沉默的火山", "深渊的回响", "莫奈的花园", "荒诞戏剧", "局外人", "西西弗斯的石头", "慢动作心碎", "低保真情绪", "云端漫步", "枯竭的喷泉", "梦的解析", "时间简史", "宇宙尘埃", "微观依恋", "被禁忌的游戏", "永恒的女性", "夜色温柔", "悲观主义的花朵", "第七封印", "野草莓", "偷自行车的人", "四百击", "狂人皮埃罗", "尤利西斯", "荒原", "去往灯塔", "达洛维夫人", "波斯语课", "小城之春", "重庆森林", "春光乍泄", "花样年华", "东邪西毒", "恋恋风尘", "悲情城市", "恐怖分子", "牯岭街少年", "一一"];
 
-        const fullDiscography = {
-            'A': ["21", "I miss you, I'm sorry", "Long Sleeves", "minor", "Friend", "Stay", "Unlearn", "Block me out"],
-            'B': ["Faultline", "Mess It Up", "Camden", "The Exit", "Right Now", "Amelie", "Where do we go now?", "Best"],
-            'C': ["Risk", "Close To You", "Blowing Smoke", "Let It Happen", "Tough Love", "I Love You, I'm Sorry", "Free Now"],
-            'D': ["Good Riddance", "The Secret of Us", "Feels Like", "Rockland", "Blue", "Augusta", "405", "Happy for You"]
-        };
-
-        const quotes = {
-            'A': ["“离别，是我们所能感知的地狱。” —— 艾米莉·狄金森", "“我就像一个在水下尖叫的人，全世界都以为我在吐泡泡。” —— Gracie Abrams"],
-            'B': ["“在这个嘈杂的世界里，闭上眼是我唯一的特权。” —— Gracie Abrams", "“所谓屏蔽，其实是另一种深度的渴望。” —— 安哲罗普洛斯"],
-            'C': ["“如果火焰能让我感觉到活着，那就烧吧。”", "“哪怕要心碎，我也要碎得像钻石一样。” —— Gracie Abrams"],
-            'D': ["“我剪断了影子，现在我拥有了整个太阳。”", "“自由，是连告别都不再沉重。” —— 安哲罗普洛斯"]
+        const discography = {
+            'A': { s: ["I miss you, I'm sorry", "21", "minor", "Stay"], r: ["Taylor Swift - Exile", "Phoebe Bridgers - Moon Song"] },
+            'B': { s: ["Block Me Out", "Camden", "Faultline", "Right Now"], r: ["Olivia Rodrigo - Making the Bed", "Lizzie McAlpine - Ceilings"] },
+            'C': { s: ["Risk", "Close To You", "Tough Love", "Blowing Smoke"], r: ["Lorde - Green Light", "Conan Gray - Memories"] },
+            'D': { s: ["Free Now", "Rockland", "Good Riddance", "Blue"], r: ["Bon Iver - Holocene", "Sufjan Stevens - Fourth of July"] }
         };
 
         const questions = [
             { q: "深夜里，你是如何听见自己的？", options: [{t:"在旧录音带的杂音里", s:"A"}, {t:"在心跳频率的混乱中", s:"B"}, {t:"在另一个人的呼吸声旁", s:"C"}, {t:"在凌晨四点的寂静里", s:"D"}] },
-            { q: "如果你是房间里亮着的那盏灯？", options: [{t:"正在微微闪烁，快要熄灭", s:"A"}, {t:"照亮了所有不该看的角落", s:"B"}, {t:"为了某人的到来而一直亮着", s:"C"}, {t:"我已经学会了自己关灯", s:"D"}] },
-            { q: "道歉的碎片堆在地上，你觉得那是？", options: [{t:"必须要拼凑好的过去", s:"A"}, {t:"扎脚的玻璃，最好别碰", s:"B"}, {t:"一种渴望被爱的筹码", s:"C"}, {t:"可以打扫掉的尘埃", s:"D"}] },
-            { q: "当你凝视镜中的自己时，你看到？", options: [{t:"一个十年前的遗憾", s:"A"}, {t:"一个满负荷运转的机器", s:"B"}, {t:"一个等待被点燃的火苗", s:"C"}, {t:"一个终于找回名字的陌生人", s:"D"}] },
-            { q: "如果要把这一刻的心碎命名？", options: [{t:"昨日的延长线", s:"A"}, {t:"正在崩塌的围墙", s:"B"}, {t:"一场心甘情愿的冒险", s:"C"}, {t:"落幕后的余晖", s:"D"}] },
-            { q: "你更习惯躲在哪里？", options: [{t:"潮湿的阁楼", s:"A"}, {t:"噪音巨大的耳机里", s:"B"}, {t:"对方大衣的阴影里", s:"C"}, {t:"空旷的公路尽头", s:"D"}] },
-            { q: "如果你是一个季节？", options: [{t:"永恒的深秋", s:"A"}, {t:"暴雨前的闷热下午", s:"B"}, {t:"盛夏最刺眼的阳光", s:"C"}, {t:"初春刚融化的冰层", s:"D"}] },
-            { q: "回忆像哪种声音？", options: [{t:"反转播放的磁带", s:"A"}, {t:"指甲划过黑板的长鸣", s:"B"}, {t:"远处传来的低音贝斯", s:"C"}, {t:"翻动旧纸张的沙沙声", s:"D"}] },
-            { q: "你如何处理那些沉重的情绪？", options: [{t:"把它们写成没有收件人的信", s:"A"}, {t:"按下静音键，假装听不见", s:"B"}, {t:"把它们全部倾倒给某人", s:"C"}, {t:"让它们随着长路流走", s:"D"}] },
-            { q: "如果你必须烧掉一样东西？", options: [{t:"唯一的一张旧照片", s:"A"}, {t:"昨晚发疯写的日记", s:"B"}, {t:"那个人的联系方式", s:"C"}, {t:"已经不合适的旧衣服", s:"D"}] },
-            { q: "“爱”最直观的触感是？", options: [{t:"冰冷的金属拉链", s:"A"}, {t:"生锈的齿轮摩擦", s:"B"}, {t:"加速心跳带来的眩晕", s:"C"}, {t:"微风拂过皮肤的轻柔", s:"D"}] },
-            { q: "当人群散去，你留在原地？", options: [{t:"寻找掉落的碎片", s:"A"}, {t:"数着呼吸缓解心悸", s:"B"}, {t:"期待那个人会回头", s:"C"}, {t:"转身走向反方向", s:"D"}] },
-            { q: "如果你是一个秘密？", options: [{t:"写在泛黄的泛黄纸上", s:"A"}, {t:"藏在最深的保险柜里", s:"B"}, {t:"在每个深夜呼之欲出", s:"C"}, {t:"已经不再是秘密了", s:"D"}] },
-            { q: "你的梦境通常是？", options: [{t:"黑白的默片", s:"A"}, {t:"失控的垂直坠落", s:"B"}, {t:"充满色彩的追逐战", s:"C"}, {t:"一片宁静的海面", s:"D"}] },
-            { q: "关于那个“TA”，现在的联想是？", options: [{t:"一把没有锁的钥匙", s:"A"}, {t:"一个无法停止的循环", s:"B"}, {t:"一颗正在坠落的恒星", s:"C"}, {t:"一张模糊的背景板", s:"D"}] },
-            { q: "当你感到失控时？", options: [{t:"不停地道歉", s:"A"}, {t:"把自己关在浴室里", s:"B"}, {t:"开车冲进黑夜里", s:"C"}, {t:"深呼吸，然后放手", s:"D"}] },
-            { q: "如果你是一段旋律？", options: [{t:"略带跑调的钢琴", s:"A"}, {t:"急促的打击乐", s:"B"}, {t:"轻快的吉他弹唱", s:"C"}, {t:"悠长的大提琴", s:"D"}] },
-            { q: "关于未来，你看到的是？", options: [{t:"灰色的雾气", s:"A"}, {t:"刺眼的白光", s:"B"}, {t:"变幻莫测的色彩", s:"C"}, {t:"地平线上的曙光", s:"D"}] },
-            { q: "你的自愈过程像？", options: [{t:"在雨中漫步", s:"A"}, {t:"修补一架坏掉的机器", s:"B"}, {t:"在一场大火中重生", s:"C"}, {t:"慢慢剪短长发", s:"D"}] },
-            { q: "必须要说最后一句话？", options: [{t:"“对不起，我还在这”", s:"A"}, {t:"“把我彻底屏蔽吧”", s:"B"}, {t:"“我愿意再冒一次险”", s:"C"}, {t:"“我已经自由了”", s:"D"}] },
-            { q: "窗外路灯照进房间，你觉得是？", options: [{t:"某种审判的目光", s:"A"}, {t:"寒冷的白色干扰", s:"B"}, {t:"邀请你出门的暗示", s:"C"}, {t:"再平凡不过的夜晚", s:"D"}] },
-            { q: "你习惯如何掩饰悲伤？", options: [{t:"在人群中不停说话", s:"A"}, {t:"戴上兜帽低下头", s:"B"}, {t:"大笑直到眼角湿润", s:"C"}, {t:"坦然承认我在心碎", s:"D"}] },
-            { q: "带走回忆里的一样东西？", options: [{t:"那天微凉的空气", s:"A"}, {t:"那段争执的声音", s:"B"}, {t:"那种心动的战栗", s:"C"}, {t:"什么都不带走", s:"D"}] },
-            { q: "关于“放手”，现在的感觉是？", options: [{t:"还没准备好", s:"A"}, {t:"正在练习闭上眼", s:"B"}, {t:"是一种必要的自毁", s:"C"}, {t:"是一场迟到的洗礼", s:"D"}] },
-            { q: "你在关系中最像哪种角色？", options: [{t:"那个总是在等的人", s:"A"}, {t:"那个总是在逃的人", s:"B"}, {t:"那个总在追的人", s:"C"}, {t:"那个已经走远的人", s:"D"}] },
-            { q: "深夜杂货店，你会买？", options: [{t:"过期很久的糖果", s:"A"}, {t:"一支不知道颜色的笔", s:"B"}, {t:"最烈的烈酒", s:"C"}, {t:"一瓶最纯净的水", s:"D"}] },
-            { q: "如果你是一棵树？", options: [{t:"在深秋落光了叶子", s:"A"}, {t:"正在暴风雨中摇晃", s:"B"}, {t:"为了阳光拼命生长", s:"C"}, {t:"扎根在安静的山谷", s:"D"}] },
-            { q: "回忆里的气味通常是？", options: [{t:"旧信件的味道", s:"A"}, {t:"汽油与灰尘的味道", s:"B"}, {t:"某种特定的香水味", s:"C"}, {t:"雨后泥土的味道", s:"D"}] },
-            { q: "关于遗憾，最后想说？", options: [{t:"“我会一直留着它”", s:"A"}, {t:"“这让我窒息”", s:"B"}, {t:"“我很庆幸发生过”", s:"C"}, {t:"“已经翻篇了”", s:"D"}] },
-            { q: "你爱自己吗？在这个瞬间。", options: [{t:"正在学着道歉", s:"A"}, {t:"很难，但我努力", s:"B"}, {t:"是的，很爱", s:"D"}, {t:"不知道答案", s:"C"}] }
+            { q: "如果你是房间里亮着的那盏灯？", options: [{t:"闪烁着快要熄灭", s:"A"}, {t:"照亮了不该看的角落", s:"B"}, {t:"为了某人一直亮着", s:"C"}, {t:"我已经学会了自己关灯", s:"D"}] },
+            { q: "道歉的碎片堆在地上，那是？", options: [{t:"必须拼凑好的过去", s:"A"}, {t:"扎脚的玻璃，别碰", s:"B"}, {t:"一种渴望被爱的筹码", s:"C"}, {t:"可以打扫掉的尘埃", s:"D"}] },
+            { q: "当你凝视镜中的自己？", options: [{t:"一个十年前的遗憾", s:"A"}, {t:"一个满负荷运转的机器", s:"B"}, {t:"一个等待点燃的火苗", s:"C"}, {t:"一个找回名字的陌生人", s:"D"}] },
+            { q: "要给心碎命名的话？", options: [{t:"昨日的延长线", s:"A"}, {t:"正在崩塌的围墙", s:"B"}, {t:"心甘情愿的冒险", s:"C"}, {t:"落幕后的余晖", s:"D"}] },
+            { q: "更习惯躲在哪里？", options: [{t:"潮湿的阁楼", s:"A"}, {t:"巨大的耳机里", s:"B"}, {t:"对方大衣的阴影里", s:"C"}, {t:"空旷的公路尽头", s:"D"}] },
+            { q: "如果你是一个季节？", options: [{t:"永恒的深秋", s:"A"}, {t:"暴雨前的闷热", s:"B"}, {t:"盛夏最刺眼的阳光", s:"C"}, {t:"初春刚融化的冰", s:"D"}] },
+            { q: "回忆像哪种声音？", options: [{t:"反向播放的磁带", s:"A"}, {t:"指甲划过黑板", s:"B"}, {t:"远处传来的低音", s:"C"}, {t:"翻动旧纸张的沙沙声", s:"D"}] },
+            { q: "如何处理沉重的情绪？", options: [{t:"写成没收件人的信", s:"A"}, {t:"按下静音键", s:"B"}, {t:"全部倾倒给某人", s:"C"}, {t:"让它们随长路流走", s:"D"}] },
+            { q: "必须要烧掉一样东西？", options: [{t:"唯一的旧照片", s:"A"}, {t:"昨晚发疯写的日记", s:"B"}, {t:"那个人的联系方式", s:"C"}, {t:"不再合适的旧衣服", s:"D"}] },
+            { q: "“爱”最直观的触感？", options: [{t:"冰冷的金属拉链", s:"A"}, {t:"生锈的齿轮", s:"B"}, {t:"眩晕的心跳", s:"C"}, {t:"微风拂过皮肤", s:"D"}] },
+            { q: "当人群散去，你？", options: [{t:"寻找掉落的碎片", s:"A"}, {t:"数着呼吸缓解心悸", s:"B"}, {t:"期待那个人回头", s:"C"}, {t:"转身走向反方向", s:"D"}] },
+            { q: "如果你是一个秘密？", options: [{t:"写在泛黄的纸上", s:"A"}, {t:"藏在保险柜里", s:"B"}, {t:"在深夜呼之欲出", s:"C"}, {t:"已经不再是秘密", s:"D"}] },
+            { q: "关于那个TA，现在的联想？", options: [{t:"没有锁的钥匙", s:"A"}, {t:"无法停止的循环", s:"B"}, {t:"坠落的恒星", s:"C"}, {t:"一张模糊的背景板", s:"D"}] },
+            { q: "必须要说最后一句话？", options: [{t:"“对不起，我还在这”", s:"A"}, {t:"“把我彻底屏蔽吧”", s:"B"}, {t:"“我愿意再冒一次险”", s:"C"}, {t:"“我已经自由了”", s:"D"}] }
         ];
 
         let cur = 0; let scores = { A:0, B:0, C:0, D:0 };
@@ -188,13 +108,8 @@
             if(cur >= questions.length) { finish(); return; }
             const q = questions[cur];
             document.getElementById('q-text').innerText = q.q;
+            document.getElementById('q-counter').innerText = `CHAPTER ${String(cur+1).padStart(2, '0')}`;
             document.getElementById('bar').style.width = ((cur+1)/questions.length)*100 + '%';
-            
-            // 背景随进度变深
-            let ratio = cur/30;
-            let r = 8 + ratio*20; let g = 9 + ratio*12; let b = 10 + ratio*10;
-            document.body.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
-
             const optDiv = document.getElementById('options'); optDiv.innerHTML = '';
             q.options.forEach(o => {
                 const b = document.createElement('button'); b.className = 'btn';
@@ -206,36 +121,31 @@
         function finish() {
             document.getElementById('quiz').style.display = 'none';
             const win = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
-            
             const meta = {
-                'A': { t: "I miss you, I'm sorry", d: "你是一封寄往森林深处的旧信，字迹被露水打湿。你习惯在遗憾中寻找安全感，那种‘温柔的忧伤’是你最熟悉的氧气。" },
-                'B': { t: "Block Me Out", d: "你是一株被玻璃罩住的白花，听得见全世界的嚣，却只想拥抱寂静。你渴望屏蔽外界，重新听见自己心底的风声。" },
-                'C': { t: "Risk", d: "你是那种敢在暴风雨中起舞的藤蔓，明知会被折断，却依然向往云端。你不需要理智的避风港，你只需要那一瞬的燃烧。" },
-                'D': { t: "Free Now", d: "你终于穿过了幽暗的森林，看到地平线上第一抹琥珀色的光。那些纠缠的红线已成过往，现在的你，轻盈得如同落叶。" }
+                'A': { t: "I miss you, I'm sorry", q: "“我不确定我们要怎么在同一个世界共存，如果你不再爱我。”", d: "你倾向于在遗憾中确认存在的意义。对你而言，告别不是结束，而是漫长的、带有颗粒感的余震。" },
+                'B': { t: "Block Me Out", q: "“我太擅长在自己的脑海里制造噪音，直到听不见心跳声。”", d: "你是一座超负荷的工厂。你渴望被屏蔽，因为只有在极致的寂静中，你才能感到那种如释重负的安全感。" },
+                'C': { t: "Risk", q: "“即使会造成无法挽回的破坏，我也想看它最后燃烧的样子。”", d: "你是那种明知危险却依然选择纵身一跃的人。你不需要理解，只需要那一瞬间的剧烈跳动。" },
+                'D': { t: "Free Now", q: "“我终于不用再为了留在谁的生活里而裁剪自己的翅膀。”", d: "你穿透了浓雾。现在的你拥有一种劫后余生的轻盈，那是一种不再需要向任何人道歉的自由。" }
             };
 
             document.getElementById('res-title').innerText = meta[win].t;
+            document.getElementById('res-quote').innerText = meta[win].q;
             document.getElementById('res-desc').innerText = meta[win].d;
-            document.getElementById('res-quote').innerText = quotes[win][Math.floor(Math.random() * quotes[win].length)];
-
-            // 结果标签
-            const allTags = ["末日余晖", "过期雨季", "碎裂胶片", "凌晨四点", "深海呼吸", "枯萎信笺", "电子荒原", "孤岛心理", "灵魂褶皱", "反生长", "记忆标本", "失眠症候群", "虚构的亲密", "玻璃之城", "灰烬审美", "野草生长", "重庆森林"];
+            
             const tagDiv = document.getElementById('res-tags'); tagDiv.innerHTML = '';
-            allTags.sort(() => 0.5 - Math.random()).slice(0, 8).forEach(t => {
+            allKeywords.sort(() => 0.5 - Math.random()).slice(0, 6).forEach(t => {
                 tagDiv.innerHTML += `<span class="tag">${t}</span>`;
             });
 
-            // 匹配歌曲列表
             const matchList = document.getElementById('match-list'); matchList.innerHTML = '';
-            const mySongs = fullDiscography[win].sort(() => 0.5 - Math.random()).slice(0, 5);
-            mySongs.forEach(s => {
+            const combined = [...discography[win].s, ...discography[win].r];
+            combined.sort(() => 0.5 - Math.random()).slice(0, 5).forEach(s => {
                 let val = Math.floor(Math.random() * 20) + 75;
-                matchList.innerHTML += `<div class="match-item"><span>${s}</span> <span style="float:right">${val}%</span><div class="match-bar-bg"><div class="match-bar-fill" style="width:${val}%"></div></div></div>`;
+                matchList.innerHTML += `<div class="match-item"><div class="match-info"><span>${s}</span><span>${val}%</span></div><div class="track-bg"><div class="track-fill" style="width:${val}%"></div></div></div>`;
             });
 
             document.getElementById('result').style.display = 'block';
-            window.scrollTo(0,0); // 回到顶部
-            setTimeout(() => { document.querySelectorAll('.match-bar-fill').forEach(b => b.style.width = b.parentElement.previousElementSibling.innerText.split(' ').pop()); }, 100);
+            window.scrollTo(0,0);
         }
     </script>
 </body>
