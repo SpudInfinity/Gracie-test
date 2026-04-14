@@ -79,57 +79,60 @@
 
         const allTags = ["末日余晖", "过期雨季", "失语霓虹", "碎裂胶片", "凌晨四点", "深海呼吸", "枯萎信笺", "坠落行星", "铁锈记忆", "薄雾晨曦", "孤岛心理", "空镜美学", "灵魂褶皱", "致命温柔", "孤独观测者", "瞬时永恒", "逃离地心", "玫瑰余烬", "无人区玫瑰", "静默审判", "记忆标本", "失眠症候群", "灵魂副作用", "昨日世界", "灰烬审美", "深渊的回响", "莫奈的花园", "西西弗斯", "慢动作心碎", "低保真情绪", "微观依恋", "夜色温柔", "悲观主义", "重庆森林", "春光乍泄", "恋恋风尘", "北野武蓝", "盐系寂寞", "半衰期", "情感放射", "潮湿主义", "旧电影质感", "无解的题", "真空地带", "听觉残留", "心碎出口", "蓝色调式", "被动荒废", "影子练习", "过敏体质", "降噪生活", "平行失语", "昨日重现", "时间缝隙", "白噪音", "梦境碎片", "触觉失灵", "深蓝梦呓", "午夜飞行", "无目的流浪", "废弃电台", "降落练习", "隐形裂痕", "情绪过载", "冷色调告别", "匿名信件", "远方共振", "旧磁带", "复古伤感", "半透明", "琥珀色记忆", "荒野呼唤", "私密频率", "低空飞行", "极简孤寂", "雾中漫行", "光影废墟", "末班车", "空房间", "无声尖叫", "灵魂寄宿", "幻肢痛", "单色世界", "雨水收集", "微凉体温", "心室颤动", "旧报纸", "黑白默片", "倒放的人生", "破碎共识", "冷战美学", "灰度空间", "呼吸刻度", "情感幽灵", "数字葬礼", "霓虹废土", "寂静之声", "无名氏", "漂流瓶", "最后一次点火"];
 
-        // 200首真实准确的推荐曲库
         const extLib = [
-            {a:"Phoebe Bridgers", t:"Moon Song"}, {a:"Phoebe Bridgers", t:"Motion Sickness"}, {a:"Phoebe Bridgers", t:"Scott Street"}, {a:"Phoebe Bridgers", t:"Kyoto"}, {a:"Phoebe Bridgers", t:"Garden Song"},
-            {a:"Lizzie McAlpine", t:"ceilings"}, {a:"Lizzie McAlpine", t:"Apple Pie"}, {a:"Lizzie McAlpine", t:"Doomsday"}, {a:"Lizzie McAlpine", t:"Pancakes for Dinner"}, {a:"Lizzie McAlpine", t:"Erase Me"},
-            {a:"Taylor Swift", t:"marjorie"}, {a:"Taylor Swift", t:"mirrorball"}, {a:"Taylor Swift", t:"cardigan"}, {a:"Taylor Swift", t:"august"}, {a:"Taylor Swift", t:"this is me trying"}, {a:"Taylor Swift", t:"tolerate it"},
-            {a:"Lorde", t:"Liability"}, {a:"Lorde", t:"Ribs"}, {a:"Lorde", t:"The Louvre"}, {a:"Lorde", t:"Hard Feelings"}, {a:"Lorde", t:"Supercut"},
-            {a:"Mitski", t:"First Love / Late Spring"}, {a:"Mitski", t:"I Bet on Losing Dogs"}, {a:"Mitski", t:"Francis Forever"}, {a:"Mitski", t:"Washing Machine Heart"}, {a:"Mitski", t:"The Only Heartbreaker"},
-            {a:"Bon Iver", t:"Roslyn"}, {a:"Bon Iver", t:"Holocene"}, {a:"Bon Iver", t:"Skinny Love"}, {a:"Bon Iver", t:"715 - CRΣΣKS"}, {a:"Bon Iver", t:"For Emma"},
-            {a:"Boygenius", t:"Emily I'm Sorry"}, {a:"Boygenius", t:"Not Strong Enough"}, {a:"Boygenius", t:"Cool About It"}, {a:"Boygenius", t:"True Blue"}, {a:"Boygenius", t:"The Record"},
-            {a:"Clairo", t:"Bags"}, {a:"Clairo", t:"Amoeba"}, {a:"Clairo", t:"Sofia"}, {a:"Clairo", t:"Harbor"}, {a:"Clairo", t:"Blouse"},
-            {a:"Sufjan Stevens", t:"Fourth of July"}, {a:"Sufjan Stevens", t:"Mystery of Love"}, {a:"Sufjan Stevens", t:"Visions of Gideon"}, {a:"Sufjan Stevens", t:"Casimir Pulaski Day"},
-            {a:"The Japanese House", t:"Saw You In A Dream"}, {a:"The Japanese House", t:"Maybe You're the Reason"}, {a:"The Japanese House", t:"Wild"},
-            {a:"Cigarettes After Sex", t:"Apocalypse"}, {a:"Cigarettes After Sex", t:"K."}, {a:"Cigarettes After Sex", t:"Sunsetz"}, {a:"Cigarettes After Sex", t:"Heavenly"},
+            {a:"Phoebe Bridgers", t:"Moon Song"}, {a:"Phoebe Bridgers", t:"Motion Sickness"}, {a:"Phoebe Bridgers", t:"Scott Street"}, {a:"Phoebe Bridgers", t:"Smoke Signals"}, {a:"Phoebe Bridgers", t:"Savior Complex"}, {a:"Phoebe Bridgers", t:"Funeral"},
+            {a:"Lizzie McAlpine", t:"ceilings"}, {a:"Lizzie McAlpine", t:"doomsday"}, {a:"Lizzie McAlpine", t:"Pancakes for Dinner"}, {a:"Lizzie McAlpine", t:"Erase Me"}, {a:"Lizzie McAlpine", t:"Apple Pie"}, {a:"Lizzie McAlpine", t:"all my ghosts"},
+            {a:"Taylor Swift", t:"marjorie"}, {a:"Taylor Swift", t:"mirrorball"}, {a:"Taylor Swift", t:"cardigan"}, {a:"Taylor Swift", t:"august"}, {a:"Taylor Swift", t:"this is me trying"}, {a:"Taylor Swift", t:"tolerate it"}, {a:"Taylor Swift", t:"champagne problems"}, {a:"Taylor Swift", t:"happiness"},
+            {a:"Lorde", t:"Liability"}, {a:"Lorde", t:"Ribs"}, {a:"Lorde", t:"The Louvre"}, {a:"Lorde", t:"Writer In The Dark"}, {a:"Lorde", t:"Hard Feelings"}, {a:"Lorde", t:"Supercut"},
+            {a:"Mitski", t:"First Love / Late Spring"}, {a:"Mitski", t:"I Bet on Losing Dogs"}, {a:"Mitski", t:"Francis Forever"}, {a:"Mitski", t:"Washing Machine Heart"}, {a:"Mitski", t:"Your Best American Girl"},
+            {a:"Bon Iver", t:"Roslyn"}, {a:"Bon Iver", t:"Holocene"}, {a:"Bon Iver", t:"Skinny Love"}, {a:"Bon Iver", t:"715 - CRΣΣKS"}, {a:"Bon Iver", t:"Beach Baby"}, {a:"Bon Iver", t:"Re: Stacks"},
+            {a:"Boygenius", t:"Emily I'm Sorry"}, {a:"Boygenius", t:"Not Strong Enough"}, {a:"Boygenius", t:"Cool About It"}, {a:"Boygenius", t:"True Blue"}, {a:"Boygenius", t:"Me & My Dog"},
+            {a:"Clairo", t:"Bags"}, {a:"Clairo", t:"Amoeba"}, {a:"Clairo", t:"Sofia"}, {a:"Clairo", t:"Harbor"}, {a:"Clairo", t:"Blouse"}, {a:"Clairo", t:"Zinnias"},
+            {a:"Sufjan Stevens", t:"Fourth of July"}, {a:"Sufjan Stevens", t:"Mystery of Love"}, {a:"Sufjan Stevens", t:"Visions of Gideon"}, {a:"Sufjan Stevens", t:"Should Have Known Better"},
+            {a:"The Japanese House", t:"Saw You In A Dream"}, {a:"The Japanese House", t:"Maybe You're the Reason"}, {a:"The Japanese House", t:"Wild"}, {a:"The Japanese House", t:"Sunshine Baby"},
+            {a:"Cigarettes After Sex", t:"Apocalypse"}, {a:"Cigarettes After Sex", t:"K."}, {a:"Cigarettes After Sex", t:"Sunsetz"}, {a:"Cigarettes After Sex", t:"Cry"},
             {a:"Mazzy Star", t:"Fade Into You"}, {a:"Faye Webster", t:"Kingston"}, {a:"Faye Webster", t:"In a Good Way"}, {a:"Faye Webster", t:"Better Distractions"},
-            {a:"Adrianne Lenker", t:"Anything"}, {a:"Adrianne Lenker", t:"dragon eyes"}, {a:"Big Thief", t:"Simulation Swarm"}, {a:"Big Thief", t:"Paul"},
-            {a:"Arlo Parks", t:"Black Dog"}, {a:"Arlo Parks", t:"Eugene"}, {a:"Soccer Mommy", t:"Your Dog"}, {a:"Snail Mail", t:"Pristine"},
+            {a:"Adrianne Lenker", t:"Anything"}, {a:"Adrianne Lenker", t:"dragon eyes"}, {a:"Adrianne Lenker", t:"ingrid"}, {a:"Big Thief", t:"Simulation Swarm"}, {a:"Big Thief", t:"Paul"},
+            {a:"Arlo Parks", t:"Black Dog"}, {a:"Arlo Parks", t:"Eugene"}, {a:"Soccer Mommy", t:"Your Dog"}, {a:"Soccer Mommy", t:"circle the drain"},
             {a:"Lucy Dacus", t:"Night Shift"}, {a:"Lucy Dacus", t:"Thumbs"}, {a:"Julien Baker", t:"Appointments"}, {a:"Julien Baker", t:"Faith Healer"},
-            {a:"Conan Gray", t:"Heather"}, {a:"Conan Gray", t:"Astronomy"}, {a:"Conan Gray", t:"Family Line"},
-            {a:"Olivia Rodrigo", t:"logical"}, {a:"Olivia Rodrigo", t:"the grudge"}, {a:"Olivia Rodrigo", t:"driving home 2 u"},
-            {a:"Noah Kahan", t:"Stick Season"}, {a:"Noah Kahan", t:"Call Your Mom"}, {a:"Hozier", t:"Cherry Wine"}, {a:"Hozier", t:"Unknown / Nth"},
-            {a:"Birdy", t:"Not About Angels"}, {a:"The 1975", t:"Somebody Else"}, {a:"The 1975", t:"About You"},
-            {a:"FKA twigs", t:"Cellophane"}, {a:"Joji", t:"Glimpse of Us"}, {a:"Joji", t:"Die For You"},
-            {a:"Lana Del Rey", t:"Norman fucking Rockwell"}, {a:"Lana Del Rey", t:"Mariners Apartment Complex"}, {a:"Lana Del Rey", t:"Hope is a dangerous thing"},
-            {a:"Holly Humberstone", t:"Deep End"}, {a:"Holly Humberstone", t:"Scarlett"}, {a:"Maya Hawke", t:"Therese"},
+            {a:"Conan Gray", t:"Heather"}, {a:"Conan Gray", t:"Astronomy"}, {a:"Conan Gray", t:"Family Line"}, {a:"Conan Gray", t:"The Cut That Always Bleeds"},
+            {a:"Olivia Rodrigo", t:"logical"}, {a:"Olivia Rodrigo", t:"the grudge"}, {a:"Olivia Rodrigo", t:"making the bed"}, {a:"Olivia Rodrigo", t:"hope ur ok"},
+            {a:"Noah Kahan", t:"Stick Season"}, {a:"Noah Kahan", t:"Call Your Mom"}, {a:"Noah Kahan", t:"Orange Juice"}, {a:"Hozier", t:"Cherry Wine"}, {a:"Hozier", t:"Unknown / Nth"},
+            {a:"Birdy", t:"Not About Angels"}, {a:"The 1975", t:"Somebody Else"}, {a:"The 1975", t:"About You"}, {a:"The 1975", t:"Be My Mistake"},
+            {a:"FKA twigs", t:"Cellophane"}, {a:"Joji", t:"Glimpse of Us"}, {a:"Joji", t:"Die For You"}, {a:"Joji", t:"Slow Dancing in the Dark"},
+            {a:"Lana Del Rey", t:"Norman fucking Rockwell"}, {a:"Lana Del Rey", t:"Mariners Apartment Complex"}, {a:"Lana Del Rey", t:"Video Games"}, {a:"Lana Del Rey", t:"Born to Die"},
+            {a:"Holly Humberstone", t:"Deep End"}, {a:"Holly Humberstone", t:"Scarlett"}, {a:"Maya Hawke", t:"Therese"}, {a:"Maya Hawke", t:"Sweet Tooth"},
             {a:"Beabadoobee", t:"Coffee"}, {a:"Beabadoobee", t:"Glue Song"}, {a:"Men I Trust", t:"Show Me How"}, {a:"Men I Trust", t:"Numb"},
-            {a:"Frank Ocean", t:"Self Control"}, {a:"Frank Ocean", t:"White Ferrari"}, {a:"Frank Ocean", t:"Ivy"},
-            {a:"Radiohead", t:"No Surprises"}, {a:"Radiohead", t:"Exit Music (For A Film)"}, {a:"Radiohead", t:"True Love Waits"},
-            {a:"Beach House", t:"Space Song"}, {a:"Beach House", t:"Myth"}, {a:"Beach House", t:"PPP"},
-            {a:"The National", t:"Light Years"}, {a:"The National", t:"I Need My Girl"}, {a:"Fleet Foxes", t:"Tiger Mountain Peasant Boy"},
-            {a:"Elliott Smith", t:"Between the Bars"}, {a:"Elliott Smith", t:"Angeles"}, {a:"Elliott Smith", t:"Say Yes"},
-            {a:"Billie Eilish", t:"What Was I Made For?"}, {a:"Billie Eilish", t:"i love you"}, {a:"Billie Eilish", t:"TV"},
-            {a:"Weyes Blood", t:"Movies"}, {a:"Weyes Blood", t:"God Turn Me Into a Flower"}, {a:"Japanese Breakfast", t:"Posing in Bondage"},
-            {a:"Sasha Alex Sloan", t:"Dancing With Your Ghost"}, {a:"Sasha Alex Sloan", t:"Older"},
-            {a:"Finneas", t:"Die Alone"}, {a:"Finneas", t:"I Lost a Friend"}, {a:"NIKI", t:"Lose"}, {a:"NIKI", t:"Backburner"},
-            {a:"Bruno Major", t:"Nothing"}, {a:"Bruno Major", t:"Easily"}, {a:"Rex Orange County", t:"Pluto Projector"},
-            {a:"Tom Odell", t:"Another Love"}, {a:"Kodaline", t:"All I Want"}, {a:"Keaton Henson", t:"You"},
-            {a:"Vancouver Sleep Clinic", t:"Someone To Stay"}, {a:"Seafret", t:"Oceans"}, {a:"Sleeping At Last", t:"Saturn"},
+            {a:"Frank Ocean", t:"Self Control"}, {a:"Frank Ocean", t:"White Ferrari"}, {a:"Frank Ocean", t:"Ivy"}, {a:"Frank Ocean", t:"Moon River"},
+            {a:"Radiohead", t:"No Surprises"}, {a:"Radiohead", t:"Exit Music (For A Film)"}, {a:"Radiohead", t:"True Love Waits"}, {a:"Radiohead", t:"Fake Plastic Trees"},
+            {a:"Beach House", t:"Space Song"}, {a:"Beach House", t:"Myth"}, {a:"Beach House", t:"PPP"}, {a:"Beach House", t:"Silver Soul"},
+            {a:"The National", t:"Light Years"}, {a:"The National", t:"I Need My Girl"}, {a:"The National", t:"About Today"},
+            {a:"Elliott Smith", t:"Between the Bars"}, {a:"Elliott Smith", t:"Angeles"}, {a:"Elliott Smith", t:"Say Yes"}, {a:"Elliott Smith", t:"Miss Misery"},
+            {a:"Billie Eilish", t:"What Was I Made For?"}, {a:"Billie Eilish", t:"i love you"}, {a:"Billie Eilish", t:"TV"}, {a:"Billie Eilish", t:"Male Fantasy"},
+            {a:"Weyes Blood", t:"Movies"}, {a:"Weyes Blood", t:"God Turn Me Into a Flower"}, {a:"Weyes Blood", t:"Andromeda"},
+            {a:"Sasha Alex Sloan", t:"Dancing With Your Ghost"}, {a:"Sasha Alex Sloan", t:"Older"}, {a:"Sasha Alex Sloan", t:"Is It Just Me?"},
+            {a:"Finneas", t:"Die Alone"}, {a:"Finneas", t:"I Lost a Friend"}, {a:"Finneas", t:"Break My Heart Again"},
+            {a:"NIKI", t:"Lose"}, {a:"NIKI", t:"Backburner"}, {a:"NIKI", t:"Oceans & Engines"},
+            {a:"Bruno Major", t:"Nothing"}, {a:"Bruno Major", t:"Easily"}, {a:"Bruno Major", t:"The Most Beautiful Thing"},
+            {a:"Rex Orange County", t:"Pluto Projector"}, {a:"Rex Orange County", t:"Untitled"},
+            {a:"Tom Odell", t:"Another Love"}, {a:"Kodaline", t:"All I Want"}, {a:"Keaton Henson", t:"You"}, {a:"Keaton Henson", t:"Lying To You"},
+            {a:"Vancouver Sleep Clinic", t:"Someone To Stay"}, {a:"Seafret", t:"Oceans"}, {a:"Sleeping At Last", t:"Saturn"}, {a:"Sleeping At Last", t:"Light"},
             {a:"The Paper Kites", t:"Bloom"}, {a:"The Paper Kites", t:"Paint"}, {a:"Novo Amor", t:"Anchor"}, {a:"Novo Amor", t:"State Lines"},
-            {a:"Gregory Alan Isakov", t:"The Stable Song"}, {a:"Gregory Alan Isakov", t:"Amsterdam"},
+            {a:"Gregory Alan Isakov", t:"The Stable Song"}, {a:"Gregory Alan Isakov", t:"Amsterdam"}, {a:"Gregory Alan Isakov", t:"Big Black Car"},
             {a:"James Bay", t:"Let It Go"}, {a:"Lewis Capaldi", t:"Someone You Loved"}, {a:"Passenger", t:"Let Her Go"},
-            {a:"Glen Hansard", t:"Say It To Me Now"}, {a:"Damien Rice", t:"The Blower's Daughter"}, {a:"Damien Rice", t:"9 Crimes"},
-            {a:"Iron & Wine", t:"Flightless Bird, American Mouth"}, {a:"City and Colour", t:"The Girl"},
+            {a:"Glen Hansard", t:"Say It To Me Now"}, {a:"Damien Rice", t:"The Blower's Daughter"}, {a:"Damien Rice", t:"9 Crimes"}, {a:"Damien Rice", t:"Delicate"},
+            {a:"Iron & Wine", t:"Flightless Bird, American Mouth"}, {a:"Iron & Wine", t:"Naked as We Came"},
             {a:"Alexi Murdoch", t:"All My Days"}, {a:"José González", t:"Stay Alive"}, {a:"SYML", t:"Where's My Love"},
-            {a:"Dotan", t:"Home"}, {a:"M83", t:"Wait"}, {a:"Sigur Rós", t:"Hoppípolla"},
-            {a:"AURORA", t:"Runaway"}, {a:"AURORA", t:"Through The Eyes Of A Child"},
+            {a:"M83", t:"Wait"}, {a:"Sigur Rós", t:"Hoppípolla"}, {a:"Sigur Rós", t:"Untitled #1"},
+            {a:"AURORA", t:"Runaway"}, {a:"AURORA", t:"Through The Eyes Of A Child"}, {a:"AURORA", t:"Murder Song"},
             {a:"Banks", t:"Waiting Game"}, {a:"Chelsea Wolfe", t:"Flatlands"}, {a:"Sharon Van Etten", t:"Every Time the Sun Comes Up"},
-            {a:"Angel Olsen", t:"Lark"}, {a:"Fiona Apple", t:"I Wait"}, {a:"Tori Amos", t:"Winter"},
-            {a:"Sarah McLachlan", t:"Angel"}, {a:"Joni Mitchell", t:"Both Sides Now"}, {a:"Joni Mitchell", t:"Blue"},
+            {a:"Angel Olsen", t:"Lark"}, {a:"Fiona Apple", t:"Paper Bag"}, {a:"Tori Amos", t:"Winter"},
+            {a:"Sarah McLachlan", t:"Angel"}, {a:"Joni Mitchell", t:"Both Sides Now"}, {a:"Joni Mitchell", t:"Blue"}, {a:"Joni Mitchell", t:"A Case of You"},
             {a:"Simon & Garfunkel", t:"The Sound of Silence"}, {a:"Nick Drake", t:"Pink Moon"}, {a:"Nick Drake", t:"Day Is Done"},
             {a:"Vashti Bunyan", t:"Train Song"}, {a:"The Civil Wars", t:"Poison & Wine"}, {a:"The Lumineers", t:"Slow It Down"},
-            {a:"Of Monsters and Men", t:"Love Love Love"}, {a:"Ben Howard", t:"Keep Your Head Up"}, {a:"Ben Howard", t:"Old Pine"}
+            {a:"Of Monsters and Men", t:"Love Love Love"}, {a:"Ben Howard", t:"Keep Your Head Up"}, {a:"Ben Howard", t:"End of the Affair"},
+            {a:"Sufjan Stevens", t:"Death with Dignity"}, {a:"The Microphones", t:"I Want Wind to Blow"}, {a:"Cat Power", t:"Sea of Love"},
+            {a:"Beach Fossils", t:"Sleep Apnea"}, {a:"Current Joys", t:"A Different Age"}, {a:"Wild Nothing", t:"Chinatown"}
         ];
 
         const types = {
@@ -164,23 +167,4 @@
             { q: "最让你感到安全的空间？", options: [{t:"潮湿阁楼", s:"A"}, {t:"巨大耳机里", s:"B"}, {t:"对方大衣阴影下", s:"C"}, {t:"无人的公路", s:"D"}] },
             { q: "如果要制作成标本？", options: [{t:"一封泛黄的匿名信", s:"A"}, {t:"一朵快要窒息的白花", s:"B"}, {t:"一颗尚未熄灭的火种", s:"C"}, {t:"一片随风流浪的落叶", s:"D"}] },
             { q: "整个世界都在下沉？", options: [{t:"寻找可以抓紧的手", s:"A"}, {t:"把身体蜷缩起来", s:"B"}, {t:"加速下坠看一眼水底", s:"C"}, {t:"学会并在水底呼吸", s:"D"}] },
-            { q: "你爱自己吗？", options: [{t:"正在学着道歉", s:"A"}, {t:"很难，但我努力", s:"B"}, {t:"是的，很爱", s:"D"}, {t:"不知道答案", s:"C"}] },
-            { q: "回忆里的气味通常是？", options: [{t:"旧信件的味道", s:"A"}, {t:"汽油与灰尘", s:"B"}, {t:"特定的香水味", s:"C"}, {t:"雨后泥土的味道", s:"D"}] },
-            { q: "必须要带走的一样东西？", options: [{t:"那天微凉的空气", s:"A"}, {t:"那段争执的声音", s:"B"}, {t:"那种心动的战栗", s:"C"}, {t:"什么都不带走", s:"D"}] },
-            { q: "放手感觉更像？", options: [{t:"还没准备好", s:"A"}, {t:"练习闭上眼", s:"B"}, {t:"一种必要的自毁", s:"C"}, {t:"迟到洗礼", s:"D"}] },
-            { q: "深夜杂货店，你会买？", options: [{t:"过期糖果", s:"A"}, {t:"一支笔", s:"B"}, {t:"最烈的酒", s:"C"}, {t:"一瓶纯净水", s:"D"}] },
-            { q: "如果明天世界末日？", options: [{t:"在回忆里度过", s:"A"}, {t:"躲进地下室", s:"B"}, {t:"疯狂寻找那个人", s:"C"}, {t:"站在海边看日落", s:"D"}] }
-        ];
-
-        let cur = 0; let scores = { A:0, B:0, C:0, D:0 };
-        function begin() { document.getElementById('start').style.display='none'; document.getElementById('quiz').style.display='block'; audio.play(); show(); }
-        function show() {
-            if(cur >= 30) { finish(); return; }
-            const q = questions[cur];
-            document.getElementById('q-text').innerText = q.q;
-            document.getElementById('q-counter').innerText = `CHAPTER ${String(cur+1).padStart(2, '0')}`;
-            document.getElementById('bar').style.width = ((cur+1)/30)*100 + '%';
-            const optDiv = document.getElementById('options'); optDiv.innerHTML = '';
-            q.options.forEach(o => {
-                const b = document.createElement('button'); b.className = 'btn';
-                b.innerText = o.t; b.oncl
+            { q: "你爱自己吗？", options: [{t:"正在学着道歉", s:"A"}, {t:"很难，但我努力", s:"B"}, {t:"是的，很爱",
