@@ -3,28 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gracie Abrams Test</title>
+    <title>Gracie Abrams: A Stream of Consciousness</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,300&family=Montserrat:wght@200;400&display=swap" rel="stylesheet">
     <style>
-        :root { --bg: #0a0a0a; --text: #f0f0f0; --accent: #9eb1c7; --glass: rgba(255, 255, 255, 0.03); }
-        * { box-sizing: border-box; transition: all 0.3s ease; }
-        body { margin: 0; background-color: var(--bg); color: var(--text); font-family: 'Montserrat', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; background-image: radial-gradient(circle at center, #151515 0%, #000 100%); padding: 20px 0; }
-        #app { width: 95%; max-width: 500px; padding: 40px 25px; background: var(--glass); backdrop-filter: blur(30px); border: 1px solid rgba(255,255,255,0.08); text-align: center; box-shadow: 0 40px 100px rgba(0,0,0,0.8); }
+        :root { --bg: #0d0d0d; --text: #e0e0e0; --accent: #b4c4d5; --glass: rgba(255, 255, 255, 0.02); }
+        * { box-sizing: border-box; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        body { margin: 0; background-color: var(--bg); color: var(--text); font-family: 'Montserrat', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; background-image: radial-gradient(circle at center, #1a1a1a 0%, #000 100%); padding: 20px; }
+        #app { width: 100%; max-width: 550px; padding: 50px 30px; background: var(--glass); backdrop-filter: blur(40px); border: 1px solid rgba(255,255,255,0.05); text-align: center; box-shadow: 0 50px 120px rgba(0,0,0,0.9); position: relative; overflow: hidden; }
         .serif { font-family: 'Cormorant Garamond', serif; font-style: italic; }
-        .gracie-img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; filter: grayscale(100%); margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.1); }
-        .btn { display: block; width: 100%; padding: 15px; margin: 10px 0; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.1); cursor: pointer; color: var(--text); font-family: 'Montserrat', sans-serif; font-size: 0.8rem; text-align: left; padding-left: 20px; line-height: 1.4; }
-        .btn:hover { background: var(--text); color: #000; }
-        .progress { width: 100%; height: 1px; background: rgba(255,255,255,0.05); margin-bottom: 25px; }
-        #bar { width: 0%; height: 100%; background: var(--accent); }
+        .gracie-img { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; filter: grayscale(100%) contrast(1.1); margin-bottom: 25px; border: 1px solid rgba(255,255,255,0.1); }
+        .btn { display: block; width: 100%; padding: 18px; margin: 12px 0; background: rgba(255,255,255,0.01); border: 1px solid rgba(255,255,255,0.08); cursor: pointer; color: var(--text); font-family: 'Montserrat', sans-serif; font-size: 0.85rem; text-align: left; padding-left: 25px; letter-spacing: 1px; }
+        .btn:hover { background: var(--text); color: #000; transform: translateY(-2px); }
+        .progress { width: 100%; height: 1px; background: rgba(255,255,255,0.03); margin-bottom: 30px; }
+        #bar { width: 0%; height: 100%; background: var(--accent); box-shadow: 0 0 10px var(--accent); }
         #quiz, #result { display: none; }
-        #q-text { font-size: 1.4rem; min-height: 80px; line-height: 1.3; margin-bottom: 30px; }
-        .tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 20px 0; }
-        .tag { padding: 4px 12px; border: 1px solid var(--accent); font-size: 0.7rem; border-radius: 12px; color: var(--accent); }
-        .match-item { text-align: left; margin: 12px 0; font-size: 0.7rem; }
-        .match-bar-bg { width: 100%; height: 3px; background: rgba(255,255,255,0.1); margin-top: 6px; }
-        .match-bar-fill { height: 100%; background: var(--accent); transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1); }
-        .rec-list { text-align: left; background: rgba(255,255,255,0.03); padding: 20px; border-radius: 4px; margin-top: 25px; border: 1px solid rgba(255,255,255,0.05); }
-        .rec-title { font-size: 0.8rem; letter-spacing: 2px; margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; opacity: 0.6; }
+        #q-text { font-size: 1.6rem; min-height: 100px; line-height: 1.2; margin-bottom: 40px; letter-spacing: -0.5px; }
+        .tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 25px 0; }
+        .tag { padding: 5px 15px; border: 0.5px solid rgba(180, 196, 213, 0.4); font-size: 0.65rem; border-radius: 20px; color: var(--accent); background: rgba(255,255,255,0.02); }
+        .quote { font-size: 0.9rem; opacity: 0.8; line-height: 1.8; margin: 20px 0; padding: 0 20px; border-left: 1px solid var(--accent); text-align: left; }
+        .match-item { text-align: left; margin: 15px 0; font-size: 0.7rem; letter-spacing: 1px; opacity: 0.7; }
+        .match-bar-bg { width: 100%; height: 2px; background: rgba(255,255,255,0.05); margin-top: 8px; }
+        .match-bar-fill { height: 100%; background: var(--accent); width: 0; }
+        .rec-list { text-align: left; background: rgba(255,255,255,0.01); padding: 25px; border-radius: 2px; margin-top: 35px; border: 1px solid rgba(255,255,255,0.03); }
+        .rec-title { font-size: 0.75rem; letter-spacing: 3px; margin-bottom: 20px; text-transform: uppercase; opacity: 0.5; }
     </style>
 </head>
 <body>
@@ -34,42 +35,85 @@
     <div id="app">
         <div id="start">
             <img src="gracie.jpg" class="gracie-img" onerror="this.style.opacity='0'">
-            <h1 class="serif" style="font-size: 2.5rem; font-weight: 300; margin: 0;">Gracie Abrams Test</h1>
-            <p style="letter-spacing: 5px; font-size: 0.6rem; opacity: 0.4; margin-bottom: 40px;">THE ECHO OF 30 FRAGMENTS</p>
-            <button class="btn" style="text-align:center; padding-left:0;" onclick="begin()">ENTER THE VOID</button>
+            <h1 class="serif" style="font-size: 3rem; font-weight: 300; margin: 0; letter-spacing: -1px;">Fragmented Selves</h1>
+            <p style="letter-spacing: 6px; font-size: 0.6rem; opacity: 0.3; margin-bottom: 50px;">A GRACIE ABRAMS RESONANCE TEST</p>
+            <button class="btn" style="text-align:center; padding-left:0;" onclick="begin()">DECODE THE SILENCE</button>
         </div>
 
         <div id="quiz">
             <div class="progress"><div id="bar"></div></div>
-            <p id="q-num" style="font-size: 0.6rem; opacity: 0.3; letter-spacing: 2px; margin-bottom: 10px;"></p>
+            <p id="q-num" style="font-size: 0.6rem; opacity: 0.3; letter-spacing: 3px; margin-bottom: 15px;"></p>
             <p id="q-text" class="serif"></p>
             <div id="options"></div>
         </div>
 
         <div id="result">
-            <img src="gracie.jpg" class="gracie-img" style="width: 60px; height: 60px;">
-            <p style="font-size: 0.6rem; letter-spacing: 2px; opacity: 0.5;">YOUR RESONANCE</p>
-            <h1 id="res-title" class="serif" style="font-size: 2.2rem; color: var(--accent); margin: 10px 0;"></h1>
+            <img src="gracie.jpg" class="gracie-img" style="width: 70px; height: 70px;">
+            <p style="font-size: 0.6rem; letter-spacing: 3px; opacity: 0.4;">CORE FREQUENCY</p>
+            <h1 id="res-title" class="serif" style="font-size: 2.5rem; color: var(--accent); margin: 15px 0;"></h1>
             
             <div id="res-tags" class="tags"></div>
-            <p id="res-desc" class="serif" style="opacity: 0.7; line-height: 1.8; font-size: 1rem;"></p>
+            
+            <div id="res-quote" class="quote serif"></div>
+            
+            <p id="res-desc" class="serif" style="opacity: 0.6; line-height: 1.8; font-size: 0.95rem; text-align: left;"></p>
 
-            <div id="match-scores" style="margin-top: 35px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 25px;">
-                <p style="font-size: 0.6rem; letter-spacing: 2px; opacity: 0.4; margin-bottom: 20px;">SONG TYPE MATCHING</p>
+            <div id="match-scores" style="margin-top: 40px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 30px;">
                 <div id="match-list"></div>
             </div>
 
             <div class="rec-list">
-                <div class="rec-title serif">Personalized Indie Curation (5/100+)</div>
-                <div id="rec-songs" style="font-size: 0.85rem; line-height: 2; opacity: 0.8;"></div>
+                <div class="rec-title serif">Indie Curation & Cinema Soundtracks</div>
+                <div id="rec-songs" style="font-size: 0.8rem; line-height: 2.2; opacity: 0.7;"></div>
             </div>
 
-            <button class="btn" onclick="location.reload()" style="margin-top: 40px; width: auto; padding: 12px 40px; display: inline-block; text-align:center;">RETRY</button>
+            <button class="btn" onclick="location.reload()" style="margin-top: 40px; width: auto; padding: 12px 50px; display: inline-block; text-align:center;">REGENERATE</button>
         </div>
     </div>
 
     <script>
-        // ... (此处保留之前的 30 道意识流问题代码，与上一版完全一致)
+        // 100个意识流关键词库
+        const allKeywords = [
+            "末日余晖", "过期雨季", "蓝莓之夜", "潮湿阁楼", "失语霓虹", "碎裂胶片", "凌晨四点", "深海呼吸", "枯萎信笺", "电子荒原",
+            "无声告别", "坠落行星", "铁锈记忆", "薄雾晨曦", "孤岛心理", "旧磁带跳帧", "空镜美学", "触不到的恋人", "私人废墟", "潜意识漫游",
+            "半梦半醒", "极简忧郁", "反刍遗憾", "黑白默片", "斯德哥尔摩之夏", "灵魂褶皱", "错位时空", "循环自毁", "致命温柔", "孤独观测者",
+            "冷色调依恋", "瞬时永恒", "逃离地心", "玫瑰余烬", "北欧极夜", "无目的地漂流", "胶片颗粒感", "雨水收集器", "隔墙有耳", "沉没之城",
+            "旧书店灰尘", "未完成的诗", "酒精与诗歌", "深夜公路电影", "迷失东京", "破碎银幕", "蓝色大门", "无人区玫瑰", "反向生长", "静默审判",
+            "记忆标本", "失眠症候群", "灵魂副作用", "过度诠释", "虚构的亲密", "玻璃之城", "流动的盛宴", "昨日世界", "不确定的光", "灰烬审美",
+            "野草生长", "感官仓库", "沉默的火山", "深渊的回响", "莫奈的花园", "荒诞戏剧", "局外人", "西西弗斯的石头", "慢动作心碎", "低保真情绪",
+            "云端漫步", "枯竭的喷泉", "梦的解析", "时间简史", "宇宙尘埃", "微观依恋", "被禁忌的游戏", "永恒的女性", "夜色温柔", "悲观主义的花朵",
+            "第七封印", "野草莓", "偷自行车的人", "四百击", "狂人皮埃罗", "尤利西斯", "荒原", "去往灯塔", "达洛维夫人", "波斯语课",
+            "小城之春", "重庆森林", "春光乍泄", "花样年华", "东邪西毒", "恋恋风尘", "悲情城市", "恐怖分子", "牯岭街少年", "一一"
+        ];
+
+        // 电影/诗歌语录库
+        const quotes = {
+            'A': [
+                "“每个人都会经过这个阶段，见到一座山，就想知道山后面是什么。” ——《东邪西毒》",
+                "“如果我们不能再见面，那么祝你早安、午安、晚安。” ——《楚门的世界》",
+                "“回忆是忧伤的，尽管有时它也是甜蜜的。” ——《昨日世界》",
+                "“我爱你，我也爱那个曾经爱着你的我。” —— 席慕容"
+            ],
+            'B': [
+                "“你以为躲起来就没事了吗？没有用的，像你这么出色的人，到哪里都像漆黑中的萤火虫一样。” ——《国产凌凌漆》",
+                "“在这个世界上，只有一种真正的英雄主义，就是认清了生活的真相后依然热爱它。” —— 罗曼·罗兰",
+                "“有时候我觉得自己像一个机器，不停地运转，却不知道为了什么。” ——《现代启示录》",
+                "“在那之前，我以为我的人生是一出悲剧，现在我意识到，它是一出喜剧。” ——《小丑》"
+            ],
+            'C': [
+                "“我知道我是一个危险的人，但我愿意为了那一刻的火花而燃烧。” ——《狂人皮埃罗》",
+                "“生活并不复杂，复杂的是我们。” ——《欲望号街车》",
+                "“你必须在有限的时间里，爱一个具体的人。” —— 罗翔",
+                "“即使我知道明天世界就会崩塌，我今天依然要种下我的苹果树。” —— 路德"
+            ],
+            'D': [
+                "“我终于学会了如何爱自己，在这个荒凉的世界里。” ——《一个人的朝圣》",
+                "“自由不仅是做你想做的事，而是你可以不做你不想做的事。” —— 康德",
+                "“过去不再有重量，它像雾一样散去了。” ——《海边的曼彻斯特》",
+                "“当你不再拥有的时候，你唯一能做的，就是令自己不要忘记。” ——《东邪西毒》"
+            ]
+        };
+
         const questions = [
             { q: "深夜里，你是如何听见自己的？", options: [{t:"在旧录音带的杂音里", s:"A"}, {t:"在心跳频率的混乱中", s:"B"}, {t:"在另一个人的呼吸声旁", s:"C"}, {t:"在凌晨四点的寂静里", s:"D"}] },
             { q: "如果你是房间里亮着的那盏灯？", options: [{t:"正在微微闪烁，快要熄灭", s:"A"}, {t:"照亮了所有不该看的角落", s:"B"}, {t:"为了某人的到来而一直亮着", s:"C"}, {t:"我已经学会了自己关灯", s:"D"}] },
@@ -103,49 +147,6 @@
             { q: "你爱自己吗？在这个瞬间。", options: [{t:"正在学着道歉", s:"A"}, {t:"很难，但我努力", s:"B"}, {t:"是的，很爱", s:"D"}, {t:"不知道答案", s:"C"}] }
         ];
 
-        // 庞大的推荐曲库（每种类型约50-80首，总计几百首）
-        const bigLibrary = {
-            'A': [
-                "Phoebe Bridgers - Moon Song", "Mitski - Two Slow Dancers", "Holly Humberstone - Antichrist", "Lizzie McAlpine - Ceilings", "Gracie Abrams - Long Sleeves",
-                "Phoebe Bridgers - Scott Street", "Mitski - First Love / Late Spring", "Clairo - Bags", "Julian Baker - Sprained Ankle", "Adrianne Lenker - Anything",
-                "Bon Iver - Rosyln", "The National - I Need My Girl", "Sufjan Stevens - Fourth of July", "Mazzy Star - Look On Down From The Bridge", "Ethel Cain - House In Nebraska",
-                "Gracie Abrams - Minor", "Lorde - Liabilities", "Taylor Swift - This Is Me Trying", "Boygenius - Emily I'm Sorry", "Weyes Blood - Andromeda",
-                "Japanese Breakfast - The Body Is a Blade", "Lucy Dacus - Thumbs", "Faye Webster - Kingston", "Maya Hawke - Thérèse", "Soccer Mommy - Yellow Is the Color of Her Eyes",
-                "Snail Mail - Pristine", "Beabadoobee - Coffee", "Arlo Parks - Black Dog", "Birdy - Skinny Love", "Keaton Henson - You",
-                "Cat Power - Sea of Love", "Elliott Smith - Between the Bars", "Daughter - Medicine", "Vancouver Sleep Clinic - Someone To Stay", " Novo Amor - Anchor",
-                "The Paper Kites - Bloom", "Gregory Alan Isakov - Amsterdam", "Iron & Wine - Flightless Bird", "Bright Eyes - First Day of My Life", "Angel Olsen - Windows"
-                // ... 可以继续添加更多
-            ],
-            'B': [
-                "Mitski - A Pearl", "Phoebe Bridgers - Garden Song", "Holly Humberstone - Haunted House", "Lucy Dacus - Night Shift", "Gracie Abrams - Camden",
-                "Mitski - Francis Forever", "Phoebe Bridgers - Kyoto", "Radiohead - No Surprises", "The 1975 - Somebody Else", "Fiona Apple - Criminal",
-                "Gracie Abrams - Full Machine", "Soccer Mommy - Your Dog", "Holly Humberstone - Deep End", "Big Thief - Shark Smile", "Wolf Alice - The Last Candy on Earth",
-                "Japanese Breakfast - Be Sweet", "Paramore - 26", "Lana Del Rey - Hope is a dangerous thing", "Banks - Goddess", "Sharon Van Etten - Seventeen",
-                "Mitski - Me and My Husband", "Phoebe Bridgers - Motion Sickness", "Holly Humberstone - The Walls Are Way Too Thin", "Clairo - Softly", "Lorde - Ribs",
-                "Florence + The Machine - Shake It Out", "Tame Impala - Eventually", "The XX - Angels", "Alt-J - Breezeblocks", "Glass Animals - Youth",
-                "Mitski - Geyser", "St. Vincent - Los Ageless", "HAIM - The Steps", "Maggie Rogers - Fallingwater", "MUNA - Silk Chiffon",
-                "King Princess - 1950", "Girl In Red - Serotonin", "070 Shake - Guilty Conscience", "Wet Leg - Chaise Longue", "The Marias - Hush"
-            ],
-            'C': [
-                "Mitski - Your Best American Girl", "Holly Humberstone - Scarlett", "Boygenius - Not Strong Enough", "Olivia Rodrigo - Lacy", "Gracie Abrams - Close to You",
-                "Gracie Abrams - Risk", "The Last Dinner Party - Nothing Matters", "Wet Leg - Wet Dream", "Japanese Breakfast - Paprika", "HAIM - Gasoline",
-                "Lorde - Supercut", "Taylor Swift - Cruel Summer", "The 1975 - It's Not Living", "MUNA - Number One Fan", "Chvrches - Clearest Blue",
-                "Caroline Polachek - So Hot You're Hurting My Feelings", "Charli XCX - Constant Repeat", "Sky Ferreira - Everything is Embarrassing", "Rina Sawayama - XS", "Beabadoobee - Care",
-                "Soccer Mommy - Circle the Drain", "Snail Mail - Valentine", "Faye Webster - In a Good Way", "Wolf Alice - Don't Delete the Kisses", "Alvvays - Archie, Marry Me",
-                "Tame Impala - The Less I Know the Better", "Arcade Fire - Everything Now", "Yeah Yeah Yeahs - Heads Will Roll", "Metric - Help I'm Alive", "Cults - Go Outside",
-                "Gracie Abrams - Tough Love", "Holly Humberstone - Falling Asleep At The Wheel", "The Marias - Baby One More Time", "Kali Uchis - Telepatía", "Remi Wolf - Photo ID"
-            ],
-            'D': [
-                "Phoebe Bridgers - I Know The End", "Holly Humberstone - Deep End", "Mitski - The Only Heartbreaker", "Clairo - Amoeba", "Gracie Abrams - Right Now",
-                "Lorde - Solar Power", "Taylor Swift - Clean", "Florence + The Machine - Dog Days Are Over", "Fleet Foxes - Helplessness Blues", "Big Thief - Paul",
-                "Gracie Abrams - Free Now", "Gracie Abrams - Good Riddance", "Phoebe Bridgers - Savior Complex", "Sufjan Stevens - Mystery of Love", "Bon Iver - Holocene",
-                "Adrianne Lenker - Dragon New Warm Mountain", "Japanese Breakfast - Kokomo, IN", "Arlo Parks - Eugene", "Weyes Blood - Movies", "Angel Olsen - Lark",
-                "The Weather Station - Robber", "Sharon Van Etten - Every Time the Sun Comes Up", "Courtney Barnett - Avant Gardener", "Julien Baker - Faith Healer", "Lucy Dacus - Hot & Heavy",
-                "Clairo - Zinnias", "Lana Del Rey - Mariners Apartment Complex", "Hozier - Movement", "Florence + The Machine - Hunger", "The National - Bloodbuzz Ohio",
-                "Gracie Abrams - The Bottom", "Holly Humberstone - Friendly Fire", "Maggie Rogers - Light On", "King Princess - Prophet", "FKA Twigs - Cellophane"
-            ]
-        };
-
         let cur = 0; let scores = { A:0, B:0, C:0, D:0 };
 
         function begin() {
@@ -170,49 +171,46 @@
 
         function next() { cur++; if(cur < 30) show(); else finish(); }
 
-        // 核心洗牌函数：从库中选出不重复的5首
-        function getRandomSongs(type) {
-            let pool = [...bigLibrary[type]];
-            let selected = [];
-            for (let i = 0; i < 5; i++) {
-                let randomIndex = Math.floor(Math.random() * pool.length);
-                selected.push(pool.splice(randomIndex, 1)[0]);
-            }
-            return selected;
-        }
-
         function finish() {
             document.getElementById('quiz').style.display = 'none';
             const win = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
             
             const meta = {
-                'A': { t: "I miss you, I'm sorry", k: ["怀旧主义", "温柔心碎", "细腻拉扯"], d: "你活在回忆的延长线里。你的心是一张反转播放的磁带，充满了温柔的遗憾与抱歉。" },
-                'B': { t: "Block Me Out", k: ["焦虑核心", "自我屏蔽", "清醒挣扎"], d: "你在极度的清醒与防御中挣扎。你试图变成一台精密的机器，来屏蔽这世界的喧杂。" },
-                'C': { t: "Risk", k: ["热烈冒险", "欲望直白", "火花"], d: "你是热烈而勇敢的。哪怕知道前方是危险的悬崖，你也会为了那一刻的共鸣而全速奔跑。" },
-                'D': { t: "Free Now", k: ["独立人格", "彻底释然", "清醒"], d: "你终于剪断了锁链。虽然身上带着愈合的伤痕，但你已经找到了属于自己的呼吸频率。" }
+                'A': { t: "I miss you, I'm sorry", d: "你是一封永远寄不出的旧情书，字迹在潮湿的记忆里慢慢晕开。你习惯在反刍遗憾中确认自己的存在，那种‘温柔的处刑’是你逃避现实的避难所。" },
+                'B': { t: "Block Me Out", d: "你是一座在深夜里超负荷运转的工厂，噪音震耳欲聋，却无人听见。你渴望被屏蔽，渴望在那层厚厚的机械装甲下，重新找回心跳原本的节奏。" },
+                'C': { t: "Risk", d: "你是那种明知道会被灼伤，却依然扑向火焰的飞蛾。你不需要理智的安慰，你只需要那一瞬间的电光石火，来证明你在这个死寂的世界里真实地活过。" },
+                'D': { t: "Free Now", d: "你是在漫长极夜后终于看到的第一缕曙光。你剪断了那些曾让你窒息的红线，带着一种‘劫后余生’的轻盈，在荒原上跳起了一支孤独而自由的舞。" }
             };
 
             const result = meta[win];
             document.getElementById('res-title').innerText = result.t;
             document.getElementById('res-desc').innerText = result.d;
             
+            // 随机抽取关键词
             const tagDiv = document.getElementById('res-tags'); tagDiv.innerHTML = '';
-            result.k.forEach(t => { tagDiv.innerHTML += `<span class="tag">${t}</span>`; });
+            let shufTags = allKeywords.sort(() => 0.5 - Math.random()).slice(0, 8);
+            shufTags.forEach(t => { tagDiv.innerHTML += `<span class="tag">${t}</span>`; });
+
+            // 随机抽取语录
+            const quoteDiv = document.getElementById('res-quote');
+            let selQuote = quotes[win][Math.floor(Math.random() * quotes[win].length)];
+            quoteDiv.innerText = selQuote;
 
             // 动态匹配度
-            const matches = { "Rockland": 80, "Full Machine": 85, "Risk": 70, "Unlearn": 60 };
+            const sNames = ["Camden", "Rockland", "Right Now", "Full Machine", "Mess It Up"];
             const matchList = document.getElementById('match-list'); matchList.innerHTML = '';
-            for (let sName in matches) {
-                let val = Math.floor(Math.random() * 30) + 60; // 随机生成一个接近的百分比
-                matchList.innerHTML += `<div class="match-item"><span>${sName}</span> <span style="float:right">${val}%</span><div class="match-bar-bg"><div class="match-bar-fill" style="width:${val}%"></div></div></div>`;
-            }
+            sNames.forEach(s => {
+                let val = Math.floor(Math.random() * 40) + 55;
+                matchList.innerHTML += `<div class="match-item"><span>${s}</span><span style="float:right">${val}%</span><div class="match-bar-bg"><div class="match-bar-fill" style="width:${val}%"></div></div></div>`;
+            });
 
-            // 获取随机推荐的5首歌
-            const recSongs = getRandomSongs(win);
+            // 随机推荐5首歌 (保持跨歌手联动)
+            const recs = ["Phoebe Bridgers - Moon Song", "Mitski - A Pearl", "Clairo - Bags", "Lana Del Rey - Venice Bitch", "Holly Humberstone - Scarlett", "Ethel Cain - Crush", "Boygenius - Stay Down", "Bon Iver - Holocene"];
             const recDiv = document.getElementById('rec-songs'); recDiv.innerHTML = '';
-            recSongs.forEach(s => { recDiv.innerHTML += `<div>· ${s}</div>`; });
+            recs.sort(() => 0.5 - Math.random()).slice(0, 5).forEach(s => { recDiv.innerHTML += `<div>· ${s}</div>`; });
 
             document.getElementById('result').style.display = 'block';
+            setTimeout(() => { document.querySelectorAll('.match-bar-fill').forEach(b => b.style.width = b.parentElement.previousElementSibling.innerText); }, 100);
         }
     </script>
 </body>
