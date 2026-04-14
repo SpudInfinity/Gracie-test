@@ -3,42 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gracie Abrams | Block Me Out Experience</title>
+    <title>Gracie Abrams | The Complete Echo</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,300&family=Montserrat:wght@200;400&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg: #121212;
-            --text: #e0e0e0;
-            --accent: #8da2b5;
-            --glass: rgba(255, 255, 255, 0.05);
-        }
-        * { box-sizing: border-box; transition: all 0.5s ease; }
+        :root { --bg: #0d0d0d; --text: #e0e0e0; --accent: #9eb1c7; --glass: rgba(255, 255, 255, 0.03); }
+        * { box-sizing: border-box; transition: all 0.4s ease; }
         body {
             margin: 0; background-color: var(--bg); color: var(--text);
             font-family: 'Montserrat', sans-serif;
             display: flex; justify-content: center; align-items: center; min-height: 100vh;
-            background-image: radial-gradient(circle at center, #1a1a1a 0%, #0a0a0a 100%);
+            background-image: radial-gradient(circle at center, #1a1a1a 0%, #050505 100%);
         }
         #app {
-            width: 90%; max-width: 480px; padding: 50px 30px;
-            background: var(--glass); backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.1); text-align: center;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            width: 90%; max-width: 500px; padding: 40px 25px;
+            background: var(--glass); backdrop-filter: blur(30px);
+            border: 1px solid rgba(255,255,255,0.08); text-align: center;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.8);
         }
         .serif { font-family: 'Cormorant Garamond', serif; font-style: italic; }
         .gracie-img {
-            width: 100px; height: 100px; border-radius: 50%; object-fit: cover;
-            filter: grayscale(100%); margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.2);
+            width: 90px; height: 90px; border-radius: 50%; object-fit: cover;
+            filter: grayscale(100%); margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.1);
         }
         .btn {
-            display: block; width: 100%; padding: 15px; margin: 12px 0;
-            background: none; border: 1px solid rgba(255,255,255,0.2); cursor: pointer;
-            color: var(--text); font-family: 'Montserrat', sans-serif; 
+            display: block; width: 100%; padding: 14px; margin: 10px 0;
+            background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.1); cursor: pointer;
+            color: var(--text); font-family: 'Montserrat', sans-serif; font-size: 0.8rem;
         }
-        .btn:hover { background: var(--text); color: #000; }
-        .progress { width: 100%; height: 1px; background: rgba(255,255,255,0.1); margin-bottom: 30px; }
+        .btn:hover { background: var(--text); color: #000; transform: scale(1.02); }
+        .progress { width: 100%; height: 1px; background: rgba(255,255,255,0.05); margin-bottom: 25px; }
         #bar { width: 0%; height: 100%; background: var(--accent); }
         #quiz, #result { display: none; }
+        #q-text { font-size: 1.4rem; min-height: 70px; line-height: 1.3; }
     </style>
 </head>
 <body>
@@ -47,69 +43,61 @@
 
     <div id="app">
         <div id="start">
-            <img src="gracie.jpg" class="gracie-img" onerror="this.style.display='none'">
-            <h1 class="serif" style="font-size: 2.5rem; font-weight: 300; margin: 0;">Block Me Out.</h1>
-            <p style="letter-spacing: 4px; font-size: 0.6rem; opacity: 0.5; margin-bottom: 40px;">30 QUESTIONS</p>
-            <button class="btn" onclick="begin()">ENTER THE VOID</button>
+            <img src="gracie.jpg" class="gracie-img" onerror="this.style.opacity='0'">
+            <h1 class="serif" style="font-size: 2.2rem; font-weight: 300; margin: 0;">The Echo Chamber.</h1>
+            <p style="letter-spacing: 3px; font-size: 0.6rem; opacity: 0.4; margin-bottom: 30px;">FIND YOUR GRACIE ANTHEM</p>
+            <button class="btn" onclick="begin()">START REFLECTION</button>
         </div>
 
         <div id="quiz">
             <div class="progress"><div id="bar"></div></div>
-            <p id="q-text" class="serif" style="font-size: 1.5rem; min-height: 80px;"></p>
+            <p id="q-text" class="serif"></p>
             <div id="options"></div>
         </div>
 
         <div id="result">
-            <img src="gracie.jpg" class="gracie-img" style="width: 80px; height: 80px;">
-            <p style="font-size: 0.6rem; letter-spacing: 2px;">YOUR RESONANCE IS</p>
-            <h1 id="res-title" class="serif" style="font-size: 2.2rem; color: var(--accent);"></h1>
-            <p id="res-desc" class="serif" style="opacity: 0.7; line-height: 1.8;"></p>
-            <button class="btn" onclick="location.reload()">RETAKE</button>
+            <img src="gracie.jpg" class="gracie-img" style="width: 70px; height: 70px;">
+            <p style="font-size: 0.6rem; letter-spacing: 2px; opacity: 0.5;">YOUR DESTINY SONG</p>
+            <h1 id="res-title" class="serif" style="font-size: 2rem; color: var(--accent); margin: 10px 0;"></h1>
+            <p id="res-desc" class="serif" style="opacity: 0.7; line-height: 1.6; font-size: 1rem; padding: 0 10px;"></p>
+            <button class="btn" onclick="location.reload()" style="margin-top: 30px; width: auto; padding: 10px 30px; display: inline-block;">RETRY</button>
         </div>
     </div>
 
     <script>
         const questions = [
-            { q: "深夜两点，你更倾向于？", options: [{t:"盯着天花板数呼吸", s:"A"}, {t:"翻看一年前的聊天记录", s:"B"}] },
-            { q: "道歉对你来说意味着？", options: [{t:"渴望解脱", s:"A"}, {t:"承认失败", s:"B"}] },
-            { q: "如果你是一个季节，你会是？", options: [{t:"刚入冬的初霜", s:"A"}, {t:"暴雨前的闷热下午", s:"B"}] },
-            { q: "关于遗憾，你的态度是？", options: [{t:"试图将其彻底抹除", s:"A"}, {t:"反复修剪它", s:"B"}] },
-            { q: "你最害怕哪种沉默？", options: [{t:"独自一人的空洞", s:"A"}, {t:"两人对坐的无言", s:"B"}] },
-            { q: "如果你是一个房间，你希望是？", options: [{t:"反锁的卧室", s:"A"}, {t:"开着窗的阁楼", s:"B"}] },
-            { q: "爱一个人的时候，你更像？", options: [{t:"潮汐，忽远忽近", s:"A"}, {t:"影子，紧紧跟随", s:"B"}] },
-            { q: "你习惯如何处理压力？", options: [{t:"Block it out (屏蔽)", s:"A"}, {t:"Let it spill (倾泻)", s:"B"}] },
-            { q: "关于“错过”，你觉得？", options: [{t:"是注定的解脱", s:"A"}, {t:"是未完的惩罚", s:"B"}] },
-            { q: "当你感到不知所措时，你会？", options: [{t:"把自己反锁在浴室", s:"A"}, {t:"去陌生人的城市走走", s:"B"}] },
-            { q: "你觉得自己更像？", options: [{t:"破碎的镜子", s:"A"}, {t:"燃烧的蜡烛", s:"B"}] },
-            { q: "如果你必须改写一段回忆？", options: [{t:"那个错误的开头", s:"A"}, {t:"那个无声的结尾", s:"B"}] },
-            { q: "你更倾向于把秘密？", options: [{t:"埋在心底腐烂", s:"A"}, {t:"写进潦草的日记", s:"B"}] },
-            { q: "如果你是一个乐器，你是？", options: [{t:"低沉的大提琴", s:"A"}, {t:"带杂音的黑胶", s:"B"}] },
-            { q: "关于原谅，你的看法是？", options: [{t:"很难，但必须做", s:"A"}, {t:"很容易，但很难忘", s:"B"}] },
-            { q: "你习惯在什么时候崩溃？", options: [{t:"深夜无人时", s:"A"}, {t:"大雨滂沱时", s:"B"}] },
-            { q: "写心情时，你会用？", options: [{t:"不留痕迹的打字机", s:"A"}, {t:"容易模糊的铅笔", s:"B"}] },
-            { q: "你最想对那个TA说？", options: [{t:"I Should Hate You", s:"A"}, {t:"I Miss You, I’m Sorry", s:"B"}] },
-            { q: "在人群中，你通常是？", options: [{t:"透明的观察者", s:"A"}, {t:"勉强的配合者", s:"B"}] },
-            { q: "想要哪种超能力？", options: [{t:"瞬间遗忘", s:"A"}, {t:"时间倒流", s:"B"}] },
-            { q: "一段关系最痛苦的是？", options: [{t:"逐渐平庸", s:"A"}, {t:"无休止的争吵", s:"B"}] },
-            { q: "被困在梦境里，你希望？", options: [{t:"永远不要醒来", s:"A"}, {t:"立刻回到现实", s:"B"}] },
-            { q: "你更喜欢哪种颜色？", options: [{t:"雾霾蓝", s:"A"}, {t:"午夜黑", s:"B"}] },
-            { q: "别人看着你时，看到？", options: [{t:"完美的伪装", s:"A"}, {t:"真实的脆弱", s:"B"}] },
-            { q: "你如何面对失去？", options: [{t:"迅速筑起围墙", s:"A"}, {t:"反复咀嚼空虚", s:"B"}] },
-            { q: "偶遇旧爱，第一反应是？", options: [{t:"低头快步走过", s:"A"}, {t:"礼貌但客套地微笑", s:"B"}] },
-            { q: "最好的关系状态是？", options: [{t:"各自独立又依靠", s:"A"}, {t:"合而为一，彼此透明", s:"B"}] },
-            { q: "关于未来，你的感受是？", options: [{t:"未知的恐惧", s:"A"}, {t:"期待的冒险", s:"B"}] },
-            { q: "你觉得自己更像？", options: [{t:"一只迷失的鸟", s:"A"}, {t:"一只孤独的狼", s:"B"}] },
-            { q: "如何定义“成长”？", options: [{t:"学会了说不", s:"A"}, {t:"学会接受失去", s:"B"}] }
+            { q: "深夜你无法入睡的原因通常是？", options: [
+                {t:"脑海中反复回放一段对话", s:"A"}, {t:"对未来的不确定感到焦虑", s:"B"}, 
+                {t:"沉溺在对某个人的想念中", s:"C"}, {t:"纯粹享受孤独的清醒", s:"D"}
+            ]},
+            { q: "如果要把这一刻的心情写下来，你会？", options: [
+                {t:"写一封永远不会寄出的信", s:"A"}, {t:"在备忘录里打下杂乱的字句", s:"B"}, 
+                {t:"画一个只有自己懂的符号", s:"C"}, {t:"撕碎手边的一张纸", s:"D"}
+            ]},
+            { q: "关于爱，你现在的状态更接近？", options: [
+                {t:"卑微地渴望被注意到", s:"A"}, {t:"冷静地想要逃离这一切", s:"B"}, 
+                {t:"在回忆里反复拉扯自己", s:"C"}, {t:"已经学会了和自己相处", s:"D"}
+            ]},
+            { q: "你最喜欢的环境是？", options: [
+                {t:"下雨时的窗边", s:"A"}, {t:"疾驰的车内后座", s:"B"}, 
+                {t:"光线昏暗的卧室", s:"C"}, {t:"清晨无人的街道", s:"D"}
+            ]},
+            { q: "如果一段关系结束了，你会？", options: [
+                {t:"不停地道歉，试图挽回", s:"A"}, {t:"屏蔽对方所有的动态", s:"B"}, 
+                {t:"留着所有的合照不删", s:"C"}, {t:"写一首歌送给对方", s:"D"}
+            ]}
         ];
 
-        let cur = 0, score = { A:0, B:0 };
+        let cur = 0;
+        let scores = { A:0, B:0, C:0, D:0 };
+
         function begin() {
-            const m = document.getElementById('bgm');
-            m.volume = 0.4; m.play().catch(() => {});
+            const m = document.getElementById('bgm'); m.volume = 0.4; m.play().catch(() => {});
             document.getElementById('start').style.display = 'none';
             document.getElementById('quiz').style.display = 'block';
             show();
         }
+
         function show() {
             const q = questions[cur];
             document.getElementById('q-text').innerText = q.q;
@@ -119,24 +107,30 @@
             q.options.forEach(o => {
                 const b = document.createElement('button');
                 b.className = 'btn'; b.innerText = o.t;
-                b.onclick = () => { score[o.s]++; next(); };
+                b.onclick = () => { scores[o.s]++; next(); };
                 optDiv.appendChild(b);
             });
         }
+
         function next() {
             cur++;
             if(cur < questions.length) show();
             else finish();
         }
+
         function finish() {
             document.getElementById('quiz').style.display = 'none';
-            const win = score.A >= score.B ? 'A' : 'B';
-            const res = {
-                'A': { t: "Block Me Out", d: "你试图屏蔽外界的嘈杂，却在安静中听见了内心最真实的崩塌声。" },
-                'B': { t: "I Miss You, I'm Sorry", d: "你感性、诚实且充满眷恋。你从不掩饰自己的破碎。" }
+            const winner = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
+            
+            const results = {
+                'A': { t: "I miss you, I'm sorry", d: "你是感性的、诚实的。你宁愿沉溺在道歉中，也不愿面对真正的失去。" },
+                'B': { t: "Block Me Out", d: "你是一个复杂的矛盾体。你试图屏蔽世界，却在安静中听到了最响亮的焦虑。" },
+                'C': { t: "Risk / Close to You", d: "你充满了生命力。哪怕知道有风险，你也愿意为了那一瞬间的靠近而倾尽所有。" },
+                'D': { t: "Good Riddance / Free Now", d: "你已经准备好放手了。在这个测试的尽头，你找到了属于自己的自由。" }
             };
-            document.getElementById('res-title').innerText = res[win].t;
-            document.getElementById('res-desc').innerText = res[win].d;
+
+            document.getElementById('res-title').innerText = results[winner].t;
+            document.getElementById('res-desc').innerText = results[winner].d;
             document.getElementById('result').style.display = 'block';
         }
     </script>
