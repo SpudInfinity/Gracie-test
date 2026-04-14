@@ -13,7 +13,6 @@
             font-family: 'Montserrat', sans-serif;
             display: flex; justify-content: center; align-items: center; min-height: 100vh;
             background-image: radial-gradient(circle at center, #151515 0%, #000 100%);
-            overflow-x: hidden;
         }
         #app {
             width: 95%; max-width: 500px; padding: 40px 20px;
@@ -21,22 +20,22 @@
             border: 1px solid rgba(255,255,255,0.08); text-align: center;
             box-shadow: 0 40px 100px rgba(0,0,0,0.8);
         }
-        .serif { font-family: 'Cormorant Gramamond', serif; font-style: italic; }
+        .serif { font-family: 'Cormorant Garamond', serif; font-style: italic; }
         .gracie-img {
             width: 80px; height: 80px; border-radius: 50%; object-fit: cover;
             filter: grayscale(100%); margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.1);
         }
         .btn {
-            display: block; width: 100%; padding: 12px; margin: 8px 0;
+            display: block; width: 100%; padding: 14px; margin: 10px 0;
             background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.1); cursor: pointer;
-            color: var(--text); font-family: 'Montserrat', sans-serif; font-size: 0.75rem;
-            text-align: left; padding-left: 20px;
+            color: var(--text); font-family: 'Montserrat', sans-serif; font-size: 0.8rem;
+            text-align: left; padding-left: 20px; line-height: 1.4;
         }
         .btn:hover { background: var(--text); color: #000; }
-        .progress { width: 100%; height: 2px; background: rgba(255,255,255,0.05); margin-bottom: 25px; }
+        .progress { width: 100%; height: 1px; background: rgba(255,255,255,0.05); margin-bottom: 25px; }
         #bar { width: 0%; height: 100%; background: var(--accent); }
         #quiz, #result { display: none; }
-        #q-text { font-size: 1.3rem; min-height: 60px; line-height: 1.4; margin-bottom: 30px; }
+        #q-text { font-size: 1.4rem; min-height: 80px; line-height: 1.3; margin-bottom: 30px; }
     </style>
 </head>
 <body>
@@ -47,8 +46,8 @@
         <div id="start">
             <img src="gracie.jpg" class="gracie-img" onerror="this.style.opacity='0'">
             <h1 class="serif" style="font-size: 2.5rem; font-weight: 300; margin: 0;">Gracie Abrams Test</h1>
-            <p style="letter-spacing: 4px; font-size: 0.6rem; opacity: 0.4; margin-bottom: 40px;">THE ECHO OF 30 MEMORIES</p>
-            <button class="btn" style="text-align:center; padding-left:0;" onclick="begin()">BEGIN REFLECTION</button>
+            <p style="letter-spacing: 4px; font-size: 0.6rem; opacity: 0.4; margin-bottom: 40px;">30 FRAGMENTS OF REFLECTION</p>
+            <button class="btn" style="text-align:center; padding-left:0;" onclick="begin()">ENTER THE VOID</button>
         </div>
 
         <div id="quiz">
@@ -60,59 +59,57 @@
 
         <div id="result">
             <img src="gracie.jpg" class="gracie-img" style="width: 60px; height: 60px;">
-            <p style="font-size: 0.6rem; letter-spacing: 2px; opacity: 0.5;">YOUR SIGNATURE SONG</p>
-            <h1 id="res-title" class="serif" style="font-size: 1.8rem; color: var(--accent); margin: 10px 0;"></h1>
-            <p id="res-desc" class="serif" style="opacity: 0.7; line-height: 1.6; font-size: 0.95rem;"></p>
+            <p style="font-size: 0.6rem; letter-spacing: 2px; opacity: 0.5;">YOUR RESONANCE</p>
+            <h1 id="res-title" class="serif" style="font-size: 2rem; color: var(--accent); margin: 10px 0;"></h1>
+            <p id="res-desc" class="serif" style="opacity: 0.7; line-height: 1.6; font-size: 1rem;"></p>
             <button class="btn" onclick="location.reload()" style="margin-top: 30px; width: auto; padding: 10px 30px; display: inline-block; text-align:center;">RETRY</button>
         </div>
     </div>
 
     <script>
         const questions = [
-            { q: "深夜你无法入睡的原因通常是？", options: [{t:"回想一段对话", s:"A"}, {t:"对未来的焦虑", s:"B"}, {t:"想念某个人", s:"C"}, {t:"享受孤独", s:"D"}] },
-            { q: "关于道歉，你的态度是？", options: [{t:"反复说直到对方原谅", s:"A"}, {t:"在心里说一万次", s:"B"}, {t:"不想说，但觉得亏欠", s:"C"}, {t:"已经不重要了", s:"D"}] },
-            { q: "如果你是一个季节，你会是？", options: [{t:"刚入冬的初霜", s:"A"}, {t:"闷热的雷雨前夕", s:"B"}, {t:"盛夏的傍晚", s:"C"}, {t:"深秋的落叶", s:"D"}] },
-            { q: "爱一个人的时候，你更像？", options: [{t:"卑微的影子", s:"A"}, {t:"失控的机器", s:"B"}, {t:"飞蛾扑火", s:"C"}, {t:"平静的湖水", s:"D"}] },
-            { q: "关于遗憾，你会？", options: [{t:"反复咀嚼", s:"A"}, {t:"试图屏蔽", s:"B"}, {t:"将其美化", s:"C"}, {t:"坦然接受", s:"D"}] },
-            { q: "你最喜欢的环境是？", options: [{t:"雨天的窗边", s:"A"}, {t:"高速公路的后座", s:"B"}, {t:"拥挤的派对边缘", s:"C"}, {t:"空旷的草地", s:"D"}] },
-            { q: "当焦虑蔓延时，你会？", options: [{t:"把自己反锁", s:"A"}, {t:"不停地走动", s:"B"}, {t:"寻找TA的痕迹", s:"C"}, {t:"听忧郁的歌", s:"D"}] },
-            { q: "如果你是一个秘密，你希望？", options: [{t:"永远烂在心里", s:"A"}, {t:"被温柔地发现", s:"B"}, {t:"变成一个谎言", s:"C"}, {t:"被写进歌里", s:"D"}] },
-            { q: "关于“错过”，你觉得？", options: [{t:"是注定的悲剧", s:"A"}, {t:"是解脱的开始", s:"B"}, {t:"是未完的故事", s:"C"}, {t:"是成长的代价", s:"D"}] },
-            { q: "你会为了爱去冒险吗？", options: [{t:"不敢，怕受伤", s:"A"}, {t:"一直在冒险却失败", s:"B"}, {t:"会，哪怕粉身碎骨", s:"C"}, {t:"现在只想安稳", s:"D"}] },
-            // 继续补充到30题...
-            { q: "你的社交习惯更接近？", options: [{t:"透明的观察者", s:"A"}, {t:"勉强的配合者", s:"B"}, {t:"热情的投入者", s:"C"}, {t:"孤独的幸存者", s:"D"}] },
-            { q: "如果要把这一刻记录下来？", options: [{t:"拍一张模糊的照片", s:"A"}, {t:"写一段杂乱的字", s:"B"}, {t:"画一个心碎的符号", s:"C"}, {t:"什么都不留", s:"D"}] },
-            { q: "你最怕哪种沉默？", options: [{t:"对坐无言", s:"A"}, {t:"独自一人的空洞", s:"B"}, {t:"被拉黑后的死寂", s:"C"}, {t:"争吵后的冷战", s:"D"}] },
-            { q: "关于“放手”，你认为？", options: [{t:"不可能做到", s:"A"}, {t:"需要漫长的自我斗争", s:"B"}, {t:"是给对方最后的爱", s:"C"}, {t:"是一种自由", s:"D"}] },
-            { q: "你更习惯在什么时候崩溃？", options: [{t:"深夜无人时", s:"A"}, {t:"大雨滂沱时", s:"B"}, {t:"在人群中强颜欢笑时", s:"C"}, {t:"在阳光明媚的下午", s:"D"}] },
-            { q: "你觉得最好的关系是？", options: [{t:"彼此纠缠", s:"A"}, {t:"互相救赎", s:"B"}, {t:"热烈燃烧", s:"C"}, {t:"各自安好", s:"D"}] },
-            { q: "如果你能改写回忆？", options: [{t:"改写那个结尾", s:"A"}, {t:"改写整个相遇", s:"B"}, {t:"保留所有痛苦", s:"C"}, {t:"把TA抹去", s:"D"}] },
-            { q: "关于未来，你的感受是？", options: [{t:"恐惧", s:"A"}, {t:"麻木", s:"B"}, {t:"期待", s:"C"}, {t:"释然", s:"D"}] },
-            { q: "你觉得自己像什么？", options: [{t:"破碎的镜子", s:"A"}, {t:"生锈的齿轮", s:"B"}, {t:"燃烧的星火", s:"C"}, {t:"飘散的云", s:"D"}] },
-            { q: "你会因为一首歌想起TA吗？", options: [{t:"每首歌都是TA", s:"A"}, {t:"只有悲伤的歌", s:"B"}, {t:"会，但会微笑", s:"C"}, {t:"已经不会了", s:"D"}] },
-            { q: "如果爱是一种颜色？", options: [{t:"忧郁的蓝", s:"A"}, {t:"压抑的灰", s:"B"}, {t:"危险的红", s:"C"}, {t:"纯净的白", s:"D"}] },
-            { q: "你如何评价自己的心？", options: [{t:"千疮百孔", s:"A"}, {t:"被冰封了", s:"B"}, {t:"依然温热", s:"C"}, {t:"空空如也", s:"D"}] },
-            { q: "你会给前任发消息吗？", options: [{t:"写好了但不敢发", s:"A"}, {t:"酒后控制不住", s:"B"}, {t:"已经互删了", s:"C"}, {t:"没有必要了", s:"D"}] },
-            { q: "你觉得自己更脆弱还是坚强？", options: [{t:"极度脆弱", s:"A"}, {t:"外强中干", s:"B"}, {t:"因爱而坚强", s:"C"}, {t:"无所谓了", s:"D"}] },
-            { q: "你渴望被拯救吗？", options: [{t:"非常渴望", s:"A"}, {t:"不信有人能救我", s:"B"}, {t:"我会自救", s:"C"}, {t:"我已经获救了", s:"D"}] },
-            { q: "如果人生是一场电影？", options: [{t:"悲剧结尾", s:"A"}, {t:"悬疑片", s:"B"}, {t:"爱情公路片", s:"C"}, {t:"纪录片", s:"D"}] },
-            { q: "你在关系中最在意？", options: [{t:"安全感", s:"A"}, {t:"诚实", s:"B"}, {t:"激情", s:"C"}, {t:"空间", s:"D"}] },
-            { q: "如果要把这一刻送给某人？", options: [{t:"送给那个离开的人", s:"B"}, {t:"送给现在的自己", s:"D"}, {t:"送给未来的爱人", s:"C"}, {t:"送给过去的自己", s:"A"}] },
-            { q: "你现在想哭吗？", options: [{t:"眼眶已经湿了", s:"A"}, {t:"哭不出来", s:"B"}, {t:"很平静", s:"D"}, {t:"想笑", s:"C"}] },
-            { q: "最后一个问题，你爱自己吗？", options: [{t:"正在努力学习", s:"A"}, {t:"很难做到", s:"B"}, {t:"是的，很爱", s:"D"}, {t:"不知道", s:"C"}] }
+            { q: "深夜里，你是如何听见自己的？", options: [{t:"在旧录音带的杂音里", s:"A"}, {t:"在心跳频率的混乱中", s:"B"}, {t:"在另一个人的呼吸声旁", s:"C"}, {t:"在凌晨四点的寂静里", s:"D"}] },
+            { q: "如果你是房间里亮着的那盏灯？", options: [{t:"正在微微闪烁，快要熄灭", s:"A"}, {t:"照亮了所有不该看的角落", s:"B"}, {t:"为了某人的到来而一直亮着", s:"C"}, {t:"我已经学会了自己关灯", s:"D"}] },
+            { q: "道歉的碎片堆在地上，你觉得那是？", options: [{t:"必须要拼凑好的过去", s:"A"}, {t:"扎脚的玻璃，最好别碰", s:"B"}, {t:"一种渴望被爱的筹码", s:"C"}, {t:"可以打扫掉的尘埃", s:"D"}] },
+            { q: "当你凝视镜中的自己时，你看到？", options: [{t:"一个十年前的遗憾", s:"A"}, {t:"一个满负荷运转的机器", s:"B"}, {t:"一个等待被点燃的火苗", s:"C"}, {t:"一个终于找回名字的陌生人", s:"D"}] },
+            { q: "如果要把这一刻的心碎命名，你会叫它？", options: [{t:"昨日的延长线", s:"A"}, {t:"正在崩塌的围墙", s:"B"}, {t:"一场心甘情愿的冒险", s:"C"}, {t:"落幕后的余晖", s:"D"}] },
+            { q: "你更习惯躲在哪里？", options: [{t:"潮湿的阁楼", s:"A"}, {t:"噪音巨大的耳机里", s:"B"}, {t:"对方大衣的阴影里", s:"C"}, {t:"空旷的公路尽头", s:"D"}] },
+            { q: "如果你是一个季节？", options: [{t:"永恒的深秋", s:"A"}, {t:"暴雨前的闷热下午", s:"B"}, {t:"盛夏最刺眼的阳光", s:"C"}, {t:"初春刚融化的冰层", s:"D"}] },
+            { q: "回忆像哪种声音？", options: [{t:"反向播放的磁带", s:"A"}, {t:"指甲划过黑板的长鸣", s:"B"}, {t:"远处传来的低音贝斯", s:"C"}, {t:"翻动旧纸张的沙沙声", s:"D"}] },
+            { q: "你如何处理那些沉重的情绪？", options: [{t:"把它们写成没有收件人的信", s:"A"}, {t:"按下静音键，假装听不见", s:"B"}, {t:"把它们全部倾倒给某人", s:"C"}, {t:"让它们随着长路流走", s:"D"}] },
+            { q: "如果你必须烧掉一样东西？", options: [{t:"唯一的一张旧照片", s:"A"}, {t:"昨晚发疯写的日记", s:"B"}, {t:"那个人的联系方式", s:"C"}, {t:"已经不合适的旧衣服", s:"D"}] },
+            { q: "关于“爱”，你最直观的触感是？", options: [{t:"冰冷的金属拉链", s:"A"}, {t:"生锈的齿轮摩擦", s:"B"}, {t:"加速的心跳带来的眩晕", s:"C"}, {t:"微风拂过皮肤的轻柔", s:"D"}] },
+            { q: "当人群散去，你留在原地？", options: [{t:"寻找掉落的碎片", s:"A"}, {t:"数着呼吸缓解心悸", s:"B"}, {t:"期待那个人会回头", s:"C"}, {t:"转身走向反方向", s:"D"}] },
+            { q: "如果你是一个秘密？", options: [{t:"写在已经泛黄的纸上", s:"A"}, {t:"藏在最深的保险柜里", s:"B"}, {t:"在每个深夜呼之欲出", s:"C"}, {t:"已经不再是秘密了", s:"D"}] },
+            { q: "你的梦境通常是？", options: [{t:"黑白的默片", s:"A"}, {t:"失控的垂直坠落", s:"B"}, {t:"充满色彩的追逐战", s:"C"}, {t:"一片宁静的海面", s:"D"}] },
+            { q: "关于那个“TA”，你现在的联想是？", options: [{t:"一把没有锁的钥匙", s:"A"}, {t:"一个无法停止的循环", s:"B"}, {t:"一颗正在坠落的恒星", s:"C"}, {t:"一张模糊的背景板", s:"D"}] },
+            { q: "当你感到失控时，你会？", options: [{t:"不停地道歉", s:"A"}, {t:"把自己关在浴室里", s:"B"}, {t:"开车冲进黑夜里", s:"C"}, {t:"深呼吸，然后放手", s:"D"}] },
+            { q: "如果你是一段旋律？", options: [{t:"略带跑调的钢琴", s:"A"}, {t:"急促的打击乐", s:"B"}, {t:"轻快的吉他弹唱", s:"C"}, {t:"悠长的大提琴", s:"D"}] },
+            { q: "关于未来，你看到的是？", options: [{t:"灰色的雾气", s:"A"}, {t:"刺眼的白光", s:"B"}, {t:"变幻莫测的色彩", s:"C"}, {t:"地平线上的曙光", s:"D"}] },
+            { q: "你的自愈过程像？", options: [{t:"在雨中漫步", s:"A"}, {t:"修补一架坏掉的机器", s:"B"}, {t:"在一场大火中重生", s:"C"}, {t:"慢慢剪短长发", s:"D"}] },
+            { q: "如果必须要说最后一句话？", options: [{t:"“对不起，我还在这”", s:"A"}, {t:"“把我彻底屏蔽吧”", s:"B"}, {t:"“我愿意再冒一次险”", s:"C"}, {t:"“我已经自由了”", s:"D"}] },
+            { q: "窗外路灯的光照进房间，你觉得那是？", options: [{t:"某种审判的目光", s:"A"}, {t:"寒冷的白色干扰", s:"B"}, {t:"邀请你出门的暗示", s:"C"}, {t:"再平凡不过的夜晚", s:"D"}] },
+            { q: "你习惯如何掩饰悲伤？", options: [{t:"在人群中不停地说话", s:"A"}, {t:"戴上兜帽低下头", s:"B"}, {t:"大笑直到眼角湿润", s:"C"}, {t:"坦然承认我在心碎", s:"D"}] },
+            { q: "如果你能带走回忆里的一样东西？", options: [{t:"那天微凉的空气", s:"A"}, {t:"那段争执的声音", s:"B"}, {t:"那种心动的战栗", s:"C"}, {t:"什么都不带走", s:"D"}] },
+            { q: "关于“放手”，你现在的感觉是？", options: [{t:"还没准备好，永远不", s:"A"}, {t:"正在练习闭上眼", s:"B"}, {t:"是一种必要的自毁", s:"C"}, {t:"是一场迟到的洗礼", s:"D"}] },
+            { q: "你在关系中最像哪种角色？", options: [{t:"那个总是在等的人", s:"A"}, {t:"那个总是在逃的人", s:"B"}, {t:"那个总在追的人", s:"C"}, {t:"那个已经走远的人", s:"D"}] },
+            { q: "深夜的杂货店里，你会买？", options: [{t:"过期很久的糖果", s:"A"}, {t:"一支不知道颜色的笔", s:"B"}, {t:"最烈的烈酒", s:"C"}, {t:"一瓶最纯净的水", s:"D"}] },
+            { q: "如果你是一棵树，你？", options: [{t:"在深秋落光了叶子", s:"A"}, {t:"正在暴风雨中摇晃", s:"B"}, {t:"为了阳光拼命生长", s:"C"}, {t:"扎根在安静的山谷", s:"D"}] },
+            { q: "回忆里的气味通常是？", options: [{t:"旧信件的味道", s:"A"}, {t:"汽油与灰尘的味道", s:"B"}, {t:"某种特定的香水味", s:"C"}, {t:"雨后泥土的味道", s:"D"}] },
+            { q: "关于遗憾，你最后想说？", options: [{t:"“我会一直留着它”", s:"A"}, {t:"“这让我窒息”", s:"B"}, {t:"“我很庆幸发生过”", s:"C"}, {t:"“已经翻篇了”", s:"D"}] },
+            { q: "你爱自己吗？在这个瞬间。", options: [{t:"正在学着道歉", s:"A"}, {t:"很难，但我努力", s:"B"}, {t:"我很珍贵", s:"D"}, {t:"不知道答案", s:"C"}] }
         ];
 
         let cur = 0; let scores = { A:0, B:0, C:0, D:0 };
         function begin() {
-            document.getElementById('bgm').volume = 0.4;
-            document.getElementById('bgm').play().catch(() => {});
+            const m = document.getElementById('bgm'); m.volume = 0.4; m.play().catch(() => {});
             document.getElementById('start').style.display = 'none';
             document.getElementById('quiz').style.display = 'block';
             show();
         }
         function show() {
             const q = questions[cur];
-            document.getElementById('q-num').innerText = `REFLECTION ${cur + 1} / 30`;
+            document.getElementById('q-num').innerText = `FRAGMENT ${cur + 1} / 30`;
             document.getElementById('q-text').innerText = q.q;
             document.getElementById('bar').style.width = ((cur+1)/30)*100 + '%';
             const optDiv = document.getElementById('options'); optDiv.innerHTML = '';
@@ -127,10 +124,10 @@
             document.getElementById('quiz').style.display = 'none';
             const win = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
             const res = {
-                'A': { t: "I miss you, I'm sorry", d: "你活在回忆的滤镜里，心碎对你来说是一种常态。你用温柔的抱歉掩饰着最深的不舍。" },
-                'B': { t: "Block Me Out / Full Machine", d: "你在极度的清醒与焦虑中挣扎，试图把自己变成毫无感情的机器来对抗混乱的世界。" },
-                'C': { t: "Risk / Close to You", d: "你是热烈而勇敢的。哪怕前路是深渊，你也会为了那一刻的火花全力奔跑。" },
-                'D': { t: "Good Riddance / Free Now", d: "你终于学会了与自己和解。虽然身上带着旧伤疤，但你已经准备好迎接全新的自由。" }
+                'A': { t: "I miss you, I'm sorry", d: "你活在旧日的回响里。你的心是一张反向播放的磁带，充满了温柔的遗憾与抱歉。" },
+                'B': { t: "Block Me Out / Full Machine", d: "你在极度的清醒与自我防御中挣扎。你试图变成一台精密的机器，来屏蔽这世界的喧杂。" },
+                'C': { t: "Risk / Close to You", d: "你是热烈、危险而直白的。哪怕知道前方是风险，你也会为了那一刻的共鸣而全速奔跑。" },
+                'D': { t: "Good Riddance / Free Now", d: "你终于剪断了那些沉重的锁链。带着愈合的伤痕，你在这个深夜里重获自由。" }
             };
             document.getElementById('res-title').innerText = res[win].t;
             document.getElementById('res-desc').innerText = res[win].d;
