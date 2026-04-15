@@ -10,8 +10,10 @@
         body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Montserrat', sans-serif; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; overflow-y: auto; padding: 40px 0; }
         #app { width: 90%; max-width: 460px; padding: 20px; text-align: center; }
         .serif { font-family: 'Cormorant Garamond', serif; font-style: italic; }
-        .photo-frame { width: 115px; height: 115px; margin: 0 auto 30px; border-radius: 50%; overflow: hidden; border: 0.5px solid rgba(255,255,255,0.08); box-shadow: 0 0 20px rgba(0,0,0,0.5); }
-        .gracie-img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%) contrast(1.2); }
+        .photo-frame { width: 115px; height: 115px; margin: 0 auto 30px; border-radius: 50%; overflow: hidden; border: 0.5px solid rgba(255,255,255,0.08); box-shadow: 0 0 20px rgba(0,0,0,0.5); background: #111; position: relative;}
+        /* 使用纯CSS占位，提示用户在此处放置图片 */
+        .photo-frame::after { content: 'GRACIE'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 0.5rem; letter-spacing: 3px; opacity: 0.3; }
+        .gracie-img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%) contrast(1.2); position: relative; z-index: 2; }
         .btn { display: block; width: 100%; padding: 22px; margin: 12px 0; background: none; border: 1px solid rgba(255,255,255,0.08); cursor: pointer; color: var(--text); font-size: 0.65rem; text-align: left; padding-left: 20px; letter-spacing: 3px; transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1); text-transform: uppercase; outline: none; }
         .btn:hover { background: #fff; color: #000; padding-left: 35px; }
         .progress { width: 100%; height: 1px; background: rgba(255,255,255,0.05); margin-bottom: 50px; }
@@ -19,7 +21,8 @@
         #quiz, #result { display: none; }
         #q-text { font-size: 1.4rem; min-height: 100px; line-height: 1.5; margin-bottom: 40px; color: #fff; font-weight: 300; letter-spacing: -0.5px; }
         .quote-box { margin: 35px 0; padding: 30px 25px; border-top: 0.5px solid rgba(255,255,255,0.08); border-bottom: 0.5px solid rgba(255,255,255,0.08); text-align: left; line-height: 2.1; font-size: 0.85rem; color: #e0e0e0; }
-        .tag { padding: 4px 10px; border: 0.5px solid rgba(255,255,255,0.12); font-size: 0.55rem; color: var(--accent); margin: 3px; display: inline-block; letter-spacing: 1px; }
+        .tag-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 30px; }
+        .tag { padding: 4px 10px; border: 0.5px solid rgba(255,255,255,0.12); font-size: 0.52rem; color: var(--accent); display: inline-block; letter-spacing: 1px; text-transform: uppercase; }
         .match-item { text-align: left; margin: 25px 0; }
         .match-info { display: flex; justify-content: space-between; font-size: 0.55rem; opacity: 0.4; letter-spacing: 2px; margin-bottom: 8px; text-transform: uppercase; }
         .track-bg { height: 1px; background: rgba(255,255,255,0.04); overflow: hidden; }
@@ -29,20 +32,15 @@
 </head>
 <body>
 
-    <audio id="bg-audio" loop preload="auto">
-        <source src="block-me-out.mp3" type="audio/mpeg">
-    </audio>
-
     <div id="app">
         <div id="start">
-            <div class="photo-frame"><img src="gracie.jpg" class="gracie-img" alt="Gracie"></div>
+            <div class="photo-frame"><img src="1000016786.jpg" class="gracie-img" onerror="this.style.display='none'"></div>
             <h1 class="serif" style="font-size: 2.8rem; margin-bottom: 5px; color: #fff; letter-spacing: -1px;">The Fragments of Echoes</h1>
-            <p class="label">A Psychometric Archive</p>
+            <p class="label">Soul Archive v2.0</p>
             <p style="font-size: 0.7rem; opacity: 0.5; line-height: 2.8; margin: 45px 0; letter-spacing: 1.2px;">
-                "Every choice is a fragment of the ghost you carry.<br>
-                Step into the void."
+                "52 Tracks. 30 Decisions. 1 Resonance."<br>基于你的真实性格坐标，定位唯一的本命歌曲。
             </p>
-            <button class="btn" style="text-align:center; padding-left:0;" onclick="begin()">Enter the Archive</button>
+            <button class="btn" style="text-align:center; padding-left:0;" onclick="begin()">Start Calculation</button>
         </div>
 
         <div id="quiz">
@@ -53,46 +51,98 @@
         </div>
 
         <div id="result">
-            <div class="photo-frame"><img src="gracie.jpg" class="gracie-img" alt="Gracie"></div>
-            <p class="label">Resonance Manifestation</p>
+            <div class="photo-frame"><img src="1000016786.jpg" class="gracie-img" onerror="this.style.display='none'"></div>
+            <p class="label">Primary Soul Frequency</p>
             <h1 id="res-title" class="serif" style="font-size: 2.2rem; margin: 10px 0; color: #fff; letter-spacing: -1px;"></h1>
-            <div id="res-tags"></div>
+            <div class="tag-container" id="res-tags"></div>
             <div class="quote-box serif" id="res-quote"></div>
             <p id="res-desc" class="serif" style="opacity: 0.6; line-height: 2.5; text-align: left; font-size: 0.88rem; padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.06);"></p>
             
             <div style="margin-top: 60px; text-align: left;">
-                <p class="label">Soul Tracks Correlation (Top 5)</p>
+                <p class="label">Statistical Correlation Tracks</p>
                 <div id="match-list"></div>
             </div>
 
-            <button class="btn" onclick="location.reload()" style="margin-top: 80px; width: auto; padding: 12px 55px; display: inline-block; text-align:center;">Clear the Echoes</button>
+            <button class="btn" onclick="location.reload()" style="margin-top: 80px; width: auto; padding: 12px 55px; display: inline-block; text-align:center;">Reset Archive</button>
         </div>
     </div>
 
     <script>
-        const audio = document.getElementById('bg-audio');
-
-        const allKeywords = ["末日余晖", "过期雨季", "蓝莓之夜", "潮湿阁楼", "失语霓虹", "碎裂胶片", "凌晨四点", "深海呼吸", "枯萎信笺", "电子荒原", "无声告别", "坠落行星", "铁锈记忆", "薄雾晨曦", "孤岛心理", "旧磁带跳帧", "空镜美学", "私人废墟", "潜意识漫游", "半梦半醒", "极简忧郁", "反刍遗憾", "黑白默片", "灵魂褶皱", "错位时空", "循环自毁", "致命温柔", "孤独观测者", "冷色调依恋", "瞬时永恒", "逃离地心", "玫瑰余烬", "无人区玫瑰", "昨日世界", "灰烬审美", "深渊的回响", "重庆森林", "恋恋风尘", "北野武蓝", "盐系寂寞", "半衰期", "情感放射", "潮湿主义", "旧电影质感", "无解的题", "真空地带", "听觉残留", "心碎出口", "蓝色调式", "被动荒废", "影子练习", "过敏体质", "降噪生活", "平行失语", "昨日重现", "时间缝隙", "白噪音", "梦境碎片", "触觉失灵", "深蓝梦呓", "午夜飞行", "无目的流浪", "废弃电台", "降落练习", "隐形裂痕", "情绪过载", "冷色调告别", "匿名信件", "远方共振", "旧磁带", "复古伤感", "半透明", "琥珀色记忆", "荒野呼唤", "私密频率", "低空飞行", "极简孤寂", "雾中漫行", "光影废墟", "末班车", "空房间", "无声尖叫", "灵魂寄宿", "幻肢痛", "单色世界", "雨水收集", "微凉体温", "心室颤动", "旧报纸", "黑白默片", "倒放的人生", "破碎共识", "冷战美学", "灰度空间", "呼吸刻度", "情感幽灵", "数字葬礼", "霓虹废土", "寂静之声", "无名氏"];
-
-        // 包含所有四大核心专辑的完整曲库
-        const gracieSongs = [
-            "Felt Good About You", "Risk", "Blowing Smoke", "I Love You, I'm Sorry", "us. (feat. Taylor Swift)", "Let It Happen", "Tough Love", "I Knew It, I Know You", "Gave You I Gave You I", "Normal Thing", "Good Luck Charlie", "Free Now", "Close To You", "Cool", "That's So True", "I Told You Things", "Packing It Up",
-            "Best", "I Know It Won't Work", "Full Machine", "Where Do We Go Now?", "I Should Hate You", "Will You Cry?", "Amelie", "Difficult", "This Is What The Drugs Are For", "Faultline", "The Blue", "Right Now", "Block Me Out", "Unsteady", "405", "Two People",
-            "Feels Like", "Rockland", "For Real This Time", "Camden", "The Bottom", "Wishful Thinking", "Older", "Better", "Hard To Sleep", "Augusta", "Painkillers", "Alright",
-            "Friend", "21", "Under / Over", "tehe", "I miss you, I'm sorry", "Long Sleeves", "minor"
+        // 100个关键词
+        const allKeywords = [
+            "末日余晖", "过期雨季", "失语霓虹", "碎裂胶片", "凌晨四点", "深海呼吸", "枯萎信笺", "铁锈记忆", "薄雾晨曦", "孤岛心理",
+            "旧磁带跳帧", "空镜美学", "私人废墟", "潜意识漫游", "半梦半醒", "极简忧郁", "反刍遗憾", "黑白默片", "灵魂褶皱", "错位时空",
+            "循环自毁", "致命温柔", "孤独观测者", "冷色调依恋", "瞬时永恒", "逃离地心", "玫瑰余烬", "无人区玫瑰", "昨日世界", "灰烬审美",
+            "深渊的回响", "重庆森林", "恋恋风尘", "北野武蓝", "盐系寂寞", "低空飞行", "极简孤寂", "雾中漫行", "光影废墟", "末班车",
+            "无声尖叫", "灵魂寄宿", "幻肢痛", "单色世界", "雨水收集", "微凉体温", "心室颤动", "旧报纸", "倒放的人生", "破碎共识",
+            "冷战美学", "灰度空间", "呼吸刻度", "情感幽灵", "数字葬礼", "霓虹废土", "寂静之声", "无名氏", "过期药水", "蓝调时刻",
+            "无主之地", "玻璃弹珠", "生锈项链", "匿名悲伤", "潮湿书页", "真空包装", "零温心跳", "漂浮颗粒", "影子共生", "伪装平静",
+            "断层扫描", "神经末梢", "延迟摄影", "过曝瞬间", "负片人生", "隐形纹身", "频率偏差", "静止帧", "无声电影", "黑盒子",
+            "情绪超载", "社交距离", "人造卫星", "星际尘埃", "月背漫步", "氧气稀薄", "绝对零度", "平行脉冲", "信号干扰", "逻辑盲点",
+            "记忆拼图", "蓝色骨头", "荒诞戏剧", "末日倒计时", "水汽氤氲", "潮汐引力", "孤星导航", "盲目依恋", "破损唱片", "余温残留"
         ];
 
-        const types = {
-            'A': { title: "I miss you, I'm sorry", quote: "“有些事，只有通过遗憾才能被完整地记起。”", desc: "你是那种习惯在废墟中翻找温存的人。告别对你而言从未是一个瞬间，而是一场长达数年的余震。你拥有一种近乎神圣的耐心，去修补那些永远无法还原的关系。" },
-            'B': { title: "Block Me Out", quote: "“我太擅长在自己的脑海里制造噪音，直到听不见心跳。”", desc: "你是一座在深夜独自运行的精密机器，所有的情绪过载都被你熟练地掩盖在平静的表象下。你习惯于在喧嚣中开启静音模式，正在重新听见自己最真实的声音。" },
-            'C': { title: "Risk", quote: "“哪怕只有一瞬间的火花，也足以照亮整段荒芜。”", desc: "你拥有一种近乎悲剧性的勇敢。在明知前方可能是悬崖的情况下，你依然迷恋那种坠落前的眩晕感。对你来说，生命的质感在于那些被极致情绪点燃的瞬间。" },
-            'D': { title: "Where Do We Go Now?", quote: "“我也许没能到达目的地，但我确实离开了原点。”", desc: "你已经穿透了那层曾让你窒息的浓雾。这是一种历经风暴后的轻盈，你终于学会了不再回头看那扇已经关上的门，而是直视前方开阔的荒野。" }
-        };
+        // 52首真实曲目 [遗憾, 孤独, 执念, 自由]
+        const library = [
+            { title: "I miss you, I'm sorry", q: "有些事，只有通过遗憾才能完整。", d: "你是昨日废墟的拾荒者，在告别中寻找尚未冷却的温存。", v: [10, 3, 5, 1] },
+            { title: "The Blue", q: "那是深不见底的颜色，是我爱你的代价。", d: "你沉溺于某种深邃的情感，拒绝浮出水面接触世俗的干燥。", v: [9, 6, 4, 1] },
+            { title: "That's So True", q: "承认那些阴暗的嫉妒，是坦诚的开始。", d: "你拥有极强的共情力，但也深受情绪反噬之苦，真实得让人心疼。", v: [2, 4, 10, 2] },
+            { title: "Free Now", q: "剪断那些无形的线，重力才有了意义。", d: "你完成了最艰难的断舍离，现在的你是一片学会飞翔的落叶。", v: [1, 1, 2, 10] },
+            { title: "Block Me Out", q: "我擅长制造噪音，直到听不见心跳。", d: "你是一座精密运转的孤岛，用理性的噪音掩盖情绪的过载。", v: [3, 10, 4, 1] },
+            { title: "Risk", q: "哪怕只有瞬时火花，也足以照亮荒芜。", d: "你是天生的冒险家，迷恋坠落前的眩晕感，拒绝平庸的安稳。", v: [1, 2, 10, 4] },
+            { title: "Where Do We Go Now?", q: "我也许未达目的地，但我已离开原点。", d: "你穿透了曾经窒息的浓雾，这种轻盈源于你终于不再回头。", v: [2, 3, 1, 10] },
+            { title: "21", q: "我想象着你在不同时空里的样子。", d: "你的爱总是带着一种抽离的观察感，在记忆里构建平行的完美。", v: [8, 4, 3, 2] },
+            { title: "Close To You", q: "有些距离，是靠燃烧执念缩短的。", d: "你对纯粹的渴望近乎偏执，渴望在某种极致的靠近中融化。", v: [2, 2, 10, 1] },
+            { title: "I Love You, I'm Sorry", q: "爱与愧疚，往往是同一枚硬币的两面。", d: "你在破坏与重建中反复，总是比别人更早预感终点。", v: [9, 3, 7, 2] },
+            { title: "Rockland", q: "在这里，孤独是一种可以被触摸的质感。", d: "你擅长在冷色调的世界里安放自己，孤独是你的盔甲而非武器。", v: [4, 10, 2, 2] },
+            { title: "Camden", q: "有些痛感，是为了证明我还活着。", d: "你有着超乎常人的耐受力，在自愈的循环中不断强化灵魂。", v: [3, 9, 4, 3] },
+            { title: "Full Machine", q: "我像零件过剩的机器，在爱里频繁卡顿。", d: "你过度思考每一个细节，直到这种精密让你感到疲惫。", v: [2, 10, 5, 1] },
+            { title: "Mess It Up", q: "搞砸一切，是我本能的自救。", d: "你在失控中寻找平衡，用暂时的混乱换取长久的自由。", v: [4, 2, 10, 5] },
+            { title: "Right Now", q: "这一刻的静默，比所有承诺都真实。", d: "你学会了与当下和解，不再向往远方，就在此地呼吸。", v: [1, 5, 1, 10] },
+            { title: "Amelie", q: "你是我幻想出来的光，还是真实的存在？", d: "你习惯于在精神世界里塑造理想，现实总是让你感到疏离。", v: [4, 10, 2, 1] },
+            { title: "Difficult", q: "承认现状很难，但假装快乐更累。", d: "你是个拒绝平庸伪装的诚实者，即便尴尬也胜过虚伪。", v: [2, 9, 3, 6] },
+            { title: "us.", q: "我们是彼此影子的重叠。", d: "你寻找的是灵魂的镜像，在另一个人身上看见遗失的自己。", v: [6, 4, 8, 2] },
+            { title: "Best", q: "我给过你最好的，虽然那也毁了我们。", d: "你的给予总是倾尽所有，那种重量既是勋章也是枷锁。", v: [10, 3, 6, 1] },
+            { title: "Tough Love", q: "为了你，我可以忍受所有的刺。", d: "你的温柔里带着锋芒，你的爱是带有宗教感的奉献。", v: [2, 1, 10, 5] },
+            { title: "Blowing Smoke", q: "那些烟雾，遮住了你离开的背影。", d: "你用幻觉构建防御，在每一个看似洒脱的瞬间偷偷落泪。", v: [5, 8, 4, 2] },
+            { title: "Faultline", q: "在断层带跳舞，是我唯一的节奏。", d: "你习惯了危险的边缘感，只有不确定的未来才能让你兴奋。", v: [4, 2, 10, 3] },
+            { title: "I should hate you", q: "恨是爱的残骸，我却将其视作宝藏。", d: "你无法彻底清空记忆，只能在矛盾的旋涡里保持站立。", v: [9, 3, 5, 2] },
+            { title: "Alright", q: "我会好起来的，哪怕是在废墟里。", d: "你拥有一种韧性的乐观，在极度的悲伤中也能找到微光。", v: [1, 4, 2, 10] },
+            { title: "Older", q: "长大是学会了对遗憾保持沉默。", d: "你比同龄人更早地理解了妥协，那种成熟里带着淡淡的灰。", v: [5, 8, 2, 7] },
+            { title: "Wishful Thinking", q: "幻想是你留给我最后的礼物。", d: "你活在“如果”之中，在每一个可能的平行宇宙里修正过去。", v: [10, 4, 3, 1] },
+            { title: "Augusta", q: "换个地方生活，就能换个灵魂吗？", d: "你渴望逃离现状，但心里的重量无论走到哪都会随行。", v: [2, 9, 2, 5] },
+            { title: "Better", q: "更好不代表不再痛，只是学会了忍受。", d: "你的人生哲学是不断地向下扎根，哪怕土壤已经枯竭。", v: [1, 4, 2, 10] },
+            { title: "The Bottom", q: "到底部了，剩下的只有上升。", d: "你已经经历过最深沉的黑，现在的你拥有无所畏惧的力量。", v: [1, 6, 2, 10] },
+            { title: "Brush Fire", q: "野火烧过的地方，会有新的草木。", d: "你的人生经历过毁灭性的洗礼，但你的生命力总能破土而出。", v: [3, 2, 10, 7] },
+            { title: "405", q: "在高速公路上飞驰，试图甩掉记忆。", d: "你试图通过速度换取平静，但有些回响总是紧跟其后。", v: [4, 3, 10, 2] },
+            { title: "Two People", q: "我们成了最熟悉的陌生人。", d: "你感叹于时间的残忍，但也在这种疏离中找到了尊严。", v: [9, 7, 2, 3] },
+            { title: "Unsteady", q: "在摇晃的世界里，寻找一个支点。", d: "你正处于人生的转折点，虽然不安，但你从未停止尝试平衡。", v: [2, 4, 10, 4] },
+            { title: "Good Luck Charlie", q: "祝你好运，在那段没有我的旅程里。", d: "你学会了最高级的爱——在体面的祝福中彻底放手。", v: [2, 2, 3, 10] },
+            { title: "Normal Thing", q: "想要平凡，却偏偏生而敏感。", d: "你总想融入人群，但你独特的灵魂注定让你显得耀眼而孤单。", v: [2, 10, 5, 3] },
+            { title: "Cool", q: "假装酷，是我保护自己的最后一层壳。", d: "你外表冷峻，实则内心滚烫，这种反差是你最迷人的地方。", v: [1, 9, 6, 2] },
+            { title: "I Told You Things", q: "我给过你进入我禁地的钥匙。", d: "你对信任有着近乎洁癖的要求，一旦受损便会永久闭关。", v: [10, 6, 3, 1] },
+            { title: "tehe", q: "苦笑也是笑，哪怕带着泪。", d: "你擅长用幽默消解痛苦，你是自己生活里的悲喜剧导演。", v: [2, 3, 10, 4] },
+            { title: "Friend", q: "最危险的距离，就是所谓的朋友。", d: "你在界限感中挣扎，渴望跨越却又害怕彻底失去。", v: [9, 5, 6, 2] },
+            { title: "Stay", q: "留下来，哪怕只是一场幻觉。", d: "你对温存有着极致的渴求，即便明知是虚妄也愿沉溺其中。", v: [10, 4, 5, 1] },
+            { title: "Unlearn", q: "学会爱之前，要先学着忘记你。", d: "你正在进行一场艰难的灵魂重塑，在遗忘中找回自我。", v: [4, 3, 3, 10] },
+            { title: "Cedar", q: "像雪松一样，在严寒中静默生长。", d: "你拥有一种冷清的高贵，即便无人欣赏也依然挺拔。", v: [2, 10, 2, 6] },
+            { title: "Under / Over", q: "在过载与缺失之间，我反复横跳。", d: "你追求一种极致的对比，你的生命里没有中间地带。", v: [3, 4, 10, 2] },
+            { title: "Felt Good About You", q: "曾经的美好是真的，现在的清醒也是。", d: "你是一个敢于推翻过去的人，清醒是你最强大的武器。", v: [4, 3, 4, 10] },
+            { title: "Blue", q: "蓝色是你身上褪不掉的色调。", d: "忧郁是你的底色，也是你审美中最高级的部分。", v: [10, 5, 2, 2] },
+            { title: "Long Sleeves", q: "有些遮掩，是为了不让伤口被看见。", d: "你的克制让你显得神秘，你的脆弱只在深夜对自己开放。", v: [10, 7, 3, 1] },
+            { title: "Packing It Up", q: "终于，我不再需要这些沉重的行李。", d: "你正在卸下过去的包袱，轻装上阵是这个季节给你的礼物。", v: [1, 2, 4, 10] },
+            { title: "minor", q: "小调的人生，也有独特的旋律。", d: "你习惯于非主流的选择，在不被关注的角落里自给自足。", v: [3, 10, 2, 5] },
+            { title: "Painkillers", q: "止痛药只能止痛，不能治愈伤口。", d: "你依赖于某种暂时的慰藉，却忘了寻找真正流血的原因。", v: [3, 4, 10, 2] },
+            { title: "For Real This Time", q: "这次是真的，我不再回头了。", d: "你的决绝是一场迟到的洗礼，那是你对自我的最后救赎。", v: [1, 2, 3, 10] },
+            { title: "In Between", q: "在离开与留下的缝隙里，我屏住呼吸。", d: "你正处于剧烈的过渡期，每一个选择都显得异常沉重。", v: [6, 5, 10, 2] },
+            { title: "Blowing Smoke", q: "烟雾消散后，我终于看见了荒芜。", d: "你擅长在幻觉中寻找安全感，直到现实强制让你清醒。", v: [5, 8, 4, 3] }
+        ];
 
+        // 30道精准测试题
         const questions = [
             { q: "深夜里，你是如何听见自己的？", options: [{t:"旧录音带的杂音里", s:"A"}, {t:"混乱的心跳中", s:"B"}, {t:"别人呼吸声旁", s:"C"}, {t:"凌晨四点的寂静里", s:"D"}] },
             { q: "如果你是房间里亮着的那盏灯？", options: [{t:"闪烁着快要熄灭", s:"A"}, {t:"照亮了不该看的角落", s:"B"}, {t:"为了某人一直亮着", s:"C"}, {t:"学会了自己关灯", s:"D"}] },
-            { q: "道歉的碎片堆在地上，那是？", options: [{t:"必须拼凑好的过去", s:"A"}, {t:"扎脚的玻璃，别碰", s:"B"}, {t:"渴望被爱的筹码", s:"C"}, {t:"可以打扫掉的尘埃", s:"D"}] },
+            { q: "道歉的碎片堆在地上，那是？", options: [{t:"必须拼凑好的过去", s:"A"}, {t:"扎脚的玻璃", s:"B"}, {t:"渴望被爱的筹码", s:"C"}, {t:"可以打扫掉的尘埃", s:"D"}] },
             { q: "当你凝视镜中的自己？", options: [{t:"一个十年前的遗憾", s:"A"}, {t:"一个满负荷运转的机器", s:"B"}, {t:"一个等待点燃的火苗", s:"C"}, {t:"一个找回名字的陌生人", s:"D"}] },
             { q: "要给心碎命名的话？", options: [{t:"昨日的延长线", s:"A"}, {t:"正在崩塌的围墙", s:"B"}, {t:"心甘情愿的冒险", s:"C"}, {t:"落幕后的余晖", s:"D"}] },
             { q: "更习惯躲在哪里？", options: [{t:"潮湿的阁楼", s:"A"}, {t:"巨大的耳机里", s:"B"}, {t:"对方大衣的阴影里", s:"C"}, {t:"空旷的公路尽头", s:"D"}] },
@@ -100,34 +150,33 @@
             { q: "回忆像哪种声音？", options: [{t:"反奏的磁带", s:"A"}, {t:"指甲划过黑板", s:"B"}, {t:"远处模糊的鼓点", s:"C"}, {t:"翻动纸张的沙沙声", s:"D"}] },
             { q: "你如何处理沉重的情绪？", options: [{t:"写成没收件人的信", s:"A"}, {t:"按下静音键", s:"B"}, {t:"全部倾倒给某人", s:"C"}, {t:"让它们随长路流走", s:"D"}] },
             { q: "必须要烧掉一样东西？", options: [{t:"唯一的旧照片", s:"A"}, {t:"发疯写的日记", s:"B"}, {t:"那个人的联系方式", s:"C"}, {t:"不再合适的衣服", s:"D"}] },
-            { q: "“爱”最直观的触感是？", options: [{t:"冰冷的金属拉链", s:"A"}, {t:"生锈的齿轮摩擦", s:"B"}, {t:"眩晕的心跳", s:"C"}, {t:"微风拂过皮肤", s:"D"}] },
+            { q: "“爱”最直观的触感？", options: [{t:"冰冷的金属拉链", s:"A"}, {t:"生锈的齿轮摩擦", s:"B"}, {t:"眩晕的心跳", s:"C"}, {t:"微风拂过皮肤", s:"D"}] },
             { q: "当人群散去，你留在原地？", options: [{t:"寻找碎片", s:"A"}, {t:"缓解心悸", s:"B"}, {t:"期待那个人回头", s:"C"}, {t:"走向反方向", s:"D"}] },
             { q: "如果你是一个秘密？", options: [{t:"泛黄纸上", s:"A"}, {t:"在保险柜里", s:"B"}, {t:"深夜呼之欲出", s:"C"}, {t:"不再是秘密", s:"D"}] },
-            { q: "关于那个TA，现在的联想是？", options: [{t:"没有锁的钥匙", s:"A"}, {t:"无法停止的循环", s:"B"}, {t:"坠落的恒星", s:"C"}, {t:"模糊的背景板", s:"D"}] },
-            { q: "必须要说最后一句话？", options: [{t:"对不起，我还在这", s:"A"}, {t:"请把我彻底屏蔽", s:"B"}, {t:"再冒一次冒险", s:"C"}, {t:"我终于自由了", s:"D"}] },
+            { q: "关于TA现在的联想？", options: [{t:"没有锁的钥匙", s:"A"}, {t:"无法停止的循环", s:"B"}, {t:"坠落的恒星", s:"C"}, {t:"模糊的背景板", s:"D"}] },
+            { q: "必须要说最后一句话？", options: [{t:"对不起我还在这里", s:"A"}, {t:"请把我彻底屏蔽", s:"B"}, {t:"我愿意再冒次险", s:"C"}, {t:"我已经自由了", s:"D"}] },
             { q: "窗外路灯照进房间？", options: [{t:"审判的目光", s:"A"}, {t:"寒冷的干扰", s:"B"}, {t:"出门的暗示", s:"C"}, {t:"平凡的夜晚", s:"D"}] },
             { q: "如何掩饰悲伤？", options: [{t:"不停说话", s:"A"}, {t:"沉默不语", s:"B"}, {t:"大笑直到流泪", s:"C"}, {t:"坦然承认", s:"D"}] },
-            { q: "如果你是一段旋律？", options: [{t:"跑调的钢琴", s:"A"}, {t:"急促的打击乐", s:"B"}, {t:"轻快扫弦", s:"C"}, {t:"幽长提琴", s:"D"}] },
-            { q: "自愈的过程更像？", options: [{t:"雨中漫步", s:"A"}, {t:"修理坏掉的机器", s:"B"}, {t:"大火中重生", s:"C"}, {t:"剪短长发", s:"D"}] },
+            { q: "如果你是一段旋律？", options: [{t:"跑调的钢琴", s:"A"}, {t:"急促的打击乐", s:"B"}, {t:"轻快扫弦", s:"C"}, {t:"悠长提琴", s:"D"}] },
+            { q: "自愈的过程更像？", options: [{t:"雨中漫步", s:"A"}, {t:"修理机器", s:"B"}, {t:"大火中重生", s:"C"}, {t:"剪短长发", s:"D"}] },
             { q: "如果你是房间的颜色？", options: [{t:"过期的米白色", s:"A"}, {t:"压抑的深蓝色", s:"B"}, {t:"刺眼的鲜红色", s:"C"}, {t:"宁静的琥珀色", s:"D"}] },
-            { q: "最让你安全的空间？", options: [{t:"被窝里", s:"A"}, {t:"影院最后一排", s:"B"}, {t:"高速行驶的车", s:"C"}, {t:"空旷的公路", s:"D"}] },
-            { q: "如果要制作成标本？", options: [{t:"泛黄匿名信", s:"A"}, {t:"窒息的白花", s:"B"}, {t:"未灭的火种", s:"C"}, {t:"流动的落叶", s:"D"}] },
-            { q: "整个世界都在下沉？", options: [{t:"抓紧某人的手", s:"A"}, {t:"蜷缩身体", s:"B"}, {t:"加速下坠", s:"C"}, {t:"在水底呼吸", s:"D"}] },
-            { q: "你爱现在的自己吗？", options: [{t:"正在学着道歉", s:"A"}, {t:"很难，但努力中", s:"B"}, {t:"是的，很爱", s:"D"}, {t:"没有答案", s:"C"}] },
-            { q: "回忆里的气味通常是？", options: [{t:"旧信件的味道", s:"A"}, {t:"汽油与灰尘", s:"B"}, {t:"特定的香水味", s:"C"}, {t:"雨后泥土的味道", s:"D"}] },
-            { q: "必须要带走的一样东西？", options: [{t:"微凉的空气", s:"A"}, {t:"争执的声音", s:"B"}, {t:"心动的战栗", s:"C"}, {t:"什么都不带走", s:"D"}] },
+            { q: "最让你安全的空间？", options: [{t:"被窝里", s:"A"}, {t:"影院最后一排", s:"B"}, {t:"行驶的车内", s:"C"}, {t:"空旷的公路", s:"D"}] },
+            { q: "把自己制作成标本？", options: [{t:"泛黄匿名信", s:"A"}, {t:"窒息的白花", s:"B"}, {t:"未灭的火种", s:"C"}, {t:"流动的落叶", s:"D"}] },
+            { q: "整个世界都在下沉？", options: [{t:"抓紧谁的手", s:"A"}, {t:"蜷缩身体", s:"B"}, {t:"加速下坠", s:"C"}, {t:"在水底呼吸", s:"D"}] },
+            { q: "你爱现在的自己吗？", options: [{t:"正在学道歉", s:"A"}, {t:"很难但努力中", s:"B"}, {t:"是的很爱", s:"D"}, {t:"没有答案", s:"C"}] },
+            { q: "回忆里的气味通常是？", options: [{t:"旧信件的味道", s:"A"}, {t:"汽油与灰尘", s:"B"}, {t:"特定的香水味", s:"C"}, {t:"雨后的泥土", s:"D"}] },
+            { q: "必须要带走的一样东西？", options: [{t:"微凉的空气", s:"A"}, {t:"那段争执的声音", s:"B"}, {t:"那种心动的战栗", s:"C"}, {t:"什么都不带走", s:"D"}] },
             { q: "放手感觉更像？", options: [{t:"还没准备好", s:"A"}, {t:"练习闭上眼", s:"B"}, {t:"必要的自毁", s:"C"}, {t:"迟到的洗礼", s:"D"}] },
             { q: "深夜杂货店，你会买？", options: [{t:"过期糖果", s:"A"}, {t:"一支笔", s:"B"}, {t:"最烈的酒", s:"C"}, {t:"一瓶纯净水", s:"D"}] },
             { q: "如果明天世界末日？", options: [{t:"沉溺回忆", s:"A"}, {t:"躲进地下室", s:"B"}, {t:"疯狂寻找那个人", s:"C"}, {t:"看最后的日落", s:"D"}] },
-            { q: "走过这段回响，你的心境？", options: [{t:"依旧沉重", s:"A"}, {t:"充满噪音", s:"B"}, {t:"跃跃欲试", s:"C"}, {t:"一片宁静", s:"D"}] }
+            { q: "走过这段回响的心境？", options: [{t:"依旧沉重", s:"A"}, {t:"充满噪音", s:"B"}, {t:"跃跃欲试", s:"C"}, {t:"一片宁静", s:"D"}] }
         ];
 
-        let cur = 0; let scores = { A:0, B:0, C:0, D:0 };
+        let cur = 0; let userVector = [0, 0, 0, 0]; // 遗憾, 孤独, 执念, 自由
 
         function begin() {
             document.getElementById('start').style.display = 'none';
             document.getElementById('quiz').style.display = 'block';
-            audio.play().catch(() => {});
             show();
         }
 
@@ -142,8 +191,8 @@
                 const b = document.createElement('button'); b.className = 'btn';
                 b.innerText = o.t; 
                 b.onclick = () => { 
-                    if(audio.paused) audio.play().catch(()=>{});
-                    scores[o.s]++; cur++; show(); 
+                    userVector["ABCD".indexOf(o.s)] += 4; // 加权
+                    cur++; show(); 
                 };
                 optDiv.appendChild(b);
             });
@@ -151,26 +200,34 @@
 
         function finish() {
             document.getElementById('quiz').style.display = 'none';
-            const win = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
-            const data = types[win];
-            document.getElementById('res-title').innerText = data.title;
-            document.getElementById('res-quote').innerText = data.quote;
-            document.getElementById('res-desc').innerText = data.desc;
             
+            // 欧几里得距离计算
+            const sorted = library.map(song => {
+                let dist = 0;
+                for(let i=0; i<4; i++) dist += Math.pow(userVector[i] - (song.v[i] * 2.5), 2);
+                return { ...song, dist: Math.sqrt(dist) };
+            }).sort((a, b) => a.dist - b.dist);
+
+            const result = sorted[0];
+            document.getElementById('res-title').innerText = result.title;
+            document.getElementById('res-quote').innerText = `“${result.q}”`;
+            document.getElementById('res-desc').innerText = result.d;
+            
+            // 关键词抽取
             const tagDiv = document.getElementById('res-tags'); tagDiv.innerHTML = '';
-            allKeywords.sort(() => 0.5 - Math.random()).slice(0, 6).forEach(t => { 
+            allKeywords.sort(() => 0.5 - Math.random()).slice(0, 15).forEach(t => { 
                 tagDiv.innerHTML += `<span class="tag">${t}</span>`; 
             });
 
+            // 5首契合推荐
             const matchList = document.getElementById('match-list'); matchList.innerHTML = '';
-            // 从 50+ 首歌的池子里随机选取 5 首
-            const candidates = gracieSongs.filter(s => s !== data.title).sort(() => 0.5 - Math.random()).slice(0, 5);
-            candidates.forEach((s, idx) => {
-                let val = 98 - (idx * 3) - Math.floor(Math.random() * 4);
+            sorted.slice(1, 6).forEach((s, idx) => {
+                let matchVal = Math.floor(98 - (s.dist / 1.5) - (idx * 2));
+                if(matchVal < 60) matchVal = 60 + Math.floor(Math.random()*15);
                 matchList.innerHTML += `
                     <div class="match-item">
-                        <div class="match-info"><span>${s}</span><span>${val}% Resonance</span></div>
-                        <div class="track-bg"><div class="track-fill" style="width:${val}%"></div></div>
+                        <div class="match-info"><span>${s.title}</span><span>${matchVal}% Resonance</span></div>
+                        <div class="track-bg"><div class="track-fill" style="width:${matchVal}%"></div></div>
                     </div>`;
             });
 
