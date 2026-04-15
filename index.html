@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Fragments of Echoes | Gracie Abrams</title>
+    <title>The Fragments of Echoes | Gracie Abrams Archive</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,400;1,600&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
     <style>
         :root { --bg: #050607; --text: #a0a0a0; --accent: #8ba1b8; }
@@ -11,7 +11,6 @@
         #app { width: 90%; max-width: 460px; padding: 20px; text-align: center; }
         .serif { font-family: 'Cormorant Garamond', serif; font-style: italic; }
         .photo-frame { width: 115px; height: 115px; margin: 0 auto 30px; border-radius: 50%; overflow: hidden; border: 0.5px solid rgba(255,255,255,0.08); box-shadow: 0 0 20px rgba(0,0,0,0.5); background: #111; position: relative;}
-        /* 使用纯CSS占位，提示用户在此处放置图片 */
         .photo-frame::after { content: 'GRACIE'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 0.5rem; letter-spacing: 3px; opacity: 0.3; }
         .gracie-img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%) contrast(1.2); position: relative; z-index: 2; }
         .btn { display: block; width: 100%; padding: 22px; margin: 12px 0; background: none; border: 1px solid rgba(255,255,255,0.08); cursor: pointer; color: var(--text); font-size: 0.65rem; text-align: left; padding-left: 20px; letter-spacing: 3px; transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1); text-transform: uppercase; outline: none; }
@@ -32,13 +31,17 @@
 </head>
 <body>
 
+    <audio id="bg-audio" loop preload="auto">
+        <source src="block-me-out.mp3" type="audio/mpeg">
+    </audio>
+
     <div id="app">
         <div id="start">
             <div class="photo-frame"><img src="1000016786.jpg" class="gracie-img" onerror="this.style.display='none'"></div>
             <h1 class="serif" style="font-size: 2.8rem; margin-bottom: 5px; color: #fff; letter-spacing: -1px;">The Fragments of Echoes</h1>
             <p class="label">Soul Archive v2.0</p>
             <p style="font-size: 0.7rem; opacity: 0.5; line-height: 2.8; margin: 45px 0; letter-spacing: 1.2px;">
-                "52 Tracks. 30 Decisions. 1 Resonance."<br>基于你的真实性格坐标，定位唯一的本命歌曲。
+                "52 Tracks. 30 Decisions. 1 Resonance."<br>基于你的性格坐标，定位唯一的本命歌曲。
             </p>
             <button class="btn" style="text-align:center; padding-left:0;" onclick="begin()">Start Calculation</button>
         </div>
@@ -59,7 +62,7 @@
             <p id="res-desc" class="serif" style="opacity: 0.6; line-height: 2.5; text-align: left; font-size: 0.88rem; padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.06);"></p>
             
             <div style="margin-top: 60px; text-align: left;">
-                <p class="label">Statistical Correlation Tracks</p>
+                <p class="label">Top 5 Correlation Tracks</p>
                 <div id="match-list"></div>
             </div>
 
@@ -68,7 +71,8 @@
     </div>
 
     <script>
-        // 100个关键词
+        const audio = document.getElementById('bg-audio');
+
         const allKeywords = [
             "末日余晖", "过期雨季", "失语霓虹", "碎裂胶片", "凌晨四点", "深海呼吸", "枯萎信笺", "铁锈记忆", "薄雾晨曦", "孤岛心理",
             "旧磁带跳帧", "空镜美学", "私人废墟", "潜意识漫游", "半梦半醒", "极简忧郁", "反刍遗憾", "黑白默片", "灵魂褶皱", "错位时空",
@@ -82,7 +86,6 @@
             "记忆拼图", "蓝色骨头", "荒诞戏剧", "末日倒计时", "水汽氤氲", "潮汐引力", "孤星导航", "盲目依恋", "破损唱片", "余温残留"
         ];
 
-        // 52首真实曲目 [遗憾, 孤独, 执念, 自由]
         const library = [
             { title: "I miss you, I'm sorry", q: "有些事，只有通过遗憾才能完整。", d: "你是昨日废墟的拾荒者，在告别中寻找尚未冷却的温存。", v: [10, 3, 5, 1] },
             { title: "The Blue", q: "那是深不见底的颜色，是我爱你的代价。", d: "你沉溺于某种深邃的情感，拒绝浮出水面接触世俗的干燥。", v: [9, 6, 4, 1] },
@@ -138,7 +141,6 @@
             { title: "Blowing Smoke", q: "烟雾消散后，我终于看见了荒芜。", d: "你擅长在幻觉中寻找安全感，直到现实强制让你清醒。", v: [5, 8, 4, 3] }
         ];
 
-        // 30道精准测试题
         const questions = [
             { q: "深夜里，你是如何听见自己的？", options: [{t:"旧录音带的杂音里", s:"A"}, {t:"混乱的心跳中", s:"B"}, {t:"别人呼吸声旁", s:"C"}, {t:"凌晨四点的寂静里", s:"D"}] },
             { q: "如果你是房间里亮着的那盏灯？", options: [{t:"闪烁着快要熄灭", s:"A"}, {t:"照亮了不该看的角落", s:"B"}, {t:"为了某人一直亮着", s:"C"}, {t:"学会了自己关灯", s:"D"}] },
@@ -172,11 +174,12 @@
             { q: "走过这段回响的心境？", options: [{t:"依旧沉重", s:"A"}, {t:"充满噪音", s:"B"}, {t:"跃跃欲试", s:"C"}, {t:"一片宁静", s:"D"}] }
         ];
 
-        let cur = 0; let userVector = [0, 0, 0, 0]; // 遗憾, 孤独, 执念, 自由
+        let cur = 0; let userVector = [0, 0, 0, 0]; 
 
         function begin() {
             document.getElementById('start').style.display = 'none';
             document.getElementById('quiz').style.display = 'block';
+            audio.play().catch(e => console.log("Audio play failed: ", e));
             show();
         }
 
@@ -191,7 +194,7 @@
                 const b = document.createElement('button'); b.className = 'btn';
                 b.innerText = o.t; 
                 b.onclick = () => { 
-                    userVector["ABCD".indexOf(o.s)] += 4; // 加权
+                    userVector["ABCD".indexOf(o.s)] += 4;
                     cur++; show(); 
                 };
                 optDiv.appendChild(b);
@@ -200,8 +203,6 @@
 
         function finish() {
             document.getElementById('quiz').style.display = 'none';
-            
-            // 欧几里得距离计算
             const sorted = library.map(song => {
                 let dist = 0;
                 for(let i=0; i<4; i++) dist += Math.pow(userVector[i] - (song.v[i] * 2.5), 2);
@@ -213,13 +214,13 @@
             document.getElementById('res-quote').innerText = `“${result.q}”`;
             document.getElementById('res-desc').innerText = result.d;
             
-            // 关键词抽取
+            // 关键词选五六个
             const tagDiv = document.getElementById('res-tags'); tagDiv.innerHTML = '';
-            allKeywords.sort(() => 0.5 - Math.random()).slice(0, 15).forEach(t => { 
+            allKeywords.sort(() => 0.5 - Math.random()).slice(0, 6).forEach(t => { 
                 tagDiv.innerHTML += `<span class="tag">${t}</span>`; 
             });
 
-            // 5首契合推荐
+            // 五首契合推荐
             const matchList = document.getElementById('match-list'); matchList.innerHTML = '';
             sorted.slice(1, 6).forEach((s, idx) => {
                 let matchVal = Math.floor(98 - (s.dist / 1.5) - (idx * 2));
