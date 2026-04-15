@@ -11,7 +11,6 @@
         #app { width: 90%; max-width: 460px; padding: 20px; text-align: center; }
         .serif { font-family: 'Cormorant Garamond', serif; font-style: italic; }
         
-        /* 照片框 */
         .photo-frame { width: 115px; height: 115px; margin: 0 auto 30px; border-radius: 50%; overflow: hidden; border: 0.5px solid rgba(255,255,255,0.08); box-shadow: 0 0 20px rgba(0,0,0,0.5); background: #111; position: relative;}
         .gracie-img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%) contrast(1.2); position: relative; z-index: 2; display: block;}
         
@@ -22,7 +21,6 @@
         #quiz, #result { display: none; }
         #q-text { font-size: 1.4rem; min-height: 100px; line-height: 1.5; margin-bottom: 40px; color: #fff; font-weight: 300; letter-spacing: -0.5px; }
         
-        /* 结果样式 */
         .quote-box { margin: 35px 0; padding: 30px 25px; border-top: 0.5px solid rgba(255,255,255,0.08); border-bottom: 0.5px solid rgba(255,255,255,0.08); text-align: left; line-height: 2.1; font-size: 0.85rem; color: #e0e0e0; }
         .tag-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 30px; }
         .tag { padding: 4px 10px; border: 0.5px solid rgba(255,255,255,0.12); font-size: 0.52rem; color: var(--accent); display: inline-block; letter-spacing: 1px; text-transform: uppercase; }
@@ -41,11 +39,13 @@
 
     <div id="app">
         <div id="start">
-            <div class="photo-frame"><img src="gracie.jpg" class="gracie-img" alt="Gracie Abrams"></div>
+            <div class="photo-frame"><img src="gracie.jpg" class="gracie-img"></div>
             <h1 class="serif" style="font-size: 2.8rem; margin-bottom: 5px; color: #fff; letter-spacing: -1px;">The Fragments of Echoes</h1>
             <p class="label">Soul Archive v2.0</p>
-            <p style="font-size: 0.7rem; opacity: 0.5; line-height: 2.8; margin: 45px 0; letter-spacing: 1.2px;">
-                "52 Tracks. 30 Decisions. 1 Resonance."<br>基于你的性格坐标，定位唯一的本命歌曲。
+            <p class="serif" style="font-size: 0.75rem; opacity: 0.6; line-height: 2.2; margin: 45px 0; letter-spacing: 0.5px;">
+                "You do not have to be good.<br>
+                You only have to let the soft animal of your body<br>
+                love what it loves."
             </p>
             <button class="btn" style="text-align:center; padding-left:0;" onclick="begin()">Start Calculation</button>
         </div>
@@ -58,12 +58,10 @@
         </div>
 
         <div id="result">
-            <div class="photo-frame"><img src="gracie.jpg" class="gracie-img" alt="Gracie Abrams"></div>
+            <div class="photo-frame"><img src="gracie.jpg" class="gracie-img"></div>
             <p class="label">Primary Soul Frequency</p>
             <h1 id="res-title" class="serif" style="font-size: 2.2rem; margin: 10px 0; color: #fff; letter-spacing: -1px;"></h1>
-            
             <div class="tag-container" id="res-tags"></div>
-            
             <div class="quote-box serif" id="res-quote"></div>
             <p id="res-desc" class="serif" style="opacity: 0.6; line-height: 2.5; text-align: left; font-size: 0.88rem; padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.06);"></p>
             
@@ -81,6 +79,7 @@
 
         const allKeywords = ["末日余晖", "过期雨季", "失语霓虹", "碎裂胶片", "凌晨四点", "深海呼吸", "枯萎信笺", "铁锈记忆", "薄雾晨曦", "孤岛心理", "旧磁带跳帧", "空镜美学", "私人废墟", "潜意识漫游", "半梦半醒", "极简忧郁", "反刍遗憾", "黑白默片", "灵魂褶皱", "错位时空", "循环自毁", "致命温柔", "孤独观测者", "冷色调依恋", "瞬时永恒", "逃离地心", "玫瑰余烬", "无人区玫瑰", "昨日世界", "灰烬审美", "无声尖叫", "灵魂寄宿", "幻肢痛", "单色世界", "雨水收集", "微凉体温", "心室颤动", "旧报纸", "倒放的人生", "破碎共识", "冷战美学", "灰度空间", "呼吸刻度", "情感幽灵", "数字葬礼", "霓虹废土", "寂静之声", "无名氏", "过期药水", "蓝调时刻", "无主之地", "玻璃弹珠", "生锈项链", "匿名悲伤", "潮湿书页", "真空包装", "零温心跳", "漂浮颗粒", "影子共生", "伪装平静"];
 
+        // 歌曲库：保留 The Blue，移除 Blue (已移除)
         const library = [
             { title: "I miss you, I'm sorry", q: "有些事，只有通过遗憾才能完整。", d: "你是昨日废墟的拾荒者，在每一个告别中寻找尚未冷却的温存，即便明知那是幻觉，你也甘愿沉溺其中不愿醒来。", v: [10, 3, 5, 1] },
             { title: "The Blue", q: "那是深不见底的颜色，是我爱你的代价。", d: "你沉溺于某种深邃的情感，拒绝浮出水面接触世俗的干燥，蓝色不仅是忧郁，更是你灵魂深处唯一的安全感。", v: [9, 6, 4, 1] },
@@ -98,7 +97,7 @@
             { title: "Mess It Up", q: "搞砸一切，是我本能的自救方式。", d: "你在失控中寻找平衡，用暂时的混乱换取长久的自由，即便满身泥泞，你也拒绝在虚假的安稳里慢慢窒息。", v: [4, 2, 10, 5] },
             { title: "Right Now", q: "这一刻的静默，比所有承诺都真实。", d: "你学会了与当下握手言和，不再盲目向往远方，就在此地平静呼吸，这种沉淀是你灵魂历经风暴后得到的珍贵馈赠。", v: [1, 5, 1, 10] },
             { title: "Amelie", q: "你是我幻想出来的光，还是真实的存在？", d: "你习惯于在精神世界里塑造理想的镜像，现实总是让你感到隔阂，你更爱那个活在记忆滤镜里、永不褪色的虚影。", v: [4, 10, 2, 1] },
-            { title: "Difficult", q: "承认现状很难，但假装快乐更累。", d: "你是个拒绝平庸伪装的诚实者，即便尴尬也胜过虚伪，你坚信只有直面那些混乱的真相，才能获得真正意义上的平静。", v: [2, 9, 3, 6] },
+            { title: "Difficult", q: "承认现状很难，但假装快乐更累。", d: "你是个拒绝平庸伪装的诚实者，即便尴尬也胜过虚虚，你坚信只有直面那些混乱的真相，才能获得真正意义上的平静。", v: [2, 9, 3, 6] },
             { title: "us.", q: "我们是彼此影子的重叠。", d: "你寻找的是灵魂的镜像，渴望在另一个人身上看见遗失的自己，这种深度的连接让你感到既恐惧又深深着迷。", v: [6, 4, 8, 2] },
             { title: "Best", q: "我给过你最好的，虽然那也毁了我们。", d: "你的给予总是倾尽所有，那种重量既是勋章也是枷锁，你习惯在自我燃烧中确认爱的纯度，哪怕最终只剩灰烬。", v: [10, 3, 6, 1] },
             { title: "Tough Love", q: "如果是为了你，我可以忍受所有的刺。", d: "你的温柔里带着锋芒，你的爱是带有宗教感的奉献，你享受那种在痛苦中逐渐升华的纯粹感，那是你活着的证据。", v: [2, 1, 10, 5] },
@@ -126,13 +125,12 @@
             { title: "Cedar", q: "像雪松一样，在严寒中静默生长。", d: "你拥有一种冷清的高贵气质，即便无人欣赏也依然选择挺拔，孤独是你灵魂深处不可亵渎、神圣的一部分。", v: [2, 10, 2, 6] },
             { title: "Under / Over", q: "在过载与缺失之间，我反复横跳。", d: "你追求极致的情绪体验，你的世界里没有中间地带，只有剧烈的碰撞与彻底的静止，这让你显得深刻而危险。", v: [2, 5, 10, 3] },
             { title: "Felt Good About You", q: "曾经的美好是真的，现在的清醒也是。", d: "你是一个敢于彻底推翻过去的人，清醒不仅是你的防御，更是你重新掌控人生的武器，哪怕伴随着阵痛。", v: [4, 3, 4, 10] },
-            { title: "Blue", q: "蓝色是你身上褪不掉的灵魂底色。", d: "忧郁是你与世界连接的独特方式，也是你审美中最核心、最高级的部分，你不需要被治愈，你只需被完整看见。", v: [10, 5, 2, 2] },
             { title: "Long Sleeves", q: "有些遮掩，是为了不让伤口被看见。", d: "你的克制让你显得神秘且遥不可及，你的脆弱只在深夜里对自己开放，那些不为人知的痕迹，是你灵魂的指纹。", v: [10, 7, 3, 1] },
             { title: "Packing It Up", q: "终于，我不再需要这些沉重的行李。", d: "在这个告别的季节，你终于学会了卸下沉重的过去，这种重获新生的轻盈感是你给自我最有价值的终极礼物。", v: [1, 2, 5, 10] },
             { title: "minor", q: "小调的人生，也有独特的旋律。", d: "你习惯于非主流的选择，在不被关注的角落里自给自足，这种冷僻的幽默感是你对抗平庸世俗最有力的武器。", v: [3, 10, 2, 5] },
             { title: "Painkillers", q: "止痛药只能止痛，不能治愈伤口。", d: "你依赖于某种暂时的慰藉来确认存在的证据，逃避现实的锋利，却总是忘了去寻找真正导致灵魂流血的原因。", v: [3, 4, 10, 2] },
             { title: "For Real This Time", q: "这次是真的，我不再回头了。", d: "你的决绝是一场迟到的灵魂洗礼，是对昨日所有遗憾的一次彻底清算，你正坚定地走在自我重塑的单行道上。", v: [1, 2, 3, 10] },
-            { title: "In Between", q: "在离开与留下的缝隙里，我屏住呼吸。", d: "你正处于剧烈的过渡期，每一个细微的选择都显得异常沉重，你正学着在这个不稳定的状态下寻找属于自己的平衡。", v: [6, 5, 10, 2] },
+            { title: "Inbetween", q: "在离开与留下的缝隙里，我屏住呼吸。", d: "你正处于剧烈的过渡期，每一个细微的选择都显得异常沉重，你正学着在这个不稳定的状态下寻找属于自己的平衡。", v: [6, 5, 10, 2] },
             { title: "Blowing Smoke", q: "烟雾消散后，我终于看见了荒芜。", d: "你擅长在幻觉中寻找瞬间的安全感，直到现实残忍地强制让你清醒，那种瞬间的崩塌感是你生命中独特的风景。", v: [5, 8, 4, 3] }
         ];
 
@@ -174,7 +172,7 @@
         function begin() {
             document.getElementById('start').style.display = 'none';
             document.getElementById('quiz').style.display = 'block';
-            audio.play().catch(e => console.log("Audio waiting for interaction"));
+            audio.play().catch(e => console.log("Audio play deferred"));
             show();
         }
 
@@ -209,14 +207,12 @@
             document.getElementById('res-quote').innerText = `“${result.q}”`;
             document.getElementById('res-desc').innerText = result.d;
             
-            // 关键词逻辑：随机打乱并抽取6个
             const tagDiv = document.getElementById('res-tags'); tagDiv.innerHTML = '';
             const shuffledTags = [...allKeywords].sort(() => 0.5 - Math.random());
             shuffledTags.slice(0, 6).forEach(t => { 
                 tagDiv.innerHTML += `<span class="tag">${t}</span>`; 
             });
 
-            // 契合歌曲逻辑：展示后续5首及其进度条
             const matchList = document.getElementById('match-list'); matchList.innerHTML = '';
             sorted.slice(1, 6).forEach((s, idx) => {
                 let matchVal = Math.floor(98 - (s.dist / 1.5) - (idx * 2));
