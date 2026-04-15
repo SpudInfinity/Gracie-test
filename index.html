@@ -39,9 +39,8 @@
             <h1 class="serif" style="font-size: 2.8rem; margin-bottom: 5px; color: #fff; letter-spacing: -1px;">The Fragments of Echoes</h1>
             <p class="label">A Psychometric Archive</p>
             <p style="font-size: 0.7rem; opacity: 0.5; line-height: 2.8; margin: 45px 0; letter-spacing: 1.2px;">
-                "Every song you loved was a blueprint<br>
-                of the heart you once broke.<br>
-                Collect the pieces."
+                "Every choice is a fragment of the ghost you carry.<br>
+                Step into the void."
             </p>
             <button class="btn" style="text-align:center; padding-left:0;" onclick="begin()">Enter the Archive</button>
         </div>
@@ -75,17 +74,23 @@
 
         const allKeywords = ["末日余晖", "过期雨季", "蓝莓之夜", "潮湿阁楼", "失语霓虹", "碎裂胶片", "凌晨四点", "深海呼吸", "枯萎信笺", "电子荒原", "无声告别", "坠落行星", "铁锈记忆", "薄雾晨曦", "孤岛心理", "旧磁带跳帧", "空镜美学", "私人废墟", "潜意识漫游", "半梦半醒", "极简忧郁", "反刍遗憾", "黑白默片", "灵魂褶皱", "错位时空", "循环自毁", "致命温柔", "孤独观测者", "冷色调依恋", "瞬时永恒", "逃离地心", "玫瑰余烬", "无人区玫瑰", "昨日世界", "灰烬审美", "深渊的回响", "重庆森林", "恋恋风尘", "北野武蓝", "盐系寂寞", "半衰期", "情感放射", "潮湿主义", "旧电影质感", "无解的题", "真空地带", "听觉残留", "心碎出口", "蓝色调式", "被动荒废", "影子练习", "过敏体质", "降噪生活", "平行失语", "昨日重现", "时间缝隙", "白噪音", "梦境碎片", "触觉失灵", "深蓝梦呓", "午夜飞行", "无目的流浪", "废弃电台", "降落练习", "隐形裂痕", "情绪过载", "冷色调告别", "匿名信件", "远方共振", "旧磁带", "复古伤感", "半透明", "琥珀色记忆", "荒野呼唤", "私密频率", "低空飞行", "极简孤寂", "雾中漫行", "光影废墟", "末班车", "空房间", "无声尖叫", "灵魂寄宿", "幻肢痛", "单色世界", "雨水收集", "微凉体温", "心室颤动", "旧报纸", "黑白默片", "倒放的人生", "破碎共识", "冷战美学", "灰度空间", "呼吸刻度", "情感幽灵", "数字葬礼", "霓虹废土", "寂静之声", "无名氏"];
 
-        const gracieSongs = ["21", "I miss you, I'm sorry", "Long Sleeves", "minor", "Friend", "Stay", "Unlearn", "Block me out", "Full Machine", "Hard to sleep", "Faultline", "Mess It Up", "Camden", "The Exit", "Right Now", "Amelie", "Where do we go now?", "Best", "Normal Thing", "Risk", "Close To You", "Blowing Smoke", "Let It Happen", "Tough Love", "I Love You, I'm Sorry", "Free Now", "Gave You I Gave You", "Deep Red", "Burn It Down", "Good Riddance", "The Secret of Us", "Feels Like", "Rockland", "Blue", "Augusta", "Cedar", "Brush Fire", "That’s So True"];
+        // 包含所有四大核心专辑的完整曲库
+        const gracieSongs = [
+            "Felt Good About You", "Risk", "Blowing Smoke", "I Love You, I'm Sorry", "us. (feat. Taylor Swift)", "Let It Happen", "Tough Love", "I Knew It, I Know You", "Gave You I Gave You I", "Normal Thing", "Good Luck Charlie", "Free Now", "Close To You", "Cool", "That's So True", "I Told You Things", "Packing It Up",
+            "Best", "I Know It Won't Work", "Full Machine", "Where Do We Go Now?", "I Should Hate You", "Will You Cry?", "Amelie", "Difficult", "This Is What The Drugs Are For", "Faultline", "The Blue", "Right Now", "Block Me Out", "Unsteady", "405", "Two People",
+            "Feels Like", "Rockland", "For Real This Time", "Camden", "The Bottom", "Wishful Thinking", "Older", "Better", "Hard To Sleep", "Augusta", "Painkillers", "Alright",
+            "Friend", "21", "Under / Over", "tehe", "I miss you, I'm sorry", "Long Sleeves", "minor"
+        ];
 
         const types = {
-            'A': { title: "I miss you, I'm sorry", quote: "“有些事，只有通过遗憾才能被完整地记起。”", desc: "你习惯在废墟中翻找尚未冷却温存的人。告别对你而言从未是一个瞬间，而是一场长达数年的余震。你拥有一种近乎神圣的耐心，去修补那些永远无法还原的关系。" },
-            'B': { title: "Block Me Out", quote: "“我太擅长在自己的脑海里制造噪音，直到听不见心跳。”", desc: "你是一座在深夜独自运行的精密机器，所有的情绪过载都被你熟练地掩盖在平静的表象下。你正在学习如何关闭那些防御性的噪音，重新听见自己最真实的声音。" },
+            'A': { title: "I miss you, I'm sorry", quote: "“有些事，只有通过遗憾才能被完整地记起。”", desc: "你是那种习惯在废墟中翻找温存的人。告别对你而言从未是一个瞬间，而是一场长达数年的余震。你拥有一种近乎神圣的耐心，去修补那些永远无法还原的关系。" },
+            'B': { title: "Block Me Out", quote: "“我太擅长在自己的脑海里制造噪音，直到听不见心跳。”", desc: "你是一座在深夜独自运行的精密机器，所有的情绪过载都被你熟练地掩盖在平静的表象下。你习惯于在喧嚣中开启静音模式，正在重新听见自己最真实的声音。" },
             'C': { title: "Risk", quote: "“哪怕只有一瞬间的火花，也足以照亮整段荒芜。”", desc: "你拥有一种近乎悲剧性的勇敢。在明知前方可能是悬崖的情况下，你依然迷恋那种坠落前的眩晕感。对你来说，生命的质感在于那些被极致情绪点燃的瞬间。" },
-            'D': { title: "Free Now", quote: "“我也许没能到达目的地，但我确实离开了原点。”", desc: "你已经穿透了那层曾让你窒息的浓雾。这是一种历经风暴后的轻盈，你终于学会了不再回头看那扇已经关上的门，而是直视前方开阔的荒野。" }
+            'D': { title: "Where Do We Go Now?", quote: "“我也许没能到达目的地，但我确实离开了原点。”", desc: "你已经穿透了那层曾让你窒息的浓雾。这是一种历经风暴后的轻盈，你终于学会了不再回头看那扇已经关上的门，而是直视前方开阔的荒野。" }
         };
 
         const questions = [
-            { q: "深夜里，你是如何听见自己的？", options: [{t:"在旧录音带的杂音里", s:"A"}, {t:"混乱的心跳中", s:"B"}, {t:"别人呼吸声旁", s:"C"}, {t:"凌晨四点的寂静里", s:"D"}] },
+            { q: "深夜里，你是如何听见自己的？", options: [{t:"旧录音带的杂音里", s:"A"}, {t:"混乱的心跳中", s:"B"}, {t:"别人呼吸声旁", s:"C"}, {t:"凌晨四点的寂静里", s:"D"}] },
             { q: "如果你是房间里亮着的那盏灯？", options: [{t:"闪烁着快要熄灭", s:"A"}, {t:"照亮了不该看的角落", s:"B"}, {t:"为了某人一直亮着", s:"C"}, {t:"学会了自己关灯", s:"D"}] },
             { q: "道歉的碎片堆在地上，那是？", options: [{t:"必须拼凑好的过去", s:"A"}, {t:"扎脚的玻璃，别碰", s:"B"}, {t:"渴望被爱的筹码", s:"C"}, {t:"可以打扫掉的尘埃", s:"D"}] },
             { q: "当你凝视镜中的自己？", options: [{t:"一个十年前的遗憾", s:"A"}, {t:"一个满负荷运转的机器", s:"B"}, {t:"一个等待点燃的火苗", s:"C"}, {t:"一个找回名字的陌生人", s:"D"}] },
@@ -93,28 +98,28 @@
             { q: "更习惯躲在哪里？", options: [{t:"潮湿的阁楼", s:"A"}, {t:"巨大的耳机里", s:"B"}, {t:"对方大衣的阴影里", s:"C"}, {t:"空旷的公路尽头", s:"D"}] },
             { q: "如果你是一个季节？", options: [{t:"永恒的深秋", s:"A"}, {t:"暴雨前的闷热下午", s:"B"}, {t:"盛夏刺眼的阳光", s:"C"}, {t:"初春刚融化的冰", s:"D"}] },
             { q: "回忆像哪种声音？", options: [{t:"反奏的磁带", s:"A"}, {t:"指甲划过黑板", s:"B"}, {t:"远处模糊的鼓点", s:"C"}, {t:"翻动纸张的沙沙声", s:"D"}] },
-            { q: "你如何处理沉重的情绪？", options: [{t:"写成没收件人的信", s:"A"}, {t:"按下静音键假装听不见", s:"B"}, {t:"全部倾倒给某人", s:"C"}, {t:"让它们随长路流走", s:"D"}] },
+            { q: "你如何处理沉重的情绪？", options: [{t:"写成没收件人的信", s:"A"}, {t:"按下静音键", s:"B"}, {t:"全部倾倒给某人", s:"C"}, {t:"让它们随长路流走", s:"D"}] },
             { q: "必须要烧掉一样东西？", options: [{t:"唯一的旧照片", s:"A"}, {t:"发疯写的日记", s:"B"}, {t:"那个人的联系方式", s:"C"}, {t:"不再合适的衣服", s:"D"}] },
             { q: "“爱”最直观的触感是？", options: [{t:"冰冷的金属拉链", s:"A"}, {t:"生锈的齿轮摩擦", s:"B"}, {t:"眩晕的心跳", s:"C"}, {t:"微风拂过皮肤", s:"D"}] },
             { q: "当人群散去，你留在原地？", options: [{t:"寻找碎片", s:"A"}, {t:"缓解心悸", s:"B"}, {t:"期待那个人回头", s:"C"}, {t:"走向反方向", s:"D"}] },
             { q: "如果你是一个秘密？", options: [{t:"泛黄纸上", s:"A"}, {t:"在保险柜里", s:"B"}, {t:"深夜呼之欲出", s:"C"}, {t:"不再是秘密", s:"D"}] },
             { q: "关于那个TA，现在的联想是？", options: [{t:"没有锁的钥匙", s:"A"}, {t:"无法停止的循环", s:"B"}, {t:"坠落的恒星", s:"C"}, {t:"模糊的背景板", s:"D"}] },
-            { q: "必须要说最后一句话？", options: [{t:"“对不起，我还在这”", s:"A"}, {t:"“屏蔽我吧”", s:"B"}, {t:"“再冒一次险”", s:"C"}, {t:"“我自由了”", s:"D"}] },
+            { q: "必须要说最后一句话？", options: [{t:"对不起，我还在这", s:"A"}, {t:"请把我彻底屏蔽", s:"B"}, {t:"再冒一次冒险", s:"C"}, {t:"我终于自由了", s:"D"}] },
             { q: "窗外路灯照进房间？", options: [{t:"审判的目光", s:"A"}, {t:"寒冷的干扰", s:"B"}, {t:"出门的暗示", s:"C"}, {t:"平凡的夜晚", s:"D"}] },
-            { q: "如何掩饰悲伤？", options: [{t:"不停说话", s:"A"}, {t:"不发一言", s:"B"}, {t:"大笑直到流泪", s:"C"}, {t:"坦然承认", s:"D"}] },
-            { q: "如果你是一段旋律？", options: [{t:"跑调的钢琴", s:"A"}, {t:"急促的打击乐", s:"B"}, {t:"轻快吉他弹唱", s:"C"}, {t:"悠长提琴", s:"D"}] },
-            { q: "自愈的过程更像？", options: [{t:"雨中漫步", s:"A"}, {t:"修理机器", s:"B"}, {t:"大火中重生", s:"C"}, {t:"剪短长发", s:"D"}] },
-            { q: "如果你是一个房间的颜色？", options: [{t:"过期米白", s:"A"}, {t:"压抑深蓝", s:"B"}, {t:"刺眼鲜红", s:"C"}, {t:"宁静琥珀", s:"D"}] },
-            { q: "最让你感到安全的空间？", options: [{t:"被窝里", s:"A"}, {t:"影院最后一排", s:"B"}, {t:"高速行驶的车内", s:"C"}, {t:"无人的公路", s:"D"}] },
-            { q: "如果要制作成标本？", options: [{t:"泛黄匿名信", s:"A"}, {t:"窒息的白花", s:"B"}, {t:"不灭的火种", s:"C"}, {t:"流浪的落叶", s:"D"}] },
-            { q: "整个世界都在下沉？", options: [{t:"抓紧谁的手", s:"A"}, {t:"蜷缩身体", s:"B"}, {t:"加速下坠", s:"C"}, {t:"学会在水底呼吸", s:"D"}] },
-            { q: "你爱现在的自己吗？", options: [{t:"学着道歉", s:"A"}, {t:"正在努力", s:"B"}, {t:"是的，很爱", s:"D"}, {t:"没有答案", s:"C"}] },
-            { q: "回忆里的气味通常是？", options: [{t:"旧信件味", s:"A"}, {t:"汽油与灰尘", s:"B"}, {t:"特定香水味", s:"C"}, {t:"雨后泥土", s:"D"}] },
+            { q: "如何掩饰悲伤？", options: [{t:"不停说话", s:"A"}, {t:"沉默不语", s:"B"}, {t:"大笑直到流泪", s:"C"}, {t:"坦然承认", s:"D"}] },
+            { q: "如果你是一段旋律？", options: [{t:"跑调的钢琴", s:"A"}, {t:"急促的打击乐", s:"B"}, {t:"轻快扫弦", s:"C"}, {t:"幽长提琴", s:"D"}] },
+            { q: "自愈的过程更像？", options: [{t:"雨中漫步", s:"A"}, {t:"修理坏掉的机器", s:"B"}, {t:"大火中重生", s:"C"}, {t:"剪短长发", s:"D"}] },
+            { q: "如果你是房间的颜色？", options: [{t:"过期的米白色", s:"A"}, {t:"压抑的深蓝色", s:"B"}, {t:"刺眼的鲜红色", s:"C"}, {t:"宁静的琥珀色", s:"D"}] },
+            { q: "最让你安全的空间？", options: [{t:"被窝里", s:"A"}, {t:"影院最后一排", s:"B"}, {t:"高速行驶的车", s:"C"}, {t:"空旷的公路", s:"D"}] },
+            { q: "如果要制作成标本？", options: [{t:"泛黄匿名信", s:"A"}, {t:"窒息的白花", s:"B"}, {t:"未灭的火种", s:"C"}, {t:"流动的落叶", s:"D"}] },
+            { q: "整个世界都在下沉？", options: [{t:"抓紧某人的手", s:"A"}, {t:"蜷缩身体", s:"B"}, {t:"加速下坠", s:"C"}, {t:"在水底呼吸", s:"D"}] },
+            { q: "你爱现在的自己吗？", options: [{t:"正在学着道歉", s:"A"}, {t:"很难，但努力中", s:"B"}, {t:"是的，很爱", s:"D"}, {t:"没有答案", s:"C"}] },
+            { q: "回忆里的气味通常是？", options: [{t:"旧信件的味道", s:"A"}, {t:"汽油与灰尘", s:"B"}, {t:"特定的香水味", s:"C"}, {t:"雨后泥土的味道", s:"D"}] },
             { q: "必须要带走的一样东西？", options: [{t:"微凉的空气", s:"A"}, {t:"争执的声音", s:"B"}, {t:"心动的战栗", s:"C"}, {t:"什么都不带走", s:"D"}] },
-            { q: "放手感觉更像？", options: [{t:"还没准备好", s:"A"}, {t:"练习闭眼", s:"B"}, {t:"必要的自毁", s:"C"}, {t:"迟到的洗礼", s:"D"}] },
-            { q: "深夜杂货店，你会买？", options: [{t:"过期糖果", s:"A"}, {t:"一支笔", s:"B"}, {t:"最烈的酒", s:"C"}, {t:"一瓶水", s:"D"}] },
-            { q: "如果明天世界末日？", options: [{t:"沉溺回忆", s:"A"}, {t:"躲进地下", s:"B"}, {t:"寻找那个人", s:"C"}, {t:"站在海边看日落", s:"D"}] },
-            { q: "走过这段回响，你的心境是？", options: [{t:"依旧沉重", s:"A"}, {t:"充满噪音", s:"B"}, {t:"跃跃欲试", s:"C"}, {t:"一片宁静", s:"D"}] }
+            { q: "放手感觉更像？", options: [{t:"还没准备好", s:"A"}, {t:"练习闭上眼", s:"B"}, {t:"必要的自毁", s:"C"}, {t:"迟到的洗礼", s:"D"}] },
+            { q: "深夜杂货店，你会买？", options: [{t:"过期糖果", s:"A"}, {t:"一支笔", s:"B"}, {t:"最烈的酒", s:"C"}, {t:"一瓶纯净水", s:"D"}] },
+            { q: "如果明天世界末日？", options: [{t:"沉溺回忆", s:"A"}, {t:"躲进地下室", s:"B"}, {t:"疯狂寻找那个人", s:"C"}, {t:"看最后的日落", s:"D"}] },
+            { q: "走过这段回响，你的心境？", options: [{t:"依旧沉重", s:"A"}, {t:"充满噪音", s:"B"}, {t:"跃跃欲试", s:"C"}, {t:"一片宁静", s:"D"}] }
         ];
 
         let cur = 0; let scores = { A:0, B:0, C:0, D:0 };
@@ -158,15 +163,17 @@
             });
 
             const matchList = document.getElementById('match-list'); matchList.innerHTML = '';
+            // 从 50+ 首歌的池子里随机选取 5 首
             const candidates = gracieSongs.filter(s => s !== data.title).sort(() => 0.5 - Math.random()).slice(0, 5);
             candidates.forEach((s, idx) => {
-                let val = 97 - (idx * 4) - Math.floor(Math.random() * 5);
+                let val = 98 - (idx * 3) - Math.floor(Math.random() * 4);
                 matchList.innerHTML += `
                     <div class="match-item">
                         <div class="match-info"><span>${s}</span><span>${val}% Resonance</span></div>
                         <div class="track-bg"><div class="track-fill" style="width:${val}%"></div></div>
                     </div>`;
             });
+
             document.getElementById('result').style.display = 'block';
             window.scrollTo(0,0);
         }
